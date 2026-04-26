@@ -1,0 +1,211 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Image Skill – ImageMagick + Pillow Wrapper
+
+usage() {
+    echo "Usage: image.sh <command> [options]"
+    echo ""
+    echo "Commands:"
+    echo "  download <url> --output OUT [--max-size N] [--quality N]"
+    echo "  convert <file> --output OUT [--density N]"
+    echo "  resize <file> --output OUT (--size WxH | --percent N)"
+    echo "  crop <file> --output OUT (--geometry BxH+X+Y | --gravity G --size WxH)"
+    echo "  rotate <file> --output OUT --degrees N"
+    echo "  optimize <file> --output OUT [--quality N]"
+    echo "  info <file>"
+    exit 1
+}
+
+require_file() {
+    [[ -f "$1" ]] || { echo "Fehler: Datei nicht gefunden: $1" >&2; exit 1; }
+}
+
+cmd_download() {
+    local url="" output="" max_size="" quality=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --output) output="$2"; shift 2 ;;
+            --max-size) max_size="$2"; shift 2 ;;
+            --quality) quality="$2"; shift 2 ;;
+            *) url="$1"; shift ;;
+        esac
+    done
+
+    [[ -z "$url" ]] && { echo "Fehler: Keine URL angegeben" >&2; exit 1; }
+    [[ -z "$output" ]] && { echo "Fehler: --output erforderlich" >&2; exit 1; }
+
+    local tmpfile
+    tmpfile=$(mktemp /tmp/img_dl_XXXXXX)
+    trap "rm -f '$tmpfile'" EXIT
+
+    curl -fsSL -o "$tmpfile" -A "Mozilla/5.0" "$url"
+
+    local args=("$tmpfile")
+    [[ -n "$max_size" ]] && args+=("-resize" "${max_size}x${max_size}>")
+    [[ -n "$quality" ]] && args+=("-quality" "$quality")
+
+    mkdir -p "$(dirname "$output")"
+    magick "${args[@]}" "$output"
+    echo "Erstellt: $output ($(stat -f%z "$output" | awk '{printf "%.1f KB", $1/1024}'))"
+}
+
+cmd_convert() {
+    local file="" output="" density=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --output) output="$2"; shift 2 ;;
+            --density) density="$2"; shift 2 ;;
+            *) file="$1"; shift ;;
+        esac
+    done
+
+    [[ -z "$file" ]] && { echo "Fehler: Keine Datei angegeben" >&2; exit 1; }
+    require_file "$file"
+    [[ -z "$output" ]] && { echo "Fehler: --output erforderlich" >&2; exit 1; }
+
+    local args=()
+    [[ -n "$density" ]] && args+=("-density" "$density")
+    args+=("$file" "$output")
+
+    mkdir -p "$(dirname "$output")"
+    magick "${args[@]}"
+    echo "Konvertiert: $file → $output"
+}
+
+cmd_resize() {
+    local file="" output="" size="" percent=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --output) output="$2"; shift 2 ;;
+            --size) size="$2"; shift 2 ;;
+            --percent) percent="$2"; shift 2 ;;
+            *) file="$1"; shift ;;
+        esac
+    done
+
+    [[ -z "$file" ]] && { echo "Fehler: Keine Datei angegeben" >&2; exit 1; }
+    require_file "$file"
+    [[ -z "$output" ]] && { echo "Fehler: --output erforderlich" >&2; exit 1; }
+
+    local resize_arg=""
+    if [[ -n "$size" ]]; then
+        resize_arg="$size"
+    elif [[ -n "$percent" ]]; then
+        resize_arg="${percent}%"
+    else
+        echo "Fehler: --size oder --percent erforderlich" >&2; exit 1
+    fi
+
+    mkdir -p "$(dirname "$output")"
+    magick "$file" -resize "$resize_arg" "$output"
+
+    local dims
+    dims=$(magick identify -format "%wx%h" "$output")
+    echo "Erstellt: $output ($dims)"
+}
+
+cmd_crop() {
+    local file="" output="" geometry="" gravity="" size=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --output) output="$2"; shift 2 ;;
+            --geometry) geometry="$2"; shift 2 ;;
+            --gravity) gravity="$2"; shift 2 ;;
+            --size) size="$2"; shift 2 ;;
+            *) file="$1"; shift ;;
+        esac
+    done
+
+    [[ -z "$file" ]] && { echo "Fehler: Keine Datei angegeben" >&2; exit 1; }
+    require_file "$file"
+    [[ -z "$output" ]] && { echo "Fehler: --output erforderlich" >&2; exit 1; }
+
+    mkdir -p "$(dirname "$output")"
+
+    if [[ -n "$geometry" ]]; then
+        magick "$file" -crop "$geometry" +repage "$output"
+    elif [[ -n "$gravity" && -n "$size" ]]; then
+        magick "$file" -gravity "$gravity" -crop "$size+0+0" +repage "$output"
+    else
+        echo "Fehler: --geometry oder --gravity+--size erforderlich" >&2; exit 1
+    fi
+
+    local dims
+    dims=$(magick identify -format "%wx%h" "$output")
+    echo "Erstellt: $output ($dims)"
+}
+
+cmd_rotate() {
+    local file="" output="" degrees=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --output) output="$2"; shift 2 ;;
+            --degrees) degrees="$2"; shift 2 ;;
+            *) file="$1"; shift ;;
+        esac
+    done
+
+    [[ -z "$file" ]] && { echo "Fehler: Keine Datei angegeben" >&2; exit 1; }
+    require_file "$file"
+    [[ -z "$output" ]] && { echo "Fehler: --output erforderlich" >&2; exit 1; }
+    [[ -z "$degrees" ]] && { echo "Fehler: --degrees erforderlich" >&2; exit 1; }
+
+    mkdir -p "$(dirname "$output")"
+    magick "$file" -rotate "$degrees" "$output"
+    echo "Erstellt: $output (${degrees}° gedreht)"
+}
+
+cmd_optimize() {
+    local file="" output="" quality="85"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --output) output="$2"; shift 2 ;;
+            --quality) quality="$2"; shift 2 ;;
+            *) file="$1"; shift ;;
+        esac
+    done
+
+    [[ -z "$file" ]] && { echo "Fehler: Keine Datei angegeben" >&2; exit 1; }
+    require_file "$file"
+    [[ -z "$output" ]] && { echo "Fehler: --output erforderlich" >&2; exit 1; }
+
+    local size_before
+    size_before=$(stat -f%z "$file")
+
+    mkdir -p "$(dirname "$output")"
+    magick "$file" -strip -quality "$quality" "$output"
+
+    local size_after
+    size_after=$(stat -f%z "$output")
+    local pct=$((100 - (size_after * 100 / size_before)))
+    echo "Erstellt: $output (${pct}% kleiner)"
+}
+
+cmd_info() {
+    local file="$1"
+    [[ -z "$file" ]] && { echo "Fehler: Keine Datei angegeben" >&2; exit 1; }
+    require_file "$file"
+
+    magick identify -format "Datei: %f\nFormat: %m\nDimensionen: %wx%h\nFarbraum: %[colorspace]\nBittiefe: %z-bit\nDateigroesse: %b\n" "$file"
+}
+
+[[ $# -lt 1 ]] && usage
+
+command="$1"; shift
+case "$command" in
+    download)  cmd_download "$@" ;;
+    convert)   cmd_convert "$@" ;;
+    resize)    cmd_resize "$@" ;;
+    crop)      cmd_crop "$@" ;;
+    rotate)    cmd_rotate "$@" ;;
+    optimize)  cmd_optimize "$@" ;;
+    info)      cmd_info "$@" ;;
+    *)         usage ;;
+esac
