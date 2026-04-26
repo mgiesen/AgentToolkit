@@ -1,6 +1,6 @@
 ---
 name: handelsregister
-description: Durchsucht das deutsche Handelsregister nach Unternehmensdaten (Name, Registergericht, HRB/HRA-Nummer, Status, Historie). Keine Authentifizierung noetig.
+description: Durchsucht das deutsche Handelsregister und ruft Registerauszuege als PDF ab. Liefert Firma, Sitz, Geschaeftszweck, Stammkapital, Geschaeftsfuehrer, Prokura, Vertretungsregelung, Rechtsform, Satzungsaenderungen, Kapitalentwicklung, Verschmelzungen und komplette Unternehmenshistorie.
 ---
 
 # Handelsregister Skill
