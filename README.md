@@ -15,6 +15,7 @@ Persoenliche Werkzeugsammlung fuer CLI-basierte AI Agents.
 | **crawl4ai**      | Web-Scraping, Markdown-Extraktion aus Webseiten           | crawl4ai (pipx)                        | Fallback – primaer MCP |
 | **youtube-dlp**   | Metadaten, Transkripte, Untertitel, Suchergebnisse        | yt-dlp (brew)                          | –                      |
 | **github**        | GitHub-Repos, Issues, PRs, Actions lesen                  | gh CLI (brew)                          | Schreibend nur mit Freigabe |
+| **image-gen**     | KI-Bildgenerierung aus Textprompts (Nano Banana)          | Google Gemini API (curl)               | API-Key in `.env`      |
 | **qr-code**       | QR-Codes erzeugen (PNG, SVG, Terminal)                    | qrencode (brew)                        | –                      |
 | **folder-picker** | Interaktive Ordnerauswahl per Finder-Dialog               | osascript (macOS built-in)             | Nur macOS              |
 
