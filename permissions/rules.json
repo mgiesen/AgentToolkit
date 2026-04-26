@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "bash": [
+
+      "chmod +x */scripts/*",
+
+      "*/scripts/geo.sh *",
+      "*/scripts/pdf.sh *",
+      "*/scripts/ocr.sh *",
+      "*/scripts/image.sh *",
+      "*/scripts/image-gen.sh *",
+      "*/scripts/handelsregister.sh *",
+      "*/scripts/tavily.sh *",
+      "*/scripts/youtube-dlp.sh *",
+      "python3 */scripts/pick_folder.py *",
+      "python3 */scripts/basic_crawler.py *",
+      "python3 */scripts/batch_crawler.py *",
+      "python3 */scripts/extraction_pipeline.py *",
+
+      "magick *",
+      "cpdf *",
+      "qpdf *",
+      "gs *",
+      "tesseract *",
+      "qrencode *",
+
+      "gh repo view *",
+      "gh issue list *",
+      "gh issue view *",
+      "gh pr list *",
+      "gh pr view *",
+      "gh pr diff *",
+      "gh search *",
+      "gh run list *",
+      "gh run view *"
+    ]
+  }
+}

@@ -9,6 +9,7 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 SKILLS_DIR="$REPO_DIR/skills"
 VENV_DIR="$REPO_DIR/.venv"
+RULES_SCRIPT="$REPO_DIR/permissions/install_rules.py"
 
 # Farben
 BOLD='\033[1m'
@@ -98,7 +99,7 @@ check_tools() {
 }
 
 # ──────────────────────────────────────────────────────────────
-# Actions
+# Skills
 # ──────────────────────────────────────────────────────────────
 
 do_install() {
@@ -187,6 +188,28 @@ do_status() {
 }
 
 # ──────────────────────────────────────────────────────────────
+# Permissions
+# ──────────────────────────────────────────────────────────────
+
+install_rules() {
+    echo -e "  ${BOLD}Permissions${RESET}"
+    "$VENV_DIR/bin/python3" "$RULES_SCRIPT" install "$@"
+    echo ""
+}
+
+uninstall_rules() {
+    echo -e "  ${BOLD}Permissions${RESET}"
+    "$VENV_DIR/bin/python3" "$RULES_SCRIPT" uninstall "$@"
+    echo ""
+}
+
+status_rules() {
+    echo ""
+    echo -e "  ${BOLD}Permissions${RESET}"
+    "$VENV_DIR/bin/python3" "$RULES_SCRIPT" status
+}
+
+# ──────────────────────────────────────────────────────────────
 # Agent-Auswahl
 # ──────────────────────────────────────────────────────────────
 
@@ -232,8 +255,10 @@ main() {
 
     echo -e "  ${BOLD}1${RESET}) Skills installieren"
     echo -e "  ${BOLD}2${RESET}) Skills deinstallieren"
-    echo -e "  ${BOLD}3${RESET}) Status anzeigen"
-    echo -e "  ${BOLD}4${RESET}) Dependencies pruefen"
+    echo -e "  ${BOLD}3${RESET}) Permissions hinzufuegen"
+    echo -e "  ${BOLD}4${RESET}) Permissions entfernen"
+    echo -e "  ${BOLD}5${RESET}) Status anzeigen"
+    echo -e "  ${BOLD}6${RESET}) Dependencies pruefen"
     echo -e "  ${BOLD}q${RESET}) Beenden"
     echo ""
     read -rp "  Auswahl: " action
@@ -243,27 +268,53 @@ main() {
             select_agents
             echo ""
             setup_venv
+            local rule_agents=()
             for i in "${SELECTED[@]}"; do
                 echo -e "  ${CYAN}${BOLD}${AGENT_NAMES[$i]}${RESET} → ${DIM}${AGENT_PATHS[$i]}${RESET}"
                 do_install "${AGENT_NAMES[$i]}" "${AGENT_PATHS[$i]}"
+                rule_agents+=("${AGENT_NAMES[$i]}")
                 echo ""
             done
+            install_rules "${rule_agents[@]}"
             ;;
         2)
             select_agents
             echo ""
+            local rule_agents=()
             for i in "${SELECTED[@]}"; do
                 echo -e "  ${CYAN}${BOLD}${AGENT_NAMES[$i]}${RESET}"
                 do_uninstall "${AGENT_NAMES[$i]}" "${AGENT_PATHS[$i]}"
+                rule_agents+=("${AGENT_NAMES[$i]}")
                 echo ""
             done
+            uninstall_rules "${rule_agents[@]}"
             ;;
         3)
+            select_agents
             echo ""
-            do_status
-            echo ""
+            setup_venv
+            local rule_agents=()
+            for i in "${SELECTED[@]}"; do
+                rule_agents+=("${AGENT_NAMES[$i]}")
+            done
+            install_rules "${rule_agents[@]}"
             ;;
         4)
+            select_agents
+            echo ""
+            local rule_agents=()
+            for i in "${SELECTED[@]}"; do
+                rule_agents+=("${AGENT_NAMES[$i]}")
+            done
+            uninstall_rules "${rule_agents[@]}"
+            ;;
+        5)
+            echo ""
+            do_status
+            status_rules
+            echo ""
+            ;;
+        6)
             echo ""
             setup_venv
             check_tools
@@ -288,11 +339,13 @@ case "${1:-}" in
             do_install "${AGENT_NAMES[$i]}" "${AGENT_PATHS[$i]}"
             echo ""
         done
+        install_rules "${AGENT_NAMES[@]}"
         exit 0
         ;;
     --status)
         banner
         do_status
+        status_rules
         echo ""
         exit 0
         ;;
@@ -303,6 +356,7 @@ case "${1:-}" in
             do_uninstall "${AGENT_NAMES[$i]}" "${AGENT_PATHS[$i]}"
             echo ""
         done
+        uninstall_rules "${AGENT_NAMES[@]}"
         exit 0
         ;;
     --check)
