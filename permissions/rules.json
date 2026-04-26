@@ -10,6 +10,7 @@
       "*/scripts/image.sh *",
       "*/scripts/image-gen.sh *",
       "*/scripts/apple-notes.sh *",
+      "*/scripts/apple-reminders.sh *",
       "*/scripts/handelsregister.sh *",
       "*/scripts/tavily.sh *",
       "*/scripts/youtube-dlp.sh *",

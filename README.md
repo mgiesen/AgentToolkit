@@ -21,6 +21,7 @@ Assets werden hier entwickelt und versioniert. Der Installer verlinkt sie global
 | **handelsregister**        |     | W M L          | Unternehmenssuche im deutschen Handelsregister            | „Suche die Handelsregisterdaten der Siemens AG."                     |
 | **folder-picker**          |     | M              | Interaktive Ordnerauswahl per Finder-Dialog               | „Lass mich einen Zielordner im Finder auswählen."                    |
 | **apple-notes-write-only** |     | M              | Neue Apple Notes erstellen (kein Lesen/Löschen)           | „Erstelle eine Notiz mit dem Titel Einkaufsliste."                   |
+| **apple-reminders-write-only** | | M              | Neue Apple Erinnerungen erstellen (kein Lesen/Löschen)    | „Erinnere mich morgen um 14 Uhr an den Zahnarzt."                    |
 
 > **W** = Windows · **M** = macOS · **L** = Linux
 
@@ -67,6 +68,7 @@ Der Installer (`install.sh`) richtet die `.venv` ein und installiert alle Python
 | **handelsregister**        | handelsregister           | –                                    | –                          |
 | **folder-picker**          | –                         | – (macOS built-in)                   | –                          |
 | **apple-notes-write-only** | –                         | – (macOS built-in)                   | –                          |
+| **apple-reminders-write-only** | –                     | – (macOS built-in)                   | –                          |
 
 ### API-Keys
 
