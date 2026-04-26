@@ -1,24 +1,65 @@
 # Agentic Collection
 
-Persoenliche Toolsammlung fuer CLI-basierte AI Agents (Claude Code, Codex, Gemini CLI, OpenCode).
+Persönliche Toolsammlung für CLI-basierte AI Agents (Claude Code, Codex, Gemini CLI, OpenCode).
 
-Assets werden hier entwickelt und versioniert. Der Installer verlinkt sie global in die Agent-Verzeichnisse, sodass sie in jedem Projekt verfuegbar sind.
+Assets werden hier entwickelt und versioniert. Der Installer verlinkt sie global in die Agent-Verzeichnisse, sodass sie in jedem Projekt verfügbar sind.
 
 ## Skills
 
-| Skill             | Faehigkeiten                                              | Dependencies                           | Voraussetzungen        |
-| ----------------- | --------------------------------------------------------- | -------------------------------------- | ---------------------- |
-| **geo**           | Entfernungen, Fahrzeiten, Geocoding, POI-Suche, Routing   | Google Maps API (pip, via .venv)       | API-Key in `.env`      |
-| **ocr**           | Texterkennung aus Bildern und gescannten PDFs             | Apple Vision (macOS), Tesseract (brew) | –                      |
-| **pdf**           | Merge, Split, Compress, Encrypt/Decrypt, Seitenextraktion | cpdf, qpdf, Ghostscript (brew)         | –                      |
-| **image**         | Download, Konvertierung, Resize, Crop, Rotate, Optimize   | ImageMagick (brew)                     | –                      |
-| **image-gen**     | KI-Bildgenerierung aus Textprompts (Nano Banana)          | Google Gemini API (curl)               | API-Key in `.env`      |
-| **crawl4ai**      | Web-Scraping, Markdown-Extraktion, strukturierte Daten    | crawl4ai (pipx + .venv)               | –                      |
-| **tavily**        | Breite Quellenfindung und Deep Research mit Zitaten       | tavily-cli (pip, via .venv)            | API-Key in `.env`      |
-| **youtube-dlp**   | Metadaten, Transkripte, Untertitel, Suchergebnisse        | yt-dlp (brew)                          | –                      |
-| **github**        | GitHub-Repos, Issues, PRs, Actions lesen                  | gh CLI (brew)                          | Schreibend nur mit Freigabe |
-| **qr-code**       | QR-Codes erzeugen (PNG, SVG, Terminal)                    | qrencode (brew)                        | –                      |
-| **folder-picker** | Interaktive Ordnerauswahl per Finder-Dialog               | osascript (macOS built-in)             | Nur macOS              |
+| Skill               | 💰 | Fähigkeiten                                               | Typischer Prompt                                                        |
+| ------------------- | -- | --------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **geo**             | ✓  | Entfernungen, Fahrzeiten, Geocoding, POI-Suche, Routing   | „Wie weit ist es von Krefeld nach München mit dem Auto?"                |
+| **ocr**             |    | Texterkennung aus Bildern und gescannten PDFs             | „Extrahiere den Text aus diesem gescannten Dokument."                   |
+| **pdf**             |    | Merge, Split, Compress, Encrypt/Decrypt, Seitenextraktion | „Fasse diese drei PDFs zu einer Datei zusammen."                        |
+| **image**           |    | Download, Konvertierung, Resize, Crop, Rotate, Optimize   | „Konvertiere alle PNGs im Ordner nach WebP und reduziere auf 800px."   |
+| **image-gen**       | ✓  | KI-Bildgenerierung aus Textprompts (Nano Banana)          | „Generiere ein Bild von einer Katze auf einem Skateboard."              |
+| **crawl4ai**        |    | Web-Scraping, Markdown-Extraktion, strukturierte Daten    | „Extrahiere alle Produktpreise von dieser Webseite als JSON."           |
+| **tavily**          | ✓  | Breite Quellenfindung und Deep Research mit Zitaten       | „Recherchiere den aktuellen Stand von AI Coding Agents mit Quellen."    |
+| **youtube-dlp**     |    | Metadaten, Transkripte, Untertitel, Suchergebnisse        | „Hole mir das Transkript von diesem YouTube-Video."                     |
+| **github**          |    | GitHub-Repos, Issues, PRs, Actions lesen                  | „Zeig mir die offenen Issues von diesem Repo."                          |
+| **qr-code**         |    | QR-Codes erzeugen (PNG, SVG, Terminal)                    | „Erstelle einen QR-Code für diese URL als PNG."                         |
+| **handelsregister** |    | Unternehmenssuche im deutschen Handelsregister            | „Suche die Handelsregisterdaten der Siemens AG."                        |
+| **folder-picker**   |    | Interaktive Ordnerauswahl per Finder-Dialog               | „Lass mich einen Zielordner im Finder auswählen."                      |
+
+## Systemvoraussetzungen
+
+| Voraussetzung | Zweck                                                                                                  | Prüfung             |
+| ------------- | ------------------------------------------------------------------------------------------------------ | ------------------- |
+| **macOS**     | Mehrere Skills nutzen macOS-APIs (Apple Vision, osascript). CLI Tools werden via Homebrew installiert. | `uname` → Darwin    |
+| **Python 3**  | Venv für alle Python-basierten Skills.                                                                 | `python3 --version` |
+| **Homebrew**  | Installiert CLI-Abhängigkeiten (siehe unten).                                                          | `brew --version`    |
+| **Git**       | Repo klonen, pip-Pakete von GitHub installieren.                                                       | `git --version`     |
+
+## Dependencies pro Skill
+
+Der Installer (`install.sh`) richtet die `.venv` ein und installiert alle Python-Pakete automatisch. Homebrew-Tools und API-Keys müssen manuell eingerichtet werden.
+
+`./install.sh --check` zeigt den aktuellen Status aller Abhängigkeiten an.
+
+| Skill               | Automatisch via .venv     | Manuell via Homebrew                 | API-Key in `.env`          |
+| ------------------- | ------------------------- | ------------------------------------ | -------------------------- |
+| **geo**             | googlemaps, python-dotenv | –                                    | `GOOGLE_MAPS_API_KEY`      |
+| **ocr**             | –                         | `brew install tesseract`             | –                          |
+| **pdf**             | –                         | `brew install cpdf qpdf ghostscript` | –                          |
+| **image**           | –                         | `brew install imagemagick`           | –                          |
+| **image-gen**       | –                         | –                                    | `GEMINI_IMAGE_GEN_API_KEY` |
+| **crawl4ai**        | crawl4ai                  | `pipx install crawl4ai`              | –                          |
+| **tavily**          | tavily-cli                | –                                    | `TAVILY_API_KEY`           |
+| **youtube-dlp**     | –                         | `brew install yt-dlp`                | –                          |
+| **github**          | –                         | `brew install gh`                    | –                          |
+| **qr-code**         | –                         | `brew install qrencode`              | –                          |
+| **handelsregister** | handelsregister           | –                                    | –                          |
+| **folder-picker**   | –                         | – (macOS built-in)                   | –                          |
+
+### API-Keys
+
+Skills mit externen APIs benötigen Keys in `.env` im Repo-Root (siehe `.env.example`):
+
+| Key                        | Skill     | Bezugsquelle                                                              |
+| -------------------------- | --------- | ------------------------------------------------------------------------- |
+| `GOOGLE_MAPS_API_KEY`      | geo       | [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
+| `GEMINI_IMAGE_GEN_API_KEY` | image-gen | [Google AI Studio](https://aistudio.google.com/apikey)                    |
+| `TAVILY_API_KEY`           | tavily    | [Tavily Dashboard](https://app.tavily.com)                                |
 
 ## Installation
 
@@ -30,16 +71,12 @@ git clone https://github.com/mgiesen/Agentic-Collection.git && cd Agentic-Collec
 Oder direkt:
 
 ```bash
-./install.sh --all        # Alle Skills fuer alle Agents installieren
+./install.sh --all        # Alle Skills für alle Agents installieren
 ./install.sh --status     # Installationsstatus anzeigen
 ./install.sh --uninstall  # Alle Skills deinstallieren
-./install.sh --check      # Dependencies pruefen (Venv, CLI Tools)
+./install.sh --check      # Dependencies prüfen (Venv, CLI Tools)
 ```
 
-Der Installer richtet die Venv ein, installiert Python-Dependencies und erstellt Symlinks in die globalen Agent-Verzeichnisse. Aenderungen an Skills wirken sofort.
+Der Installer richtet die Venv ein, installiert Python-Dependencies und erstellt Symlinks in die globalen Agent-Verzeichnisse. Änderungen an Skills wirken sofort.
 
-Nach der Installation: API-Keys in `.env` eintragen (siehe `.env.example`).
-
-## API Keys
-
-Zentral in `.env` im Repo-Root. Skills laden diese automatisch. Benoetigte Keys siehe `.env.example`.
+Nach der Installation: fehlende Homebrew-Tools installieren und API-Keys in `.env` eintragen.

@@ -31,6 +31,7 @@ banner() {
     echo ""
     echo -e "${CYAN}${BOLD}  ╔══════════════════════════════════════╗${RESET}"
     echo -e "${CYAN}${BOLD}  ║      Agentic Collection Installer    ║${RESET}"
+    echo -e "${CYAN}${BOLD}  ║               ${DIM}@mgiesen${RESET}${CYAN}${BOLD}               ║${RESET}"
     echo -e "${CYAN}${BOLD}  ╚══════════════════════════════════════╝${RESET}"
     echo ""
 }

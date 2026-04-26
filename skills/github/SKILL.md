@@ -1,6 +1,6 @@
 ---
 name: github
-description: GitHub-Repos, Issues, PRs und Actions lesen via gh CLI. Schreibende Operationen nur mit expliziter Einzelfreigabe.
+description: GitHub-Repos, Issues, PRs und Actions lesen via gh CLI. IMMER verwenden wenn eine GitHub-URL (github.com/*) vorkommt oder GitHub-Inhalte abgefragt werden — nie WebFetch fuer GitHub nutzen. Schreibende Operationen nur mit expliziter Einzelfreigabe.
 ---
 
 # GitHub Skill
