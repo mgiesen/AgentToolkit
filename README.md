@@ -12,7 +12,7 @@ Persoenliche Werkzeugsammlung fuer CLI-basierte AI Agents.
 | **ocr**           | Texterkennung aus Bildern und gescannten PDFs             | Apple Vision (macOS), Tesseract (brew) | –                      |
 | **pdf**           | Merge, Split, Compress, Encrypt/Decrypt, Seitenextraktion | cpdf, qpdf, Ghostscript (brew)         | –                      |
 | **image**         | Download, Konvertierung, Resize, Crop, Rotate, Optimize   | ImageMagick (brew)                     | –                      |
-| **crawl4ai**      | Web-Scraping, Markdown-Extraktion aus Webseiten           | crawl4ai (pipx)                        | Fallback – primaer MCP |
+| **crawl4ai**      | Web-Scraping, Markdown-Extraktion aus Webseiten           | crawl4ai (pipx)                        | –                      |
 | **youtube-dlp**   | Metadaten, Transkripte, Untertitel, Suchergebnisse        | yt-dlp (brew)                          | –                      |
 | **github**        | GitHub-Repos, Issues, PRs, Actions lesen                  | gh CLI (brew)                          | Schreibend nur mit Freigabe |
 | **image-gen**     | KI-Bildgenerierung aus Textprompts (Nano Banana)          | Google Gemini API (curl)               | API-Key in `.env`      |
@@ -20,19 +20,13 @@ Persoenliche Werkzeugsammlung fuer CLI-basierte AI Agents.
 | **folder-picker** | Interaktive Ordnerauswahl per Finder-Dialog               | osascript (macOS built-in)             | Nur macOS              |
 
 
-## MCP-Server
-
-| Server       | Zweck                                   | Runtime                         | Warum MCP statt Skill?                                  |
-| ------------ | --------------------------------------- | ------------------------------- | ------------------------------------------------------- |
-| **crawl4ai** | Web-Scraping, Screenshots, JS-Execution | Lokal via `crawl4ai-mcp` (pipx) | Browser-Session bleibt offen, kein Kaltstart pro Aufruf |
-
 ## Struktur
 
 ```
 assets/                     Portable Assets (Skills, kuenftig weitere)
   skills/                   SKILL.md-Standard, von allen Agents nutzbar
 agents/                     Proprietaere Agent-Konfigurationen
-  Claude Code/              CLAUDE.md, .mcp.json, .claude/ (agents, commands, hooks)
+  Claude Code/              CLAUDE.md, .claude/ (agents, commands, hooks)
   Codex/                    AGENTS.md, .codex/ (agents, config)
   OpenCode/                 (geplant)
 update-agents.sh            Symlinks aus assets/ in alle Agent-Ordner erstellen

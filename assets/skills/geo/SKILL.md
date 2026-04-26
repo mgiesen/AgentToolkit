@@ -16,6 +16,8 @@ scripts/geo.sh distance "Krefeld" "Muenchen"
 scripts/geo.sh distance "Krefeld" "Muenchen" --mode transit
 ```
 
+Modes: `driving` (Default), `transit`, `bicycling`, `walking`
+
 ### geocode
 
 ```bash

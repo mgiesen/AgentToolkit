@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# crawl4ai Fallback-CLI (nur wenn MCP-Server nicht verfuegbar)
+# crawl4ai CLI Wrapper
 
 usage() {
     echo "Usage: crawl4ai.sh <command> <url> [options]"

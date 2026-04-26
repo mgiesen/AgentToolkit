@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Wrapper: ruft geo.py mit dem Repo-Venv-Python auf
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 VENV_PYTHON="$REPO_ROOT/.venv/bin/python3"
 
