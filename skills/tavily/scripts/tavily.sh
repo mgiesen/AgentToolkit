@@ -18,12 +18,15 @@ Intentionally unsupported here:
 
 Defaults:
   search/research/research-poll add --json unless --json, --human, or --stream is passed.
+  search supports --compact for token-light title/url/snippet output.
 EOF
 }
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 TVLY="$REPO_ROOT/.venv/bin/tvly"
+PYTHON="$REPO_ROOT/.venv/bin/python3"
 ENV_FILE="$REPO_ROOT/.env"
 
 if [[ -f "$ENV_FILE" ]]; then
@@ -47,10 +50,15 @@ json_default_args() {
     local saw_json=0
     local human=0
     local stream=0
+    COMPACT=0
     ARGS=()
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
+            --compact)
+                COMPACT=1
+                shift
+                ;;
             --json)
                 saw_json=1
                 ARGS+=("$1")
@@ -72,9 +80,40 @@ json_default_args() {
         esac
     done
 
-    if [[ "$saw_json" -eq 0 && "$human" -eq 0 && "$stream" -eq 0 ]]; then
+    if [[ "$COMPACT" -eq 1 ]]; then
+        ARGS+=(--json)
+    elif [[ "$saw_json" -eq 0 && "$human" -eq 0 && "$stream" -eq 0 ]]; then
         ARGS+=(--json)
     fi
+}
+
+compact_search() {
+    "$PYTHON" -c '
+import json
+import re
+import sys
+
+data = json.load(sys.stdin)
+results = data.get("results", data if isinstance(data, list) else [])
+
+for i, item in enumerate(results, 1):
+    title = (item.get("title") or "").strip()
+    url = (item.get("url") or "").strip()
+    score = item.get("score")
+    snippet = item.get("content") or item.get("raw_content") or ""
+    snippet = re.sub(r"\s+", " ", snippet).strip()
+    if len(snippet) > 180:
+        snippet = snippet[:177].rstrip() + "..."
+
+    head = f"{i}. {title}" if title else f"{i}. {url}"
+    if score is not None:
+        head += f" | score: {score:.2f}" if isinstance(score, (int, float)) else f" | score: {score}"
+    print(head)
+    if url:
+        print(f"   {url}")
+    if snippet:
+        print(f"   {snippet}")
+'
 }
 
 cmd="${1:-}"
@@ -94,7 +133,17 @@ case "$cmd" in
     search)
         [[ $# -eq 0 ]] && usage && exit 2
         json_default_args "$@"
-        exec "$TVLY" search "${ARGS[@]}"
+        if [[ "$COMPACT" -eq 1 ]]; then
+            if raw="$("$TVLY" search "${ARGS[@]}" 2>&1)"; then
+                printf '%s\n' "$raw" | compact_search
+            else
+                status=$?
+                printf '%s\n' "$raw" >&2
+                exit "$status"
+            fi
+        else
+            exec "$TVLY" search "${ARGS[@]}"
+        fi
         ;;
     research)
         [[ $# -eq 0 ]] && usage && exit 2

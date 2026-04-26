@@ -1,6 +1,6 @@
 ---
 name: tavily
-description: "Quellenfindung und Deep Research, wenn noch keine belastbaren Quellen bekannt sind und breite aktuelle Recherche noetig ist. Gut fuer Markt-, Vendor-, Tool-, Company-, Wettbewerbs-, Trend- und News-Recherche sowie Synthese mit Zitaten. Fuer bekannte URLs Webtools und für Crawling crawl4ai nutzen."
+description: "Quellenfindung und Deep Research fuer breite aktuelle Recherche ohne bekannte Quellen. Verwenden fuer Markt-, Vendor-, Tool-, Company-, Wettbewerbs-, Trend- und News-Recherche mit Zitaten. Fuer bekannte URLs, Webtools und Crawling crawl4ai nutzen."
 ---
 
 # Tavily Skill
@@ -16,22 +16,21 @@ Voraussetzung: `TAVILY_API_KEY` in `.env`. Der Wrapper nutzt `.venv/bin/tvly`.
 
 Modellwahl: `mini` fuer fokussierte Fragen, `pro` fuer breite Markt-, Wettbewerbs- und Strategiefragen.
 
-## Nicht Nutzen
+## Workflow
 
-- Bekannte URL, Website-Crawl, Doku-Mirror, RAG-Ingestion: `crawl4ai` oder lokale Tools.
-- GitHub: `github`.
-- YouTube: `youtube-dlp`.
-- PDF, OCR, Bild, Geo, Codebase: jeweiliger Spezialskill oder lokales Tool.
-
-Nach Tavily-Treffern moeglichst mit Primaerquellen weiterarbeiten.
+- Breite Recherche: immer mit `research` starten.
+- Firmen/Regionen, Maerkte, Vendor-Listen, Vergleiche: `research --model pro`.
+- Research kann 2 - 15 Minuten dauern. Warten oder als Background-Task laufen lassen.
+- Keine parallelen `search`-Aufrufe zum selben Thema, solange `research` laeuft.
+- `search --compact` nur fuer gezielte Nachschlaege nach dem Research-Report.
 
 ## Commands
 
 ```bash
 scripts/tavily.sh status
-scripts/tavily.sh search "AI coding agents enterprise adoption 2026" --depth advanced --max-results 10
+scripts/tavily.sh search "AI coding agents enterprise adoption 2026" --compact --depth advanced --max-results 10
 scripts/tavily.sh research "Compare current AI coding assistants for small engineering teams" --model mini --citation-format numbered
 scripts/tavily.sh research "Market landscape for on-prem AI coding assistants in regulated industries" --model pro --citation-format numbered
 ```
 
-Der Wrapper gibt fuer `search`, `research` und `research-poll` standardmaessig JSON aus. Fuer lesbare CLI-Ausgabe `--human` setzen.
+Default ist JSON. Fuer Token sparen bei Suche `--compact`. `--human` nur nutzen, wenn der User den Rohbericht direkt lesen soll.
