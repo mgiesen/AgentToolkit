@@ -14,6 +14,7 @@ Assets werden hier entwickelt und versioniert. Der Installer verlinkt sie global
 | **image**         | Download, Konvertierung, Resize, Crop, Rotate, Optimize   | ImageMagick (brew)                     | –                      |
 | **image-gen**     | KI-Bildgenerierung aus Textprompts (Nano Banana)          | Google Gemini API (curl)               | API-Key in `.env`      |
 | **crawl4ai**      | Web-Scraping, Markdown-Extraktion, strukturierte Daten    | crawl4ai (pipx + .venv)               | –                      |
+| **tavily**        | Breite Quellenfindung und Deep Research mit Zitaten       | tavily-cli (pip, via .venv)            | API-Key in `.env`      |
 | **youtube-dlp**   | Metadaten, Transkripte, Untertitel, Suchergebnisse        | yt-dlp (brew)                          | –                      |
 | **github**        | GitHub-Repos, Issues, PRs, Actions lesen                  | gh CLI (brew)                          | Schreibend nur mit Freigabe |
 | **qr-code**       | QR-Codes erzeugen (PNG, SVG, Terminal)                    | qrencode (brew)                        | –                      |

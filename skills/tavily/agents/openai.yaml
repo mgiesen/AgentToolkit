@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tavily"
+  short_description: "Quellenfindung und Deep Research"
+  default_prompt: "Finde belastbare Quellen und synthetisiere die wichtigsten Ergebnisse."
