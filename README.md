@@ -6,20 +6,36 @@ Assets werden hier entwickelt und versioniert. Der Installer verlinkt sie global
 
 ## Skills
 
-| Skill               | 💰 | Fähigkeiten                                               | Typischer Prompt                                                        |
-| ------------------- | -- | --------------------------------------------------------- | ----------------------------------------------------------------------- |
-| **geo**             | ✓  | Entfernungen, Fahrzeiten, Geocoding, POI-Suche, Routing   | „Wie weit ist es von Krefeld nach München mit dem Auto?"                |
-| **ocr**             |    | Texterkennung aus Bildern und gescannten PDFs             | „Extrahiere den Text aus diesem gescannten Dokument."                   |
-| **pdf**             |    | Merge, Split, Compress, Encrypt/Decrypt, Seitenextraktion | „Fasse diese drei PDFs zu einer Datei zusammen."                        |
-| **image**           |    | Download, Konvertierung, Resize, Crop, Rotate, Optimize   | „Konvertiere alle PNGs im Ordner nach WebP und reduziere auf 800px."   |
-| **image-gen**       | ✓  | KI-Bildgenerierung aus Textprompts (Nano Banana)          | „Generiere ein Bild von einer Katze auf einem Skateboard."              |
-| **crawl4ai**        |    | Web-Scraping, Markdown-Extraktion, strukturierte Daten    | „Extrahiere alle Produktpreise von dieser Webseite als JSON."           |
-| **tavily**          | ✓  | Breite Quellenfindung und Deep Research mit Zitaten       | „Recherchiere den aktuellen Stand von AI Coding Agents mit Quellen."    |
-| **youtube-dlp**     |    | Metadaten, Transkripte, Untertitel, Suchergebnisse        | „Hole mir das Transkript von diesem YouTube-Video."                     |
-| **github**          |    | GitHub-Repos, Issues, PRs, Actions lesen                  | „Zeig mir die offenen Issues von diesem Repo."                          |
-| **qr-code**         |    | QR-Codes erzeugen (PNG, SVG, Terminal)                    | „Erstelle einen QR-Code für diese URL als PNG."                         |
-| **handelsregister** |    | Unternehmenssuche im deutschen Handelsregister            | „Suche die Handelsregisterdaten der Siemens AG."                        |
-| **folder-picker**   |    | Interaktive Ordnerauswahl per Finder-Dialog               | „Lass mich einen Zielordner im Finder auswählen."                      |
+| Skill                      | 💰  | Kompatibilität | Fähigkeiten                                               | Typischer Prompt                                                     |
+| -------------------------- | --- | -------------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
+| **geo**                    | ✓   | W M L          | Entfernungen, Fahrzeiten, Geocoding, POI-Suche, Routing   | „Wie weit ist es von Krefeld nach München mit dem Auto?"             |
+| **ocr**                    |     | W M L          | Texterkennung aus Bildern und gescannten PDFs             | „Extrahiere den Text aus diesem gescannten Dokument."                |
+| **pdf**                    |     | W M L          | Merge, Split, Compress, Encrypt/Decrypt, Seitenextraktion | „Fasse diese drei PDFs zu einer Datei zusammen."                     |
+| **image**                  |     | W M L          | Download, Konvertierung, Resize, Crop, Rotate, Optimize   | „Konvertiere alle PNGs im Ordner nach WebP und reduziere auf 800px." |
+| **image-gen**              | ✓   | W M L          | KI-Bildgenerierung aus Textprompts (Nano Banana)          | „Generiere ein Bild von einer Katze auf einem Skateboard."           |
+| **crawl4ai**               |     | W M L          | Web-Scraping, Markdown-Extraktion, strukturierte Daten    | „Extrahiere alle Produktpreise von dieser Webseite als JSON."        |
+| **tavily**                 | ✓   | W M L          | Breite Quellenfindung und Deep Research mit Zitaten       | „Recherchiere den aktuellen Stand von AI Coding Agents mit Quellen." |
+| **youtube-dlp**            |     | W M L          | Metadaten, Transkripte, Untertitel, Suchergebnisse        | „Hole mir das Transkript von diesem YouTube-Video."                  |
+| **github**                 |     | W M L          | GitHub-Repos, Issues, PRs, Actions lesen                  | „Zeig mir die offenen Issues von diesem Repo."                       |
+| **qr-code**                |     | W M L          | QR-Codes erzeugen (PNG, SVG, Terminal)                    | „Erstelle einen QR-Code für diese URL als PNG."                      |
+| **handelsregister**        |     | W M L          | Unternehmenssuche im deutschen Handelsregister            | „Suche die Handelsregisterdaten der Siemens AG."                     |
+| **folder-picker**          |     | M              | Interaktive Ordnerauswahl per Finder-Dialog               | „Lass mich einen Zielordner im Finder auswählen."                    |
+| **apple-notes-write-only** |     | M              | Neue Apple Notes erstellen (kein Lesen/Löschen)           | „Erstelle eine Notiz mit dem Titel Einkaufsliste."                   |
+
+> **W** = Windows · **M** = macOS · **L** = Linux
+
+## Permissions
+
+Der Installer verteilt Berechtigungsregeln aus `permissions/rules.json` in die Config-Dateien der Agents, damit häufig genutzte Befehle (Skill-Scripts, lokale CLI-Tools, `gh`-Leseoperationen) nicht jedes Mal manuell bestätigt werden müssen.
+
+| Agent       | Ziel-Config                         | Format                                     |
+| ----------- | ----------------------------------- | ------------------------------------------ |
+| Claude Code | `~/.claude/settings.json`           | `Bash(pattern)` in `allow[]`               |
+| Codex       | `~/.codex/rules/agentic.rules`      | Starlark `prefix_rule()`                   |
+| Gemini CLI  | `~/.gemini/settings.json`           | `run_shell_command()` in `tools.allowed[]` |
+| OpenCode    | `~/.config/opencode/.opencode.json` | Pattern in `permission.bash{}`             |
+
+Permissions können im Installer unabhängig von Skills verwaltet werden (Menüpunkte 3 + 4).
 
 ## Systemvoraussetzungen
 
@@ -36,20 +52,21 @@ Der Installer (`install.sh`) richtet die `.venv` ein und installiert alle Python
 
 `./install.sh --check` zeigt den aktuellen Status aller Abhängigkeiten an.
 
-| Skill               | Automatisch via .venv     | Manuell via Homebrew                 | API-Key in `.env`          |
-| ------------------- | ------------------------- | ------------------------------------ | -------------------------- |
-| **geo**             | googlemaps, python-dotenv | –                                    | `GOOGLE_MAPS_API_KEY`      |
-| **ocr**             | –                         | `brew install tesseract`             | –                          |
-| **pdf**             | –                         | `brew install cpdf qpdf ghostscript` | –                          |
-| **image**           | –                         | `brew install imagemagick`           | –                          |
-| **image-gen**       | –                         | –                                    | `GEMINI_IMAGE_GEN_API_KEY` |
-| **crawl4ai**        | crawl4ai                  | `pipx install crawl4ai`              | –                          |
-| **tavily**          | tavily-cli                | –                                    | `TAVILY_API_KEY`           |
-| **youtube-dlp**     | –                         | `brew install yt-dlp`                | –                          |
-| **github**          | –                         | `brew install gh`                    | –                          |
-| **qr-code**         | –                         | `brew install qrencode`              | –                          |
-| **handelsregister** | handelsregister           | –                                    | –                          |
-| **folder-picker**   | –                         | – (macOS built-in)                   | –                          |
+| Skill                      | Automatisch via .venv     | Manuell via Homebrew                 | API-Key in `.env`          |
+| -------------------------- | ------------------------- | ------------------------------------ | -------------------------- |
+| **geo**                    | googlemaps, python-dotenv | –                                    | `GOOGLE_MAPS_API_KEY`      |
+| **ocr**                    | –                         | `brew install tesseract`             | –                          |
+| **pdf**                    | –                         | `brew install cpdf qpdf ghostscript` | –                          |
+| **image**                  | –                         | `brew install imagemagick`           | –                          |
+| **image-gen**              | –                         | –                                    | `GEMINI_IMAGE_GEN_API_KEY` |
+| **crawl4ai**               | crawl4ai                  | `pipx install crawl4ai`              | –                          |
+| **tavily**                 | tavily-cli                | –                                    | `TAVILY_API_KEY`           |
+| **youtube-dlp**            | –                         | `brew install yt-dlp`                | –                          |
+| **github**                 | –                         | `brew install gh`                    | –                          |
+| **qr-code**                | –                         | `brew install qrencode`              | –                          |
+| **handelsregister**        | handelsregister           | –                                    | –                          |
+| **folder-picker**          | –                         | – (macOS built-in)                   | –                          |
+| **apple-notes-write-only** | –                         | – (macOS built-in)                   | –                          |
 
 ### API-Keys
 
