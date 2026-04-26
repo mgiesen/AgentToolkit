@@ -1,16 +1,17 @@
 ---
 name: tavily
-description: "Quellenfindung und Deep Research fuer breite aktuelle Recherche ohne bekannte Quellen. Verwenden fuer Markt-, Vendor-, Tool-, Company-, Wettbewerbs-, Trend- und News-Recherche mit Zitaten. Fuer bekannte URLs, Webtools und Crawling crawl4ai nutzen."
+description: "Optionale Paid-Recherche via Tavily fuer breite Quellenfindung und Deep Research. Nur verwenden, wenn der User Tavily/Deep Research wuenscht oder wenn kostenlose Webtools/crawl4ai nicht reichen und API-Kosten vertretbar sind. Gut fuer Markt-, Vendor-, Tool-, Company-, Wettbewerbs-, Trend- und News-Recherche mit Zitaten."
 ---
 
 # Tavily Skill
 
-Fokus: breite Recherche vor der Quellenlage. Nicht als Crawler verwenden.
+Fokus: kostenpflichtige breite Recherche vor der Quellenlage. Nicht als Default-Websuche oder Crawler verwenden.
 
 Voraussetzung: `TAVILY_API_KEY` in `.env`. Der Wrapper nutzt `.venv/bin/tvly`.
 
 ## Einsatz
 
+- Tavily ist eine Paid-Option. Bei Unsicherheit erst kostenlose Webtools oder `crawl4ai` nutzen oder den User fragen.
 - `search`: erste Quellenliste, aktuelle Treffer, News, Trends, Vendor-/Tool-Findung.
 - `research`: Synthese ueber viele Quellen mit Zitaten.
 
@@ -18,7 +19,7 @@ Modellwahl: `mini` fuer fokussierte Fragen, `pro` fuer breite Markt-, Wettbewerb
 
 ## Workflow
 
-- Breite Recherche: immer mit `research` starten.
+- Wenn Tavily bewusst eingesetzt wird: breite Recherche mit `research` starten.
 - Firmen/Regionen, Maerkte, Vendor-Listen, Vergleiche: `research --model pro`.
 - Research kann 2 - 15 Minuten dauern. Warten oder als Background-Task laufen lassen.
 - Keine parallelen `search`-Aufrufe zum selben Thema, solange `research` laeuft.
