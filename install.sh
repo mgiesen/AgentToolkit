@@ -78,6 +78,7 @@ check_tools() {
                  "yt-dlp:brew install yt-dlp"
                  "gh:brew install gh"
                  "qrencode:brew install qrencode"
+                 "pandoc:brew install pandoc"
                  "crwl:pipx install crawl4ai")
 
     for entry in "${tools[@]}"; do

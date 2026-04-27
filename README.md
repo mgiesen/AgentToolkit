@@ -19,6 +19,7 @@ Assets werden hier entwickelt und versioniert. Der Installer verlinkt sie global
 | **github**                 |     | W M L          | GitHub-Repos, Issues, PRs, Actions lesen                  | „Zeig mir die offenen Issues von diesem Repo."                       |
 | **qr-code**                |     | W M L          | QR-Codes erzeugen (PNG, SVG, Terminal)                    | „Erstelle einen QR-Code für diese URL als PNG."                      |
 | **handelsregister**        |     | W M L          | Unternehmenssuche im deutschen Handelsregister            | „Suche die Handelsregisterdaten der Siemens AG."                     |
+| **pandoc**                 |     | W M L          | Dokumentkonvertierung (Markdown, Word, PDF, HTML, EPUB)    | „Konvertiere dieses Markdown-Dokument in eine Word-Datei."           |
 | **folder-picker**          |     | M              | Interaktive Ordnerauswahl per Finder-Dialog               | „Lass mich einen Zielordner im Finder auswählen."                    |
 | **apple-notes-write-only** |     | M              | Neue Apple Notes erstellen (kein Lesen/Löschen)           | „Erstelle eine Notiz mit dem Titel Einkaufsliste."                   |
 | **apple-reminders-write-only** | | M              | Neue Apple Erinnerungen erstellen (kein Lesen/Löschen)    | „Erinnere mich morgen um 14 Uhr an den Zahnarzt."                    |
@@ -64,6 +65,7 @@ Der Installer (`install.sh`) richtet die `.venv` ein und installiert alle Python
 | **tavily**                 | tavily-cli                | –                                    | `TAVILY_API_KEY`           |
 | **youtube-dlp**            | –                         | `brew install yt-dlp`                | –                          |
 | **github**                 | –                         | `brew install gh`                    | –                          |
+| **pandoc**                 | –                         | `brew install pandoc`                | –                          |
 | **qr-code**                | –                         | `brew install qrencode`              | –                          |
 | **handelsregister**        | handelsregister           | –                                    | –                          |
 | **folder-picker**          | –                         | – (macOS built-in)                   | –                          |

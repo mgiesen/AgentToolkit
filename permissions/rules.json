@@ -25,6 +25,7 @@
       "gs *",
       "tesseract *",
       "qrencode *",
+      "pandoc *",
 
       "gh repo view *",
       "gh issue list *",
