@@ -1,16 +1,98 @@
 ---
 name: pandoc
-description: Dokumentkonvertierung zwischen Formaten (Markdown, Word, PDF, HTML, LaTeX, EPUB u.v.m.) via pandoc.
+description: Dokumente erstellen und konvertieren (Markdown, Word, PDF, HTML, EPUB, PowerPoint u.v.m.) via pandoc + typst. Professionelle PDF-Vorlagen (Report, Letter, Minimal) mit modernem Design enthalten.
 ---
 
 # Pandoc Skill
 
-Universelle Dokumentkonvertierung via pandoc.
+Universelle Dokumentkonvertierung via pandoc + typst.
 
 ## Voraussetzungen
 
 - `pandoc` (`brew install pandoc`)
-- Fuer PDF-Ausgabe: LaTeX (`brew install --cask basictex` oder `brew install --cask mactex-no-gui`)
+- `typst` (`brew install typst`) — PDF-Engine
+
+## PDF-Konvertierung: Pflicht-Ablauf
+
+**Vor jeder PDF-Erzeugung** pruefen:
+
+```bash
+which typst || echo "FEHLT: brew install typst"
+```
+
+Wenn typst fehlt: Dem User mitteilen, dass `brew install typst` noetig ist. Nicht improvisieren, keine alternativen Tools versuchen.
+
+## Templates
+
+Im Skill-Ordner liegen fertige Typst-Templates unter `templates/`. Der Pfad zum Template-Ordner ist:
+
+```
+~/.claude/skills/pandoc/templates/
+```
+
+| Template        | Datei          | Einsatz                                | Font                |
+| --------------- | -------------- | -------------------------------------- | ------------------- |
+| **Report**      | `report.typ`   | Berichte, Dokumentationen, Specs       | Avenir Next + Menlo |
+| **Letter**      | `letter.typ`   | Geschaeftsbriefe, formelle Schreiben   | Helvetica Neue + Menlo |
+| **Minimal**     | `minimal.typ`  | Notizen, kurze Dokumente, Protokolle   | Charter + Menlo     |
+
+### Template-Auswahl
+
+- Kein Template angegeben → **Report** als Standard verwenden
+- User will Brief/Anschreiben → **Letter**
+- User will schlicht/kompakt → **Minimal**
+- User nennt explizit ein Template → das verwenden
+
+## Markdown zu PDF
+
+Immer mit Template und `--pdf-engine-opt=--root=/` (damit typst Dateien findet):
+
+```bash
+# Standard (Report-Template)
+pandoc input.md --pdf-engine=typst \
+  -V template=~/.claude/skills/pandoc/templates/report.typ \
+  --pdf-engine-opt=--root=/ \
+  -o output.pdf
+
+# Minimal-Template
+pandoc input.md --pdf-engine=typst \
+  -V template=~/.claude/skills/pandoc/templates/minimal.typ \
+  --pdf-engine-opt=--root=/ \
+  -o output.pdf
+
+# Letter-Template
+pandoc input.md --pdf-engine=typst \
+  -V template=~/.claude/skills/pandoc/templates/letter.typ \
+  --pdf-engine-opt=--root=/ \
+  -o output.pdf
+```
+
+### PDF-Optionen via Frontmatter
+
+Alle Templates unterstuetzen diese YAML-Frontmatter-Variablen:
+
+```yaml
+---
+title: "Dokumenttitel"
+subtitle: "Untertitel"
+author: "Max Giesen"
+date: "27. April 2026"
+lang: de
+papersize: a4
+fontsize: 11pt
+linestretch: 1.5
+section-numbering: "1.1"
+toc: true
+toc-depth: 3
+mainfont: "Helvetica Neue"
+---
+```
+
+### Verfuegbare Fonts (auf diesem System installiert)
+
+Sans-Serif: Avenir Next, Helvetica Neue, PT Sans, Futura, Gill Sans, Seravek, DIN
+Serif: Charter, Palatino, New York, Baskerville, Cochin, Iowan Old Style, PT Serif, Libertinus Serif
+Monospace: Menlo, Monaco, PT Mono, DejaVu Sans Mono, Courier New
 
 ## Markdown zu Word (.docx)
 
@@ -28,33 +110,77 @@ pandoc input.md --reference-doc=template.docx -o output.docx
 pandoc input.md -s --metadata title="Dokumenttitel" -o output.docx
 ```
 
-## Markdown zu PDF
+## Markdown zu PowerPoint (.pptx)
 
-Benoetigt LaTeX. Nach Installation: `eval "$(/usr/libexec/path_helper)"` oder neues Terminal.
+Pandoc kann direkt Praesentationen erzeugen. Ueberschriften strukturieren die Folien:
+
+- `# Heading 1` → Abschnittstrenner-Folie
+- `## Heading 2` → Neue Folie (Titel)
+- Inhalt unter `##` → Folieninhalt (Bullets, Bilder, Tabellen)
+- `---` → Manuelle Folientrennung
 
 ```bash
-# Standard (pdflatex)
-pandoc input.md -o output.pdf
+# Einfache Praesentation
+pandoc input.md -o output.pptx
 
-# Mit Inhaltsverzeichnis und Raendern
-pandoc input.md -s --toc --toc-depth=2 -V geometry:margin=1in -o output.pdf
+# Mit Referenz-Dokument (fuer Corporate Design)
+pandoc input.md --reference-doc=template.pptx -o output.pptx
 
-# xelatex (bessere Unicode-Unterstuetzung: Pfeile, Boxen, Emojis)
-export PATH="/Library/TeX/texbin:$PATH"
-pandoc input.md --pdf-engine=xelatex -V geometry:margin=1in -o output.pdf
+# Slide-Level anpassen (Standard: 2)
+pandoc input.md --slide-level=2 -o output.pptx
 ```
 
-PDF-Engine-Auswahl:
+### Beispiel-Markdown fuer Praesentation
 
-| Engine     | Einsatz                                     |
-| ---------- | ------------------------------------------- |
-| `pdflatex` | Standard, reiner ASCII-Inhalt               |
-| `xelatex`  | Unicode-Zeichen (Pfeile, Boxzeichnung, Emojis) |
-| `lualatex` | Komplexe Typografie, OpenType-Fonts         |
+```markdown
+---
+title: "Quartalsbericht Q1"
+author: "Max Giesen"
+date: "2026-04-27"
+---
+
+# Ueberblick
+
+## Kernzahlen
+
+- Umsatz: +15%
+- Neukunden: 342
+- Churn Rate: 2.1%
+
+## Roadmap
+
+| Quartal | Fokus          |
+|---------|----------------|
+| Q2      | API v2 Launch  |
+| Q3      | Mobile App     |
+
+## Naechste Schritte
+
+1. Team-Erweiterung
+2. Infrastruktur-Upgrade
+3. Kundenfeedback auswerten
+```
+
+## Markdown zu EPUB
+
+```bash
+# Standard
+pandoc input.md -o output.epub
+
+# Mit Cover-Bild und Metadaten
+pandoc input.md --epub-cover-image=cover.jpg \
+  --metadata title="Buchtitel" \
+  --metadata author="Autor" \
+  --toc --toc-depth=2 \
+  -o output.epub
+
+# Mehrere Kapitel-Dateien
+pandoc kapitel1.md kapitel2.md kapitel3.md --toc -o buch.epub
+```
 
 ## Markdown zu HTML
 
-Wichtig: Immer `-f gfm` (GitHub Flavored Markdown) verwenden fuer korrekte Listen und Zeilenumbrueche.
+Immer `-f gfm` (GitHub Flavored Markdown) verwenden fuer korrekte Listen und Zeilenumbrueche.
 
 ```bash
 # Empfohlen: GFM mit vollstaendigem Styling
@@ -77,51 +203,8 @@ blockquote{border-left:4px solid #ddd;margin:1em 0;padding-left:1em;color:#666}
 STYLE
 ) input.md -o output.html
 
-# Schnelle Version (minimales Styling)
-pandoc -f gfm -s input.md -o output.html
-
 # Self-contained (bettet Bilder/CSS ein)
 pandoc -f gfm -s --embed-resources --standalone input.md -o output.html
-```
-
-Format-Optionen:
-
-| Option                        | Einsatz                                        |
-| ----------------------------- | ---------------------------------------------- |
-| `-f gfm`                      | Standard – Listen, Zeilenumbrueche, Tabellen korrekt |
-| `-f markdown+hard_line_breaks` | Alle Zeilenumbrueche werden zu `<br>`          |
-| `-f commonmark`                | Strikte CommonMark-Konformitaet                |
-
-## HTML fuer Print-to-PDF (ohne LaTeX)
-
-Wenn kein LaTeX verfuegbar ist: HTML erstellen und im Browser als PDF drucken.
-
-```bash
-# Print-optimiertes CSS erstellen
-cat > /tmp/print-style.css << 'EOF'
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-       max-width: 800px; margin: 0 auto; padding: 2em; line-height: 1.6; }
-h1 { border-bottom: 2px solid #333; padding-bottom: 0.3em; }
-h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2em; margin-top: 1.5em; }
-h3 { margin-top: 1.2em; }
-ul, ol { margin: 0.5em 0 0.5em 1.5em; padding-left: 1em; }
-ul { list-style-type: disc; } ol { list-style-type: decimal; }
-li { margin: 0.3em 0; }
-ul ul, ol ul { list-style-type: circle; margin: 0.2em 0 0.2em 1em; }
-table { border-collapse: collapse; width: 100%; margin: 1em 0; }
-th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-th { background-color: #f5f5f5; }
-code { background-color: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
-pre { background-color: #f4f4f4; padding: 1em; overflow-x: auto; border-radius: 5px; }
-blockquote { border-left: 4px solid #ddd; margin: 1em 0; padding-left: 1em; color: #666; }
-@media print { body { max-width: none; } }
-EOF
-
-# Konvertieren mit eingebetteten Styles (immer -f gfm)
-pandoc -f gfm input.md -s --toc --toc-depth=2 -c /tmp/print-style.css --embed-resources --standalone -o output.html
-
-# Oeffnen und als PDF drucken (Cmd+P > Als PDF sichern)
-open output.html
 ```
 
 ## Word zu Markdown
@@ -152,7 +235,7 @@ pandoc dokument.md -o dokument.docx
 | `--toc-depth=N`          | TOC-Tiefe (Standard: 3)                  |
 | `-V key=value`           | Template-Variable setzen                  |
 | `--metadata key=value`   | Metadaten-Feld setzen                     |
-| `--reference-doc=FILE`   | Styling-Vorlage (docx/odt)               |
+| `--reference-doc=FILE`   | Styling-Vorlage (docx/odt/pptx)          |
 | `--template=FILE`        | Benutzerdefiniertes Template              |
 | `--highlight-style=STYLE`| Syntax-Highlighting (pygments, tango etc.)|
 | `--number-sections`      | Abschnitts-Nummerierung                   |
@@ -161,53 +244,36 @@ pandoc dokument.md -o dokument.docx
 
 ## Format-Bezeichner
 
-| Format   | Bezeichner                          |
-| -------- | ----------------------------------- |
-| Markdown | `markdown`, `gfm`, `commonmark`    |
-| Word     | `docx`                              |
-| PDF      | `pdf`                               |
-| HTML     | `html`, `html5`                     |
-| LaTeX    | `latex`                             |
-| RST      | `rst`                               |
-| EPUB     | `epub`                              |
-| ODT      | `odt`                               |
-| RTF      | `rtf`                               |
+| Format     | Bezeichner                          |
+| ---------- | ----------------------------------- |
+| Markdown   | `markdown`, `gfm`, `commonmark`    |
+| Word       | `docx`                              |
+| PDF        | `pdf` (via typst)                   |
+| PowerPoint | `pptx`                              |
+| HTML       | `html`, `html5`                     |
+| LaTeX      | `latex`                             |
+| RST        | `rst`                               |
+| EPUB       | `epub`                              |
+| ODT        | `odt`                               |
+| RTF        | `rtf`                               |
 
 ## Troubleshooting
 
 ### Listen/Zeilen laufen zusammen (HTML)
 
-Ursache: Standard-Markdown fasst aufeinanderfolgende Zeilen als einen Absatz zusammen.
-
 ```bash
 # Immer -f gfm verwenden
 pandoc -f gfm -s input.md -o output.html
-
-# Oder harte Zeilenumbrueche erzwingen
-pandoc -f markdown+hard_line_breaks -s input.md -o output.html
 ```
 
 ### PDF-Generierung schlaegt fehl
 
-**"pdflatex not found"** – LaTeX installieren:
+**"typst not found":**
 
 ```bash
-brew install --cask basictex    # Kleiner (~100MB)
-brew install --cask mactex-no-gui  # Voll (~4GB)
-eval "$(/usr/libexec/path_helper)"
+brew install typst
 ```
 
-**Unicode-Fehler** (Boxzeichnung, Pfeile, Emojis):
+**Template nicht gefunden:**
 
-```bash
-export PATH="/Library/TeX/texbin:$PATH"
-pandoc input.md --pdf-engine=xelatex -o output.pdf
-```
-
-**Kein LaTeX verfuegbar** – HTML Print-to-PDF Workflow nutzen:
-
-```bash
-pandoc input.md -s --toc -o output.html
-open output.html
-# Dann Cmd+P > Als PDF sichern
-```
+Sicherstellen, dass `--pdf-engine-opt=--root=/` gesetzt ist, damit typst absolute Pfade aufloesen kann.
