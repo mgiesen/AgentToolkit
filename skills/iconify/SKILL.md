@@ -1,6 +1,6 @@
 ---
 name: iconify
-description: SVG-Icons aus Iconify suchen, ranken und herunterladen. Tokenarmes Helferscript fuer UI-Icons, Navigation, Doku, Websites und Apps.
+description: SVG-Icons suchen und herunterladen. Verwenden wenn Icons, Symbole oder Piktogramme fuer UI-Elemente, Navigationen, Toolbars, Buttons, Websites, Dokumente oder Apps benoetigt werden. Durchsucht Iconify (200k+ Icons aus Lucide, Tabler, Phosphor, Material Design u.a.).
 ---
 
 # Iconify Skill
