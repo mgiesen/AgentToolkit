@@ -11,7 +11,7 @@
   abstract: none,
   thanks: none,
   cols: 1,
-  margin: (x: 2.5cm, y: 2.5cm),
+  margin: (x: 1.8cm, y: 1.8cm),
   paper: "a4",
   lang: "de",
   region: "DE",
@@ -47,14 +47,10 @@
           if title != none { title } else { [] },
           if date != none { date } else { [] },
         )
-        v(-4pt)
-        line(length: 100%, stroke: 0.4pt + rgb("#e0e0e0"))
       }
     },
     footer: context {
       set text(size: 8.5pt, fill: mid-gray, font: body-font)
-      line(length: 100%, stroke: 0.4pt + rgb("#e0e0e0"))
-      v(4pt)
       grid(
         columns: (1fr, 1fr),
         align: (left, right),
@@ -80,10 +76,8 @@
   show heading.where(level: 1): it => {
     v(1.2em)
     block(below: 0.8em)[
-      #set text(size: 1.5em, weight: "bold", fill: primary-color)
+      #set text(size: 1.5em, weight: "bold", fill: accent-color)
       #it.body
-      #v(-0.3em)
-      #line(length: 100%, stroke: 2pt + accent-color)
     ]
   }
 
@@ -143,10 +137,12 @@
     inset: 8pt,
     stroke: (x: none, y: 0.5pt + rgb("#e0e0e0")),
   )
-  show table.cell.where(y: 0): it => {
-    set text(weight: "semibold", fill: white)
-    table.cell(fill: accent-color, it)
-  }
+  // Pandoc erzeugt table.hline() nach table.header() — verursacht leere Zeile (bekanntes Typst-Issue)
+  show table.hline: none
+  // Pandoc wickelt Tabellen in align(center)[...] — Zellinhalte linksbuendig erzwingen
+  show table.cell: set align(left)
+  show table.cell.where(y: 0): set text(weight: "semibold", fill: primary-color)
+  set table(fill: (_, y) => if y == 0 { rgb("#e8eef5") } else { none })
 
   // Blockquotes
   show quote: it => {

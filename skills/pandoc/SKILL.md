@@ -1,6 +1,6 @@
 ---
 name: pandoc
-description: Dokumente erstellen und konvertieren (Markdown, Word, PDF, HTML, EPUB, PowerPoint u.v.m.) via pandoc + typst. Professionelle PDF-Vorlagen (Report, Letter, Minimal) mit modernem Design enthalten.
+description: Dokumente erstellen und konvertieren (Markdown, Word, PDF, HTML, EPUB, PowerPoint u.v.m.) via pandoc + typst. Professionelles PDF-Template (Report) mit modernem Design enthalten.
 ---
 
 # Pandoc Skill
@@ -30,42 +30,26 @@ Im Skill-Ordner liegen fertige Typst-Templates unter `templates/`. Der Pfad zum 
 ~/.claude/skills/pandoc/templates/
 ```
 
-| Template        | Datei          | Einsatz                                | Font                |
-| --------------- | -------------- | -------------------------------------- | ------------------- |
-| **Report**      | `report.typ`   | Berichte, Dokumentationen, Specs       | Avenir Next + Menlo |
-| **Letter**      | `letter.typ`   | Geschaeftsbriefe, formelle Schreiben   | Helvetica Neue + Menlo |
-| **Minimal**     | `minimal.typ`  | Notizen, kurze Dokumente, Protokolle   | Charter + Menlo     |
-
-### Template-Auswahl
-
-- Kein Template angegeben → **Report** als Standard verwenden
-- User will Brief/Anschreiben → **Letter**
-- User will schlicht/kompakt → **Minimal**
-- User nennt explizit ein Template → das verwenden
+| Template   | Datei        | Einsatz                          | Font                |
+| ---------- | ------------ | -------------------------------- | ------------------- |
+| **Default** | `default.typ` | Berichte, Dokumentationen, Specs | Avenir Next + Menlo |
 
 ## Markdown zu PDF
 
 Immer mit Template und `--pdf-engine-opt=--root=/` (damit typst Dateien findet):
 
 ```bash
-# Standard (Report-Template)
-pandoc input.md --pdf-engine=typst \
-  -V template=~/.claude/skills/pandoc/templates/report.typ \
-  --pdf-engine-opt=--root=/ \
-  -o output.pdf
+# 1. Markdown vorverarbeiten (fehlende Leerzeilen vor Listen korrigieren)
+python3 scripts/fix_markdown.py input.md /tmp/input_fixed.md
 
-# Minimal-Template
-pandoc input.md --pdf-engine=typst \
-  -V template=~/.claude/skills/pandoc/templates/minimal.typ \
-  --pdf-engine-opt=--root=/ \
-  -o output.pdf
-
-# Letter-Template
-pandoc input.md --pdf-engine=typst \
-  -V template=~/.claude/skills/pandoc/templates/letter.typ \
+# 2. PDF erzeugen
+pandoc /tmp/input_fixed.md --pdf-engine=typst \
+  -V template=~/.claude/skills/pandoc/templates/default.typ \
   --pdf-engine-opt=--root=/ \
   -o output.pdf
 ```
+
+Der Preprocessing-Schritt ist besonders bei KI-generiertem Markdown wichtig, da Listen ohne Leerzeile nach Doppelpunkt sonst als Fliesstext gerendert werden.
 
 ### PDF-Optionen via Frontmatter
 
