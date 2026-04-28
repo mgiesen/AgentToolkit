@@ -18,6 +18,7 @@
       "python3 */scripts/basic_crawler.py *",
       "python3 */scripts/batch_crawler.py *",
       "python3 */scripts/extraction_pipeline.py *",
+      "python3 */scripts/iconify.py *",
 
       "magick *",
       "cpdf *",

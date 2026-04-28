@@ -17,6 +17,7 @@ Assets werden hier entwickelt und versioniert. Der Installer verlinkt sie global
 | **tavily**                 | ✓   | W M L          | Breite Quellenfindung und Deep Research mit Zitaten       | „Recherchiere den aktuellen Stand von AI Coding Agents mit Quellen." |
 | **youtube-dlp**            |     | W M L          | Metadaten, Transkripte, Untertitel, Suchergebnisse        | „Hole mir das Transkript von diesem YouTube-Video."                  |
 | **github**                 |     | W M L          | GitHub-Repos, Issues, PRs, Actions lesen                  | „Zeig mir die offenen Issues von diesem Repo."                       |
+| **iconify**                |     | W M L          | SVG-Icons aus Iconify suchen, ranken und herunterladen    | „Finde passende SVG-Icons für diese Toolbar."                        |
 | **qr-code**                |     | W M L          | QR-Codes erzeugen (PNG, SVG, Terminal)                    | „Erstelle einen QR-Code für diese URL als PNG."                      |
 | **handelsregister**        |     | W M L          | Unternehmenssuche im deutschen Handelsregister            | „Suche die Handelsregisterdaten der Siemens AG."                     |
 | **pandoc**                 |     | W M L          | Dokumente erstellen und konvertieren (PDF, Word, PPTX, EPUB, HTML) mit professionellen Vorlagen | „Erstelle aus diesem Markdown ein PDF im Report-Layout."             |
@@ -65,6 +66,7 @@ Der Installer (`install.sh`) richtet die `.venv` ein und installiert alle Python
 | **tavily**                 | tavily-cli                | –                                    | `TAVILY_API_KEY`           |
 | **youtube-dlp**            | –                         | `brew install yt-dlp`                | –                          |
 | **github**                 | –                         | `brew install gh`                    | –                          |
+| **iconify**                | –                         | –                                    | –                          |
 | **pandoc**                 | –                         | `brew install pandoc typst`          | –                          |
 | **qr-code**                | –                         | `brew install qrencode`              | –                          |
 | **handelsregister**        | handelsregister           | –                                    | –                          |
