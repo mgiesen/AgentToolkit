@@ -1,6 +1,6 @@
 ---
 name: pandoc
-description: Dokumente erstellen und konvertieren (Markdown, Word, PDF, HTML, EPUB, PowerPoint u.v.m.) via pandoc + typst. Professionelles PDF-Template (Report) mit modernem Design enthalten.
+description: Dokumente erstellen und konvertieren (Markdown, Word, PDF, HTML, EPUB, PowerPoint u.v.m.) via pandoc + typst. Zwei PDF-Templates enthalten (Default fuer allgemeine Dokumente, Research Report fuer wissenschaftliche Berichte).
 ---
 
 # Pandoc Skill
@@ -30,9 +30,10 @@ Im Skill-Ordner liegen fertige Typst-Templates unter `templates/`. Der Pfad zum 
 ~/.claude/skills/pandoc/templates/
 ```
 
-| Template   | Datei        | Einsatz                          | Font                |
-| ---------- | ------------ | -------------------------------- | ------------------- |
-| **Default** | `default.typ` | Berichte, Dokumentationen, Specs | Avenir Next + Menlo |
+| Template            | Datei                 | Einsatz                                        | Font                         |
+| ------------------- | --------------------- | ---------------------------------------------- | ---------------------------- |
+| **Default**         | `default.typ`         | Berichte, Dokumentationen, Specs               | Avenir Next + Menlo          |
+| **Research Report** | `research-report.typ` | Wissenschaftliche Berichte, Rechercheergebnisse | Charter + Avenir Next + Menlo |
 
 ## Markdown zu PDF
 
@@ -261,3 +262,4 @@ brew install typst
 **Template nicht gefunden:**
 
 Sicherstellen, dass `--pdf-engine-opt=--root=/` gesetzt ist, damit typst absolute Pfade aufloesen kann.
+

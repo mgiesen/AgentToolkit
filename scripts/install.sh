@@ -6,11 +6,11 @@ set -euo pipefail
 # https://github.com/mgiesen/Agentic-Collection
 # ──────────────────────────────────────────────────────────────
 
-REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
-SKILLS_DIR="$REPO_DIR/skills"
-AGENTS_DIR="$REPO_DIR/agents"
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+SKILLS_DIR="$REPO_DIR/assets/skills"
+AGENTS_DIR="$REPO_DIR/assets/agents"
 VENV_DIR="$REPO_DIR/.venv"
-RULES_SCRIPT="$REPO_DIR/permissions/install_rules.py"
+RULES_SCRIPT="$REPO_DIR/assets/permissions/install_rules.py"
 
 # Farben
 BOLD='\033[1m'
@@ -27,7 +27,7 @@ AGENT_SKILL_PATHS=("$HOME/.claude/skills" "$HOME/.codex/skills" "$HOME/.gemini/s
 AGENT_AGENT_PATHS=("$HOME/.claude/agents" "$HOME/.codex/agents" "$HOME/.gemini/agents" "$HOME/.opencode/agents")
 
 # Instructions-Konfiguration (Agent → Zieldatei)
-INSTRUCTIONS_SOURCE="$REPO_DIR/instructions/AGENTS.md"
+INSTRUCTIONS_SOURCE="$REPO_DIR/assets/instructions/AGENTS.md"
 INSTRUCTIONS_TARGETS=(
     "$HOME/.claude/CLAUDE.md"
     "$HOME/.codex/AGENTS.md"
@@ -154,7 +154,7 @@ setup_brew() {
     fi
 
     echo -e "  ${YELLOW}→${RESET} Installiere fehlende Brew-Pakete..."
-    brew bundle --file="$REPO_DIR/Brewfile" --quiet --no-lock
+    brew bundle --file="$REPO_DIR/Brewfile" --quiet
     echo -e "  ${GREEN}✓${RESET} Brew-Pakete aktuell"
     echo ""
 }

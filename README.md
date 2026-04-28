@@ -17,6 +17,7 @@ Skills, Agenten und Workflows werden zentral in diesem Repository entwickelt und
 | **tavily**                     | `tavily-cli` (pip)                     | `TAVILY_API_KEY`           |
 | **youtube-dlp**                | `yt-dlp` (brew)                        |                            |
 | **github**                     | `gh` (brew)                            |                            |
+| **chart**                      | `matplotlib` (pip)                     |                            |
 | **iconify**                    |                                        |                            |
 | **qr-code**                    | `qrencode` (brew)                      |                            |
 | **handelsregister**            | `handelsregister` (pip)                |                            |
@@ -30,10 +31,11 @@ Skills, Agenten und Workflows werden zentral in diesem Repository entwickelt und
 | Agent             | Beschreibung                                                                                       |
 | ----------------- | -------------------------------------------------------------------------------------------------- |
 | **deep-research** | Mehrstufige Tiefenrecherche mit Quellenanalyse, Wissenslücken-Tracking und strukturierter Synthese |
+| **report-writer** | Strukturiert Rechercheergebnisse in wissenschaftlich konsistente Berichte und erzeugt PDF via pandoc |
 
 ## Permissions
 
-Der Installer verteilt Berechtigungsregeln aus `permissions/rules.json` in die Config-Dateien der Agents, damit häufig genutzte Befehle (Skill-Scripts, lokale CLI-Tools, `gh`-Leseoperationen) nicht jedes Mal manuell bestätigt werden müssen.
+Der Installer verteilt Berechtigungsregeln aus `assets/permissions/rules.json` in die Config-Dateien der Agents, damit häufig genutzte Befehle (Skill-Scripts, lokale CLI-Tools, `gh`-Leseoperationen) nicht jedes Mal manuell bestätigt werden müssen.
 
 | Agent       | Ziel-Config                         | Format                                     |
 | ----------- | ----------------------------------- | ------------------------------------------ |
@@ -44,7 +46,7 @@ Der Installer verteilt Berechtigungsregeln aus `permissions/rules.json` in die C
 
 ## Dependencies
 
-Der Installer (`install.sh`) richtet die `.venv` ein, installiert alle Python-Pakete (pip) und Homebrew-Tools (via `Brewfile`) automatisch. Nur API-Keys müssen manuell eingetragen werden.
+Der Installer (`scripts/install.sh`) richtet die `.venv` ein, installiert alle Python-Pakete (pip) und Homebrew-Tools (via `Brewfile`) automatisch. Nur API-Keys müssen manuell eingetragen werden.
 
 API-Keys werden zentral in `.env` im Repo-Root gepflegt (siehe `.env.example`):
 
@@ -58,16 +60,16 @@ API-Keys werden zentral in `.env` im Repo-Root gepflegt (siehe `.env.example`):
 
 ```bash
 git clone https://github.com/mgiesen/Agentic-Collection.git && cd Agentic-Collection
-./install.sh              # Interaktiver Installer (TUI)
+./scripts/install.sh              # Interaktiver Installer (TUI)
 ```
 
 Oder direkt:
 
 ```bash
-./install.sh --all        # Alle Skills für alle Agents installieren
-./install.sh --status     # Installationsstatus anzeigen
-./install.sh --uninstall  # Alle Skills deinstallieren
-./install.sh --check      # Dependencies prüfen und installieren (Venv, Brew)
+./scripts/install.sh --all        # Alle Skills für alle Agents installieren
+./scripts/install.sh --status     # Installationsstatus anzeigen
+./scripts/install.sh --uninstall  # Alle Skills deinstallieren
+./scripts/install.sh --check      # Dependencies prüfen und installieren (Venv, Brew)
 ```
 
 Der Installer richtet die Venv ein, installiert Python- und Brew-Dependencies und erstellt Symlinks in die globalen Agent-Verzeichnisse. Änderungen an Skills wirken sofort.
