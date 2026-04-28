@@ -6,24 +6,24 @@ Skills, Agenten und Workflows werden zentral in diesem Repository entwickelt und
 
 ## Skills
 
-| Skill                          | 💰  | macOS                                | Linux                   | Windows                 | API-Key                    |
-| ------------------------------ | --- | ------------------------------------ | ----------------------- | ----------------------- | -------------------------- |
-| **geo**                        | 💰  | `googlemaps` (pip)                   | ❌                      | ❌                      | `GOOGLE_MAPS_API_KEY`      |
-| **ocr**                        |     | `tesseract` (brew)                   | ❌                      | ❌                      | –                          |
-| **pdf**                        |     | `cpdf`, `qpdf`, `ghostscript` (brew) | ❌                      | ❌                      | –                          |
-| **image**                      |     | `imagemagick` (brew)                 | ❌                      | ❌                      | –                          |
-| **image-gen**                  | 💰  | –                                    | ❌                      | ❌                      | `GEMINI_IMAGE_GEN_API_KEY` |
-| **crawl4ai**                   |     | `crawl4ai` (pip)                     | `crawl4ai` (pip)        | `crawl4ai` (pip)        | –                          |
-| **tavily**                     | 💰  | `tavily-cli` (pip)                   | ❌                      | ❌                      | `TAVILY_API_KEY`           |
-| **youtube-dlp**                |     | `yt-dlp` (brew)                      | ❌                      | ❌                      | –                          |
-| **github**                     |     | `gh` (brew)                          | ❌                      | ❌                      | –                          |
-| **iconify**                    |     | –                                    | –                       | –                       | –                          |
-| **qr-code**                    |     | `qrencode` (brew)                    | ❌                      | ❌                      | –                          |
-| **handelsregister**            |     | `handelsregister` (pip)              | `handelsregister` (pip) | `handelsregister` (pip) | –                          |
-| **pandoc**                     |     | `pandoc`, `typst` (brew)             | ❌                      | ❌                      | –                          |
-| **folder-picker**              |     | –                                    | ❌                      | ❌                      | –                          |
-| **apple-notes-write-only**     |     | –                                    | ❌                      | ❌                      | –                          |
-| **apple-reminders-write-only** |     | –                                    | ❌                      | ❌                      | –                          |
+| Skill                          | Abhängigkeiten                         | API-Key                    |
+| ------------------------------ | -------------------------------------- | -------------------------- |
+| **geo**                        | `googlemaps` (pip)                     | `GOOGLE_MAPS_API_KEY`      |
+| **ocr**                        | `tesseract` (brew)                     |                            |
+| **pdf**                        | `cpdf`, `qpdf`, `ghostscript` (brew)   |                            |
+| **image**                      | `imagemagick` (brew)                   |                            |
+| **image-gen**                  |                                        | `GEMINI_IMAGE_GEN_API_KEY` |
+| **crawl4ai**                   | `crawl4ai` (pip)                       |                            |
+| **tavily**                     | `tavily-cli` (pip)                     | `TAVILY_API_KEY`           |
+| **youtube-dlp**                | `yt-dlp` (brew)                        |                            |
+| **github**                     | `gh` (brew)                            |                            |
+| **iconify**                    |                                        |                            |
+| **qr-code**                    | `qrencode` (brew)                      |                            |
+| **handelsregister**            | `handelsregister` (pip)                |                            |
+| **pandoc**                     | `pandoc`, `typst` (brew)               |                            |
+| **folder-picker**              | OS built-in, Linux: `zenity`           |                            |
+| **apple-notes-write-only**     | macOS built-in                         |                            |
+| **apple-reminders-write-only** | macOS built-in                         |                            |
 
 ## Agenten
 
@@ -44,7 +44,7 @@ Der Installer verteilt Berechtigungsregeln aus `permissions/rules.json` in die C
 
 ## Dependencies
 
-Der Installer (`install.sh`) richtet die `.venv` ein und installiert alle Python-Pakete (pip) automatisch. Homebrew-Tools und API-Keys müssen manuell eingerichtet werden. `./install.sh --check` zeigt den aktuellen Status aller Abhängigkeiten an.
+Der Installer (`install.sh`) richtet die `.venv` ein, installiert alle Python-Pakete (pip) und Homebrew-Tools (via `Brewfile`) automatisch. Nur API-Keys müssen manuell eingetragen werden.
 
 API-Keys werden zentral in `.env` im Repo-Root gepflegt (siehe `.env.example`):
 
@@ -67,9 +67,9 @@ Oder direkt:
 ./install.sh --all        # Alle Skills für alle Agents installieren
 ./install.sh --status     # Installationsstatus anzeigen
 ./install.sh --uninstall  # Alle Skills deinstallieren
-./install.sh --check      # Dependencies prüfen (Venv, CLI Tools)
+./install.sh --check      # Dependencies prüfen und installieren (Venv, Brew)
 ```
 
-Der Installer richtet die Venv ein, installiert Python-Dependencies und erstellt Symlinks in die globalen Agent-Verzeichnisse. Aenderungen an Skills wirken sofort.
+Der Installer richtet die Venv ein, installiert Python- und Brew-Dependencies und erstellt Symlinks in die globalen Agent-Verzeichnisse. Änderungen an Skills wirken sofort.
 
-Nach der Installation: fehlende Homebrew-Tools installieren und API-Keys in `.env` eintragen.
+Nach der Installation: API-Keys in `.env` eintragen.

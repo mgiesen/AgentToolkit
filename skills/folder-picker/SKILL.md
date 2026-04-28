@@ -1,11 +1,11 @@
 ---
 name: folder-picker
-description: Oeffnet einen nativen macOS Finder-Dialog zur interaktiven Ordnerauswahl und gibt den Pfad zurueck. Nur macOS.
+description: Oeffnet einen nativen Ordner-Dialog zur interaktiven Ordnerauswahl und gibt den Pfad zurueck. Unterstuetzt macOS (Finder), Windows (PowerShell) und Linux (zenity).
 ---
 
 # folder-picker
 
-Interaktive Ordnerauswahl per Finder-Dialog. Nutzen wenn ein Zielordner vom Anwender benoetigt wird und nicht aus dem Kontext bekannt ist.
+Interaktive Ordnerauswahl per nativem Dialog (macOS: Finder, Windows: PowerShell, Linux: zenity). Nutzen wenn ein Zielordner vom Anwender benoetigt wird und nicht aus dem Kontext bekannt ist.
 
 ```bash
 python3 scripts/pick_folder.py [--prompt "Bitte Ordner waehlen"]
@@ -16,7 +16,7 @@ python3 scripts/pick_folder.py [--prompt "Bitte Ordner waehlen"]
 - **stdout:** `PATH=<absoluter Pfad>` (bei Erfolg)
 - **exit 0:** Ordner gewaehlt
 - **exit 1:** Benutzer hat abgebrochen
-- **exit 2:** Pfad ungueltig oder nicht macOS
+- **exit 2:** Pfad ungueltig oder OS nicht unterstuetzt
 
 ## Nutzungsregeln
 

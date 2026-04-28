@@ -144,37 +144,19 @@ setup_venv() {
     echo ""
 }
 
-check_tools() {
-    echo -e "  ${BOLD}CLI Tools${RESET}"
-    local missing=0
+setup_brew() {
+    echo -e "  ${BOLD}Homebrew Tools${RESET}"
 
-    local tools=("magick:brew install imagemagick"
-                 "cpdf:brew install cpdf"
-                 "qpdf:brew install qpdf"
-                 "gs:brew install ghostscript"
-                 "tesseract:brew install tesseract"
-                 "yt-dlp:brew install yt-dlp"
-                 "gh:brew install gh"
-                 "qrencode:brew install qrencode"
-                 "pandoc:brew install pandoc"
-                 "crwl:pipx install crawl4ai")
-
-    for entry in "${tools[@]}"; do
-        local cmd="${entry%%:*}"
-        local hint="${entry#*:}"
-        if command -v "$cmd" &>/dev/null; then
-            echo -e "  ${GREEN}✓${RESET} $cmd"
-        else
-            echo -e "  ${RED}✗${RESET} $cmd ${DIM}($hint)${RESET}"
-            missing=$((missing + 1))
-        fi
-    done
-
-    echo ""
-    if [[ $missing -gt 0 ]]; then
-        echo -e "  ${YELLOW}$missing Tools fehlen (optional, nur fuer betroffene Skills)${RESET}"
+    if ! command -v brew &>/dev/null; then
+        echo -e "  ${RED}✗${RESET} Homebrew nicht installiert ${DIM}(https://brew.sh)${RESET}"
         echo ""
+        return 1
     fi
+
+    echo -e "  ${YELLOW}→${RESET} Installiere fehlende Brew-Pakete..."
+    brew bundle --file="$REPO_DIR/Brewfile" --quiet --no-lock
+    echo -e "  ${GREEN}✓${RESET} Brew-Pakete aktuell"
+    echo ""
 }
 
 # ──────────────────────────────────────────────────────────────
@@ -471,6 +453,9 @@ do_install() {
     if has_asset "Skills" || has_asset "Permissions"; then
         setup_venv
     fi
+    if has_asset "Skills"; then
+        setup_brew
+    fi
 
     for i in "${PARSED_INDICES[@]}"; do
         echo -e "  ${CYAN}${BOLD}${AGENT_NAMES[$i]}${RESET}"
@@ -599,7 +584,7 @@ main() {
         Dependencies)
             echo ""
             setup_venv
-            check_tools
+            setup_brew
             ;;
         Beenden)
             exit 0
@@ -632,7 +617,7 @@ case "${1:-}" in
     --check)
         banner
         setup_venv
-        check_tools
+        setup_brew
         exit 0
         ;;
 esac
