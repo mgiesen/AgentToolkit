@@ -24,7 +24,7 @@ EOF
 
 SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 TVLY="$REPO_ROOT/.venv/bin/tvly"
 PYTHON="$REPO_ROOT/.venv/bin/python3"
 ENV_FILE="$REPO_ROOT/.env"

@@ -11,7 +11,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import googlemaps
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 load_dotenv(REPO_ROOT / ".env")
 
 API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")

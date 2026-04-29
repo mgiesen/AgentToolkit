@@ -80,6 +80,14 @@ scripts/youtube-dlp.sh playlist "https://www.youtube.com/playlist?list=PLAYLIST_
 scripts/youtube-dlp.sh playlist "https://www.youtube.com/playlist?list=PLAYLIST_ID" --json
 ```
 
+### thumbnail
+
+Video-Thumbnail im Originalformat (meist webp) herunterladen.
+
+```bash
+scripts/youtube-dlp.sh thumbnail "https://www.youtube.com/watch?v=VIDEO_ID" --output thumb.webp
+```
+
 ### audio
 
 Audio nur herunterladen, wenn der Nutzer es explizit verlangt.

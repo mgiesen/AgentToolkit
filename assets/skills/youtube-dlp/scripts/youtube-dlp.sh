@@ -16,6 +16,7 @@ usage() {
     echo "  playlist <url> [--limit N] [--json] [--cookies-from-browser BROWSER]"
     echo "  audio <url> [--format m4a|mp3|opus|wav] [--output-dir DIR] [--cookies-from-browser BROWSER]"
     echo "  video <url> [--preset mp4|mkv] [--output-dir DIR] [--cookies-from-browser BROWSER]"
+    echo "  thumbnail <url> [--output FILE] [--cookies-from-browser BROWSER]"
     exit 1
 }
 
@@ -348,6 +349,40 @@ cmd_video() {
     yt-dlp "${YTDLP_ARGS[@]}" "$url"
 }
 
+cmd_thumbnail() {
+    local url="" output="" cookies_browser=""
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --output) output="$2"; shift 2 ;;
+            --cookies-from-browser) cookies_browser="$2"; shift 2 ;;
+            *) url="$1"; shift ;;
+        esac
+    done
+    [[ -z "$url" ]] && usage
+
+    local tmpdir
+    tmpdir=$(mktemp -d)
+    trap "rm -rf '$tmpdir'" EXIT
+
+    YTDLP_ARGS=(--skip-download --write-thumbnail --no-playlist -o "$tmpdir/thumb")
+    add_cookies_arg "$cookies_browser"
+    yt-dlp "${YTDLP_ARGS[@]}" "$url" >/dev/null 2>&1
+
+    local thumb
+    thumb=$(find "$tmpdir" -type f \( -name "*.png" -o -name "*.webp" -o -name "*.jpg" \) | head -n 1)
+    if [[ -z "$thumb" ]]; then
+        echo "Fehler: Kein Thumbnail gefunden" >&2
+        exit 1
+    fi
+
+    if [[ -z "$output" ]]; then
+        echo "$thumb"
+    else
+        cp "$thumb" "$output"
+        echo "Erstellt: $output"
+    fi
+}
+
 [[ $# -lt 1 ]] && usage
 require_yt_dlp
 
@@ -361,5 +396,6 @@ case "$command" in
     playlist)   cmd_playlist "$@" ;;
     audio)      cmd_audio "$@" ;;
     video)      cmd_video "$@" ;;
+    thumbnail)  cmd_thumbnail "$@" ;;
     *)          usage ;;
 esac

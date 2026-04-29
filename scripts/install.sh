@@ -173,7 +173,7 @@ install_skills() {
         local link="$target/$skill"
         local source="$SKILLS_DIR/$skill"
 
-        if [[ -L "$link" ]]; then
+        if [[ -L "$link" && "$(readlink "$link")" == "$source" ]]; then
             skipped=$((skipped + 1))
         else
             rm -rf "$link" 2>/dev/null || true
@@ -196,7 +196,7 @@ uninstall_skills() {
 
     for skill in $(get_skills); do
         local link="$target/$skill"
-        if [[ -L "$link" ]]; then
+        if [[ -L "$link" && "$(readlink "$link")" == "$SKILLS_DIR/$skill" ]]; then
             rm "$link"
             removed=$((removed + 1))
         fi
@@ -230,7 +230,7 @@ install_agents() {
         local link="$target/$file"
         local source="$AGENTS_DIR/$file"
 
-        if [[ -L "$link" ]]; then
+        if [[ -L "$link" && "$(readlink "$link")" == "$source" ]]; then
             skipped=$((skipped + 1))
         else
             rm -rf "$link" 2>/dev/null || true
@@ -253,7 +253,7 @@ uninstall_agents() {
 
     for file in $(get_agents); do
         local link="$target/$file"
-        if [[ -L "$link" ]]; then
+        if [[ -L "$link" && "$(readlink "$link")" == "$AGENTS_DIR/$file" ]]; then
             rm "$link"
             removed=$((removed + 1))
         fi

@@ -25,6 +25,7 @@ Skills, Agenten und Workflows werden zentral in diesem Repository entwickelt und
 | **folder-picker**              | OS built-in, Linux: `zenity`         |                            |
 | **apple-notes-write-only**     | macOS built-in                       |                            |
 | **apple-reminders-write-only** | macOS built-in                       |                            |
+| **ssh**                        | `openssh` (OS built-in)              |                            |
 
 ## Agenten
 
