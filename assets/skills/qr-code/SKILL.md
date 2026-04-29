@@ -1,6 +1,6 @@
 ---
 name: qr-code
-description: QR-Codes erzeugen als PNG, SVG oder Terminal-Output via qrencode.
+description: QR-Codes erzeugen, anzeigen oder exportieren (PNG, SVG, Terminal/UTF8). Wandelt URLs, Texte oder Daten in scannbare QR-Codes um. Nutzt qrencode.
 ---
 
 # QR-Code Skill
