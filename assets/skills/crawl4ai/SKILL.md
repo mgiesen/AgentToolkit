@@ -39,13 +39,13 @@ asyncio.run(main())
 ### Using Provided Scripts
 ```bash
 # Simple markdown extraction
-python scripts/basic_crawler.py https://example.com
+scripts/crawl4ai.sh basic_crawler.py https://example.com
 
 # Batch processing
-python scripts/batch_crawler.py urls.txt
+scripts/crawl4ai.sh batch_crawler.py urls.txt
 
 # Data extraction
-python scripts/extraction_pipeline.py --generate-schema https://shop.com "extract products"
+scripts/crawl4ai.sh extraction_pipeline.py --generate-schema https://shop.com "extract products"
 ```
 
 ## Core Crawling Fundamentals
@@ -207,10 +207,10 @@ For repetitive patterns, generate schema once and reuse:
 
 ```bash
 # Step 1: Generate schema with LLM (one-time)
-python scripts/extraction_pipeline.py --generate-schema https://shop.com "extract products"
+scripts/crawl4ai.sh extraction_pipeline.py --generate-schema https://shop.com "extract products"
 
 # Step 2: Use schema for fast extraction (no LLM)
-python scripts/extraction_pipeline.py --use-schema https://shop.com generated_schema.json
+scripts/crawl4ai.sh extraction_pipeline.py --use-schema https://shop.com generated_schema.json
 ```
 
 ### 2. Manual CSS/JSON Extraction

@@ -16,29 +16,29 @@ Erzeugt Diagramme aus JSON-Daten als SVG oder PNG via matplotlib. Konfigurierbar
 ## Grundaufruf
 
 ```bash
-python3 scripts/chart.py <type> --data <json> --output <pfad> [optionen]
+scripts/chart.sh <type> --data <json> --output <pfad> [optionen]
 ```
 
 ## Beispiele
 
 ```bash
 # Liniendiagramm
-python3 scripts/chart.py line \
+scripts/chart.sh line \
   --data '{"labels":["Q1","Q2","Q3","Q4"],"values":[12,19,8,15],"ylabel":"Anzahl"}' \
   --title "Trend" --output chart.svg
 
 # Balkendiagramm
-python3 scripts/chart.py bar \
+scripts/chart.sh bar \
   --data '{"labels":["A","B","C"],"values":[30,50,20]}' \
   --title "Vergleich" --output chart.svg
 
 # Kreisdiagramm
-python3 scripts/chart.py pie \
+scripts/chart.sh pie \
   --data '{"labels":["X","Y","Z"],"values":[45,35,20]}' \
   --title "Verteilung" --output chart.png
 
 # Mehrere Datenreihen
-python3 scripts/chart.py line \
+scripts/chart.sh line \
   --data '{"labels":["2022","2023","2024"],"series":[{"name":"A","values":[10,15,20]},{"name":"B","values":[5,12,18]}]}' \
   --title "Vergleich" --output chart.svg
 ```
@@ -56,12 +56,12 @@ Ueber `--theme` wird das Farbschema gewaehlt:
 
 ```bash
 # Vibrant fuer ein README
-python3 scripts/chart.py bar \
+scripts/chart.sh bar \
   --data '{"labels":["Feature A","Feature B"],"values":[85,92]}' \
   --theme vibrant --output chart.svg
 
 # Academic fuer einen Report
-python3 scripts/chart.py line \
+scripts/chart.sh line \
   --data '{"labels":["Jan","Feb","Mär"],"values":[10,15,12]}' \
   --theme academic --output chart.svg
 ```
@@ -71,7 +71,7 @@ python3 scripts/chart.py line \
 Mit `--colors` koennen die Theme-Farben ueberschrieben werden:
 
 ```bash
-python3 scripts/chart.py bar \
+scripts/chart.sh bar \
   --data '{"labels":["A","B","C"],"values":[30,50,20]}' \
   --colors "#ff6b6b,#4ecdc4,#45b7d1" --output chart.svg
 ```
