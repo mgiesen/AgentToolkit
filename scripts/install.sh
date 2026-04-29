@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # ──────────────────────────────────────────────────────────────
-# Agentic Collection – Installer
-# https://github.com/mgiesen/Agentic-Collection
+# AgentBox – Installer
+# https://github.com/mgiesen/AgentBox
 # ──────────────────────────────────────────────────────────────
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -45,7 +45,7 @@ ASSET_NAMES=("Skills" "Agents" "Instructions" "Permissions")
 banner() {
     echo ""
     echo -e "${CYAN}${BOLD}  ╔══════════════════════════════════════╗${RESET}"
-    echo -e "${CYAN}${BOLD}  ║      Agentic Collection Installer    ║${RESET}"
+    echo -e "${CYAN}${BOLD}  ║         AgentBox Installer         ║${RESET}"
     echo -e "${CYAN}${BOLD}  ║               ${DIM}@mgiesen${RESET}${CYAN}${BOLD}               ║${RESET}"
     echo -e "${CYAN}${BOLD}  ╚══════════════════════════════════════╝${RESET}"
     echo ""
