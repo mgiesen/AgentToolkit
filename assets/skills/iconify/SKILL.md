@@ -12,19 +12,19 @@ Verwende `scripts/iconify.py`, um Iconify-Icons tokenarm zu suchen und als SVG z
 1. Erst suchen, wenn die Semantik nicht eindeutig ist:
 
 ```bash
-python3 assets/skills/iconify/scripts/iconify.py search "gauge" --limit 8 --prefixes lucide,tabler,ph,mdi,carbon
+python3 scripts/iconify.py search "gauge" --limit 8 --prefixes lucide,tabler,ph,mdi,carbon
 ```
 
 2. Passenden Treffer lokal speichern:
 
 ```bash
-python3 assets/skills/iconify/scripts/iconify.py download lucide:gauge --output assets/gauge.svg
+python3 scripts/iconify.py download lucide:gauge --output assets/gauge.svg
 ```
 
 3. Nur bei klarer Semantik direkt waehlen und speichern:
 
 ```bash
-python3 assets/skills/iconify/scripts/iconify.py pick "calendar check" --output assets/calendar-check.svg --limit 12
+python3 scripts/iconify.py pick "calendar check" --output assets/calendar-check.svg --limit 12
 ```
 
 ## Commands
@@ -41,7 +41,7 @@ Wichtige Optionen: `--prefixes`, `--prefer`, `--palette mono|color|any`, `--limi
 Python:
 
 ```python
-from assets.skills.iconify.scripts.iconify import fetch_svg_icon
+from scripts.iconify import fetch_svg_icon
 svg = fetch_svg_icon("shopping cart")
 ```
 
