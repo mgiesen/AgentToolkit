@@ -45,7 +45,7 @@ ASSET_NAMES=("Skills" "Agents" "Instructions" "Permissions")
 banner() {
     echo ""
     echo -e "${CYAN}${BOLD}  ╔══════════════════════════════════════╗${RESET}"
-    echo -e "${CYAN}${BOLD}  ║         AgentBox Installer         ║${RESET}"
+    echo -e "${CYAN}${BOLD}  ║          AgentBox Installer          ║${RESET}"
     echo -e "${CYAN}${BOLD}  ║               ${DIM}@mgiesen${RESET}${CYAN}${BOLD}               ║${RESET}"
     echo -e "${CYAN}${BOLD}  ╚══════════════════════════════════════╝${RESET}"
     echo ""
