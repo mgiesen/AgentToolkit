@@ -1,6 +1,16 @@
 ---
 name: image
+version: "1.0"
 description: Bilder herunterladen, konvertieren, skalieren, zuschneiden, drehen und Metadaten lesen. Unterstuetzte Formate u.a. PNG, JPG, WebP, TIFF, GIF, BMP, SVG.
+requires:
+  bin: [imagemagick, python]
+  pip: [Pillow]
+features:
+  - Bilder von URLs herunterladen und in ein anderes Format konvertieren
+  - Bilder skalieren (Pixel oder Prozent) und zuschneiden
+  - SVG zu PNG mit konfigurierbarem DPI konvertieren
+  - Dateigröße ohne sichtbaren Qualitätsverlust optimieren
+  - Metadaten (Format, Dimensionen, Dateigröße, Farbraum) auslesen
 ---
 
 # Image Skill

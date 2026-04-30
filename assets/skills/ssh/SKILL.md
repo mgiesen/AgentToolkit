@@ -1,6 +1,14 @@
 ---
 name: ssh
+version: "1.0"
 description: Der User möchte via SSH etwas auf einem entfernten System tun — Software installieren, Dienste konfigurieren, Dateien bearbeiten, Logs prüfen oder Probleme beheben.
+requires: {}
+features:
+  - SSH-Verbindung zu entfernten Hosts über ~/.ssh/config herstellen
+  - Software installieren, Dienste konfigurieren und Logs auf Remote-Systemen prüfen
+  - Lesende Befehle direkt ausführen, schreibende Befehle mit Rückfrage absichern
+  - Dateien auf Remote-Systemen bearbeiten
+  - Neuen Host interaktiv per setup-Skript einrichten
 ---
 
 # SSH
@@ -17,15 +25,21 @@ Ersetze `<skill-pfad>` mit dem absoluten Pfad dieses Skill-Ordners. Warte auf `/
 
 ## Sicherheit
 
-Zeige vor dem ersten SSH-Befehl im Gespräch:
+Zeige **einmal pro Gespräch** vor dem ersten SSH-Befehl:
 
 > ⚠️ SSH-Befehle werden direkt auf dem entfernten System ausgeführt — ohne das Berechtigungssystem deines lokalen Agenten. Beachte das KI-Modelle Fehler machen können!
 
-**Vor JEDEM SSH-Befehl ohne Ausnahme:**
+**Lesende Befehle direkt ausführen, ohne Rückfrage.** Dazu zählen u. a. `cat`, `head`, `tail`, `grep`, `awk`/`sed` ohne `-i`, `ls`, `find`, `stat`, `du`, `df`, `ps`, `top -n1`, `uptime`, `free`, `uname`, `hostname`, `dmesg`, `journalctl` (ohne Rotate), `ip`, `ss`, `ping`, `vcgencmd`, `systemctl status`, `git status/log/diff`. Auch `sudo` davor ist ok, solange das Tool selbst rein lesend ist.
 
-1. Beschreibe in einem Satz auf Deutsch, was der Befehl bewirkt — in Alltagssprache, nicht als Bash-Befehl
-2. Zeige den Befehl im Codeblock
-3. Frage: „Soll ich das ausführen?"
+**Bei verändernden Befehlen Rückfrage stellen** — vorher:
+
+1. Einen Satz auf Deutsch in Alltagssprache, was der Befehl bewirkt
+2. Den Befehl im Codeblock
+3. Die Frage: „Soll ich das ausführen?"
+
+Verändernd ist u. a.: Schreibumleitungen (`>`, `>>`, `tee`, `sed -i`, `cat <<EOF > …`), `rm`/`mv`/`cp` mit Ziel, `chmod`/`chown`, Paketmanager (`apt`, `dpkg`, `pip install`, `npm install`), `systemctl start/stop/restart/enable/disable`, `service …`, `kill`/`pkill`, `reboot`/`shutdown`, `mount`/`umount`/`mkfs`, Firewall-/Netzwerkkonfiguration, jedes neu kompilieren/installieren oder Verändern von Konfigdateien.
+
+Im Zweifel — vor allem bei `sudo` mit unklarem Tool oder verketteten Pipelines, die schreiben können — lieber nachfragen.
 
 ## Befehlsregeln
 

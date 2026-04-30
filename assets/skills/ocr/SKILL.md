@@ -1,6 +1,14 @@
 ---
 name: ocr
+version: "1.0"
 description: Extrahiert Text aus Bildern und gescannten PDFs. Nutzt Apple Vision (macOS) mit Tesseract-Fallback (Windows/Linux).
+requires:
+  bin: [tesseract]
+features:
+  - Text aus Bildern (PNG, JPG, TIFF, BMP) extrahieren — auf macOS via Apple Vision hardwarebeschleunigt
+  - Gescannte PDFs in durchsuchbaren Text umwandeln
+  - Mehrere Sprachen gleichzeitig erkennen (z.B. de+en)
+  - Bilder in durchsuchbare PDFs konvertieren
 ---
 
 # OCR Skill

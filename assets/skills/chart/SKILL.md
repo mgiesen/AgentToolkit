@@ -1,6 +1,16 @@
 ---
 name: chart
+version: "1.0"
 description: Diagramme und Charts erzeugen (Linie, Balken, Kreis) als SVG oder PNG. Verwenden wenn Daten visualisiert, Statistiken dargestellt oder Vergleiche grafisch aufbereitet werden sollen.
+requires:
+  bin: [python]
+  pip: [matplotlib]
+features:
+  - Linien-, Balken- und Kreisdiagramme aus JSON-Daten als SVG oder PNG erzeugen
+  - Mehrere Datenreihen in einem Diagramm darstellen
+  - Farbthemen wählen (academic, vibrant, mono, dark)
+  - Achsenbeschriftungen, Titel, Breite und Höhe konfigurieren
+  - Eigene Hex-Farben per --colors überschreiben
 ---
 
 # Chart Skill

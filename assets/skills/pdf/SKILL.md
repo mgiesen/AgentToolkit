@@ -1,6 +1,15 @@
 ---
 name: pdf
+version: "1.0"
 description: PDF-Operationen – Merge, Split, Seiten extrahieren, komprimieren, verschluesseln, Metadaten lesen. Nutzt cpdf, qpdf und Ghostscript.
+requires:
+  bin: [cpdf, qpdf, ghostscript]
+features:
+  - Mehrere PDFs zu einem Dokument zusammenführen
+  - PDF nach Seitenbereich aufteilen oder bestimmte Seiten extrahieren
+  - Dateigröße mit einstellbarer Qualitätsstufe komprimieren (screen/ebook/printer/prepress)
+  - PDF mit Passwort verschlüsseln oder Passwortschutz entfernen
+  - Metadaten und Seitenanzahl eines PDFs auslesen
 ---
 
 # PDF Skill

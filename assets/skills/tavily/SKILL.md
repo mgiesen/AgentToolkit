@@ -1,6 +1,16 @@
 ---
 name: tavily
-description: "Optionale Paid-Recherche via Tavily fuer breite Quellenfindung und Deep Research. Nur verwenden, wenn der User Tavily/Deep Research wuenscht oder wenn kostenlose Webtools/crawl4ai nicht reichen und API-Kosten vertretbar sind. Gut fuer Markt-, Vendor-, Tool-, Company-, Wettbewerbs-, Trend- und News-Recherche mit Zitaten."
+version: "1.0"
+description: Optionale Paid-Recherche via Tavily fuer breite Quellenfindung und Deep Research. Nur verwenden, wenn der User Tavily/Deep Research wuenscht oder wenn kostenlose Webtools/crawl4ai nicht reichen und API-Kosten vertretbar sind. Gut fuer Markt-, Vendor-, Tool-, Company-, Wettbewerbs-, Trend- und News-Recherche mit Zitaten.
+requires:
+  key:
+    - name: TAVILY_API_KEY
+      url: https://app.tavily.com
+features:
+  - Breite Web-Recherche mit Quellensynthese und nummerierten Zitaten
+  - Aktuelle News, Trends und Vendor-Listen zu einem Thema abrufen
+  - Markt- und Wettbewerbsanalysen für strategische Fragen
+  - Gezielte Nachschlag-Suche nach einem Research-Report
 ---
 
 # Tavily Skill

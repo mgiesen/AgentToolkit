@@ -1,6 +1,15 @@
 ---
 name: apple-reminders-write-only
+version: "1.0"
 description: Erstellt neue Apple Erinnerungen. Nur schreibend, kein Lesen/Loeschen/Auflisten. Nur macOS.
+requires:
+  platform: macOS
+  app: [Reminders]
+features:
+  - Neue Erinnerung mit Titel, Notiztext und Fälligkeitsdatum erstellen
+  - Priorität (hoch/mittel/niedrig) und Ziel-Liste festlegen
+  - ISO-Datetime als Fälligkeitszeitpunkt übergeben (2026-04-28T14:00)
+  - URLs im Notiztext werden automatisch klickbar dargestellt
 ---
 
 Neue Erinnerung erstellen:

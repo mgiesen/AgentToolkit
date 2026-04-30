@@ -1,6 +1,14 @@
 ---
 name: folder-picker
+version: "1.0"
 description: Oeffnet einen nativen Ordner-Dialog zur interaktiven Ordnerauswahl und gibt den Pfad zurueck. Unterstuetzt macOS (Finder), Windows (PowerShell) und Linux (zenity).
+requires:
+  bin: [python, zenity]
+features:
+  - Nativen Ordner-Auswahldialog öffnen (macOS Finder, Windows PowerShell, Linux zenity)
+  - Absoluten Pfad des gewählten Ordners zurückgeben
+  - Abbruch durch den User erkennen und erneut nachfragen
+  - Optionalen Prompt-Text für den Dialog übergeben
 ---
 
 # folder-picker

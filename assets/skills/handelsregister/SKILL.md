@@ -1,6 +1,13 @@
 ---
 name: handelsregister
+version: "1.0"
 description: Durchsucht das deutsche Handelsregister und ruft Registerauszuege als PDF ab. Liefert Firma, Sitz, Geschaeftszweck, Stammkapital, Geschaeftsfuehrer, Prokura, Vertretungsregelung, Rechtsform, Satzungsaenderungen, Kapitalentwicklung, Verschmelzungen und komplette Unternehmenshistorie.
+requires: {}
+features:
+  - Unternehmen im deutschen Handelsregister nach Name, Ort oder Registernummer suchen
+  - Registerauszüge als PDF (aktuell, chronologisch, historisch) abrufen
+  - Strukturierte Unternehmensdaten mit Geschäftsführern, Stammkapital und Prokura auslesen
+  - Nach Rechtsform, Bundesland, Registergericht und PLZ-Bereich filtern
 ---
 
 # Handelsregister Skill

@@ -1,9 +1,16 @@
 ---
 name: crawl4ai
+version: "0.7"
 description: Complete toolkit for web crawling and data extraction using Crawl4AI. This skill should be used when users need to scrape websites, extract structured data, handle JavaScript-heavy pages, crawl multiple URLs, or build automated web data pipelines. Includes optimized extraction patterns with schema generation for efficient, LLM-free extraction.
-version: 0.7.4
-crawl4ai_version: ">=0.7.4"
-last_updated: 2025-01-19
+requires:
+  bin: [python]
+  pip: [crawl4ai]
+features:
+  - Einzelne oder mehrere URLs crawlen und als Markdown extrahieren
+  - Strukturierte Daten mit JSON-Schema aus Websites extrahieren (LLM-frei)
+  - JavaScript-lastige Seiten mit Browser-Rendering crawlen
+  - Mehrere URLs parallel crawlen und als Datenpipeline verarbeiten
+  - Automatisches Schema aus einer Beispiel-URL generieren
 ---
 
 # Crawl4AI

@@ -1,6 +1,15 @@
 ---
 name: pandoc
+version: "1.0"
 description: Dokumente erstellen und konvertieren (Markdown, Word, PDF, HTML, EPUB, PowerPoint u.v.m.) via pandoc + typst. Zwei PDF-Templates enthalten (Default fuer allgemeine Dokumente, Research Report fuer wissenschaftliche Berichte).
+requires:
+  bin: [pandoc, typst]
+features:
+  - Markdown zu PDF mit professionellen Typst-Templates konvertieren
+  - Markdown zu Word (.docx), PowerPoint (.pptx) oder EPUB konvertieren
+  - HTML-Ausgabe mit eingebetteten Ressourcen erzeugen
+  - Inhaltsverzeichnis, Abschnittsnummerierung und Syntax-Highlighting konfigurieren
+  - Word-Dokumente zurück zu Markdown extrahieren
 ---
 
 # Pandoc Skill

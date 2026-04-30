@@ -1,6 +1,13 @@
 ---
 name: iconify
+version: "1.0"
 description: SVG-Icons suchen und herunterladen. Verwenden wenn Icons, Symbole oder Piktogramme fuer UI-Elemente, Navigationen, Toolbars, Buttons, Websites, Dokumente oder Apps benoetigt werden. Durchsucht Iconify (200k+ Icons aus Lucide, Tabler, Phosphor, Material Design u.a.).
+requires: {}
+features:
+  - Icons aus 200k+ Iconify-Icons suchen (Lucide, Tabler, Phosphor, Material Design)
+  - Konkretes SVG-Icon per ID (z.B. lucide:gauge) herunterladen
+  - Nach Farbpalette (mono/color/any) und Icon-Set filtern
+  - Top-Treffer suchen und direkt als SVG-Datei speichern
 ---
 
 # Iconify Skill

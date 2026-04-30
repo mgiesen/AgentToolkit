@@ -1,6 +1,15 @@
 ---
 name: github
+version: "1.0"
 description: GitHub-Repos, Issues, PRs und Actions lesen via gh CLI. IMMER verwenden wenn eine GitHub-URL (github.com/*) vorkommt oder GitHub-Inhalte abgefragt werden — nie WebFetch fuer GitHub nutzen. Schreibende Operationen nur mit expliziter Einzelfreigabe.
+requires:
+  bin: [gh]
+features:
+  - Repos, Issues und Pull Requests eines GitHub-Projekts lesen
+  - PR-Diffs und CI-Run-Status abfragen
+  - Code und Dateiinhalte direkt über die GitHub API abrufen
+  - Repos und Code über GitHub Search durchsuchen
+  - Schreibende Operationen (Kommentare, Labels, Merges) nur nach expliziter Freigabe
 ---
 
 # GitHub Skill

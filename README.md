@@ -6,27 +6,26 @@ Skills, Agenten und Workflows werden zentral in diesem Repository entwickelt und
 
 ## Skills
 
-| Skill                          | Abhängigkeiten                       | API-Key                    |
-| ------------------------------ | ------------------------------------ | -------------------------- |
-| **geo**                        | `googlemaps` (pip)                   | `GOOGLE_MAPS_API_KEY`      |
-| **ocr**                        | `tesseract` (brew)                   |                            |
-| **pdf**                        | `cpdf`, `qpdf`, `ghostscript` (brew) |                            |
-| **image**                      | `imagemagick` (brew)                 |                            |
-| **image-gen**                  |                                      | `GEMINI_IMAGE_GEN_API_KEY` |
-| **crawl4ai**                   | `crawl4ai` (pip)                     |                            |
-| **tavily**                     | `tavily-cli` (pip)                   | `TAVILY_API_KEY`           |
-| **youtube-dlp**                | `yt-dlp` (brew)                      |                            |
-| **github**                     | `gh` (brew)                          |                            |
-| **chart**                      | `matplotlib` (pip)                   |                            |
-| **iconify**                    |                                      |                            |
-| **qr-code**                    | `qrencode` (brew)                    |                            |
-| **handelsregister**            | `handelsregister` (pip)              |                            |
-| **pandoc**                     | `pandoc`, `typst` (brew)             |                            |
-| **folder-picker**              | OS built-in, Linux: `zenity`         |                            |
-| **apple-notes-write-only**     | macOS built-in                       |                            |
-| **apple-reminders-write-only** | macOS built-in                       |                            |
-| **ssh**                        | `openssh` (OS built-in)              |                            |
-
+| Skill | Version | Features | Abhängigkeiten | API-Key |
+|---|---|---|---|---|
+| **apple-notes-write-only** | 1.0 | • Neue Apple Note mit HTML-formatiertem Body erstellen<br>• Notizen mit Bullet-Listen, nummerierten Listen und Tabellen anlegen<br>• Hyperlinks und fett/kursiven Text in Notizen einbetten<br>• Notizen in beliebige Ordner (Accounts) schreiben | `macOS`, `Notes` | — |
+| **apple-reminders-write-only** | 1.0 | • Neue Erinnerung mit Titel, Notiztext und Fälligkeitsdatum erstellen<br>• Priorität (hoch/mittel/niedrig) und Ziel-Liste festlegen<br>• ISO-Datetime als Fälligkeitszeitpunkt übergeben (2026-04-28T14:00)<br>• URLs im Notiztext werden automatisch klickbar dargestellt | `macOS`, `Reminders` | — |
+| **chart** | 1.0 | • Linien-, Balken- und Kreisdiagramme aus JSON-Daten als SVG oder PNG erzeugen<br>• Mehrere Datenreihen in einem Diagramm darstellen<br>• Farbthemen wählen (academic, vibrant, mono, dark)<br>• Achsenbeschriftungen, Titel, Breite und Höhe konfigurieren<br>• Eigene Hex-Farben per --colors überschreiben | `python`, `matplotlib` | — |
+| **crawl4ai** | 0.7 | • Einzelne oder mehrere URLs crawlen und als Markdown extrahieren<br>• Strukturierte Daten mit JSON-Schema aus Websites extrahieren (LLM-frei)<br>• JavaScript-lastige Seiten mit Browser-Rendering crawlen<br>• Mehrere URLs parallel crawlen und als Datenpipeline verarbeiten<br>• Automatisches Schema aus einer Beispiel-URL generieren | `python`, `crawl4ai` | — |
+| **folder-picker** | 1.0 | • Nativen Ordner-Auswahldialog öffnen (macOS Finder, Windows PowerShell, Linux zenity)<br>• Absoluten Pfad des gewählten Ordners zurückgeben<br>• Abbruch durch den User erkennen und erneut nachfragen<br>• Optionalen Prompt-Text für den Dialog übergeben | `python`, `zenity` | — |
+| **geo** | 2.0 | • Fahrdistanz und -dauer zwischen zwei Orten (Auto, Fahrrad, zu Fuß)<br>• ÖPNV-Routing mit Umstiegszeiten<br>• Turn-by-turn Navigation mit Wegpunkten<br>• Routen-Geometrie als GeoJSON<br>• Distance Matrix (n Starts × m Ziele)<br>• Adresse in Koordinaten umwandeln (Geocoding)<br>• Koordinaten in Adresse umwandeln (Reverse Geocoding)<br>• POI-Suche in einem Radius um einen Ort<br>• Höhenprofil für beliebige Koordinaten<br>• GPS-Trace auf Straßennetz einpassen (Map Matching)<br>• Optimale Rundtour über mehrere Stops (TSP) | `python`, `googlemaps`, `requests`, `python-dotenv` | `GOOGLE_MAPS_API_KEY` |
+| **github** | 1.0 | • Repos, Issues und Pull Requests eines GitHub-Projekts lesen<br>• PR-Diffs und CI-Run-Status abfragen<br>• Code und Dateiinhalte direkt über die GitHub API abrufen<br>• Repos und Code über GitHub Search durchsuchen<br>• Schreibende Operationen (Kommentare, Labels, Merges) nur nach expliziter Freigabe | `gh` | — |
+| **handelsregister** | 1.0 | • Unternehmen im deutschen Handelsregister nach Name, Ort oder Registernummer suchen<br>• Registerauszüge als PDF (aktuell, chronologisch, historisch) abrufen<br>• Strukturierte Unternehmensdaten mit Geschäftsführern, Stammkapital und Prokura auslesen<br>• Nach Rechtsform, Bundesland, Registergericht und PLZ-Bereich filtern | — | — |
+| **iconify** | 1.0 | • Icons aus 200k+ Iconify-Icons suchen (Lucide, Tabler, Phosphor, Material Design)<br>• Konkretes SVG-Icon per ID (z.B. lucide:gauge) herunterladen<br>• Nach Farbpalette (mono/color/any) und Icon-Set filtern<br>• Top-Treffer suchen und direkt als SVG-Datei speichern | — | — |
+| **image** | 1.0 | • Bilder von URLs herunterladen und in ein anderes Format konvertieren<br>• Bilder skalieren (Pixel oder Prozent) und zuschneiden<br>• SVG zu PNG mit konfigurierbarem DPI konvertieren<br>• Dateigröße ohne sichtbaren Qualitätsverlust optimieren<br>• Metadaten (Format, Dimensionen, Dateigröße, Farbraum) auslesen | `imagemagick`, `python`, `Pillow` | — |
+| **image-gen** | 1.0 | • KI-Bilder aus Textprompts via Google Gemini generieren<br>• Zwischen zwei Qualitätsstufen wählen (hochwertig ~$0.13 oder schnell ~$0.07)<br>• Aspect Ratio (1:1, 16:9, 9:16, 4:3, 3:2) und Auflösung festlegen<br>• Prompts mit Motiv, Komposition, Stil und Atmosphäre formulieren | — | `GEMINI_API_KEY` |
+| **ocr** | 1.0 | • Text aus Bildern (PNG, JPG, TIFF, BMP) extrahieren — auf macOS via Apple Vision hardwarebeschleunigt<br>• Gescannte PDFs in durchsuchbaren Text umwandeln<br>• Mehrere Sprachen gleichzeitig erkennen (z.B. de+en)<br>• Bilder in durchsuchbare PDFs konvertieren | `tesseract` | — |
+| **pandoc** | 1.0 | • Markdown zu PDF mit professionellen Typst-Templates konvertieren<br>• Markdown zu Word (.docx), PowerPoint (.pptx) oder EPUB konvertieren<br>• HTML-Ausgabe mit eingebetteten Ressourcen erzeugen<br>• Inhaltsverzeichnis, Abschnittsnummerierung und Syntax-Highlighting konfigurieren<br>• Word-Dokumente zurück zu Markdown extrahieren | `pandoc`, `typst` | — |
+| **pdf** | 1.0 | • Mehrere PDFs zu einem Dokument zusammenführen<br>• PDF nach Seitenbereich aufteilen oder bestimmte Seiten extrahieren<br>• Dateigröße mit einstellbarer Qualitätsstufe komprimieren (screen/ebook/printer/prepress)<br>• PDF mit Passwort verschlüsseln oder Passwortschutz entfernen<br>• Metadaten und Seitenanzahl eines PDFs auslesen | `cpdf`, `qpdf`, `ghostscript` | — |
+| **qr-code** | 1.0 | • QR-Code aus URL oder beliebigem Text als PNG oder SVG exportieren<br>• QR-Code direkt im Terminal als UTF8-Grafik anzeigen<br>• Modulgröße und Fehlerkorrekturlevel (L/M/Q/H) einstellen | `qrencode` | — |
+| **ssh** | 1.0 | • SSH-Verbindung zu entfernten Hosts über ~/.ssh/config herstellen<br>• Software installieren, Dienste konfigurieren und Logs auf Remote-Systemen prüfen<br>• Lesende Befehle direkt ausführen, schreibende Befehle mit Rückfrage absichern<br>• Dateien auf Remote-Systemen bearbeiten<br>• Neuen Host interaktiv per setup-Skript einrichten | — | — |
+| **tavily** | 1.0 | • Breite Web-Recherche mit Quellensynthese und nummerierten Zitaten<br>• Aktuelle News, Trends und Vendor-Listen zu einem Thema abrufen<br>• Markt- und Wettbewerbsanalysen für strategische Fragen<br>• Gezielte Nachschlag-Suche nach einem Research-Report | — | `TAVILY_API_KEY` |
+| **youtube-dlp** | 1.0 | • Video-Metadaten (Titel, Kanal, Datum, Beschreibung) ohne Download abrufen<br>• Transkripte aus manuellen oder automatischen Untertiteln extrahieren (de/en/…)<br>• YouTube-Suchergebnisse und Playlist-Inhalte als strukturierte Quellenliste abrufen<br>• Audio (m4a/mp3) oder Video (mp4) nur bei explizitem Download-Auftrag speichern | `yt-dlp`, `ffmpeg` | — |
 ## Agenten
 
 | Agent             | Beschreibung                                                                                         |
