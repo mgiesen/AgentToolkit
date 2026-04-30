@@ -31,21 +31,21 @@ _Gesamt-Kontextgröße aller Skills beim Start: **1,096 Tokens**_
 
 ## Binaries
 
-| Binary        | Skill(s)                          |
-| ------------- | --------------------------------- |
-| `cpdf`        | pdf                               |
-| `ffmpeg`      | youtube-dlp                       |
-| `gh`          | github                            |
-| `ghostscript` | pdf                               |
-| `imagemagick` | image                             |
-| `pandoc`      | pandoc                            |
+| Binary        | Skill(s)                                                     |
+| ------------- | ------------------------------------------------------------ |
+| `cpdf`        | pdf                                                          |
+| `ffmpeg`      | youtube-dlp                                                  |
+| `gh`          | github                                                       |
+| `ghostscript` | pdf                                                          |
+| `imagemagick` | image                                                        |
+| `pandoc`      | pandoc                                                       |
 | `python`      | • chart<br>• crawl4ai<br>• folder-picker<br>• geo<br>• image |
-| `qpdf`        | pdf                               |
-| `qrencode`    | qr-code                           |
-| `tesseract`   | ocr                               |
-| `typst`       | pandoc                            |
-| `yt-dlp`      | youtube-dlp                       |
-| `zenity`      | folder-picker                     |
+| `qpdf`        | pdf                                                          |
+| `qrencode`    | qr-code                                                      |
+| `tesseract`   | ocr                                                          |
+| `typst`       | pandoc                                                       |
+| `yt-dlp`      | youtube-dlp                                                  |
+| `zenity`      | folder-picker                                                |
 
 ## Agenten
 
@@ -64,18 +64,6 @@ Der Installer verteilt Berechtigungsregeln aus `assets/permissions/rules.json` i
 | Codex       | `~/.codex/rules/agentic.rules`      | Starlark `prefix_rule()`                   |
 | Gemini CLI  | `~/.gemini/settings.json`           | `run_shell_command()` in `tools.allowed[]` |
 | OpenCode    | `~/.config/opencode/.opencode.json` | Pattern in `permission.bash{}`             |
-
-## Dependencies
-
-Der Installer (`scripts/install.sh`) richtet die `.venv` ein, installiert alle Python-Pakete (pip) und Homebrew-Tools (via `Brewfile`) automatisch. Nur API-Keys müssen manuell eingetragen werden.
-
-API-Keys werden zentral in `.env` im Repo-Root gepflegt (siehe `.env.example`):
-
-| Key                        | Skill     | Bezugsquelle                                                              |
-| -------------------------- | --------- | ------------------------------------------------------------------------- |
-| `GOOGLE_MAPS_API_KEY`      | geo       | [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
-| `GEMINI_IMAGE_GEN_API_KEY` | image-gen | [Google AI Studio](https://aistudio.google.com/apikey)                    |
-| `TAVILY_API_KEY`           | tavily    | [Tavily Dashboard](https://app.tavily.com)                                |
 
 ## Installation
 

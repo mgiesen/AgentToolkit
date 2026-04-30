@@ -9,7 +9,6 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 SKILLS_DIR="$REPO_DIR/assets/skills"
 AGENTS_DIR="$REPO_DIR/assets/agents"
-VENV_DIR="$REPO_DIR/.venv"
 RULES_SCRIPT="$REPO_DIR/assets/permissions/install_rules.py"
 
 # Farben
@@ -121,42 +120,6 @@ choose_multi() {
             fi
         done
     fi
-}
-
-# ──────────────────────────────────────────────────────────────
-# Setup: Venv + Dependencies
-# ──────────────────────────────────────────────────────────────
-
-setup_venv() {
-    echo -e "  ${BOLD}Python Venv${RESET}"
-
-    if [[ -f "$VENV_DIR/bin/python3" ]]; then
-        echo -e "  ${GREEN}✓${RESET} Venv vorhanden"
-    else
-        echo -e "  ${YELLOW}→${RESET} Erstelle Venv..."
-        python3 -m venv "$VENV_DIR"
-        echo -e "  ${GREEN}✓${RESET} Venv erstellt"
-    fi
-
-    echo -e "  ${YELLOW}→${RESET} Installiere Python-Dependencies..."
-    "$VENV_DIR/bin/pip" install -q -r "$REPO_DIR/requirements.txt"
-    echo -e "  ${GREEN}✓${RESET} Dependencies aktuell"
-    echo ""
-}
-
-setup_brew() {
-    echo -e "  ${BOLD}Homebrew Tools${RESET}"
-
-    if ! command -v brew &>/dev/null; then
-        echo -e "  ${RED}✗${RESET} Homebrew nicht installiert ${DIM}(https://brew.sh)${RESET}"
-        echo ""
-        return 1
-    fi
-
-    echo -e "  ${YELLOW}→${RESET} Installiere fehlende Brew-Pakete..."
-    brew bundle --file="$REPO_DIR/Brewfile" --quiet
-    echo -e "  ${GREEN}✓${RESET} Brew-Pakete aktuell"
-    echo ""
 }
 
 # ──────────────────────────────────────────────────────────────
@@ -272,13 +235,13 @@ uninstall_agents() {
 
 install_rules() {
     echo -e "  ${BOLD}Permissions${RESET}"
-    "$VENV_DIR/bin/python3" "$RULES_SCRIPT" install "$@"
+    python3 "$RULES_SCRIPT" install "$@"
     echo ""
 }
 
 uninstall_rules() {
     echo -e "  ${BOLD}Permissions${RESET}"
-    "$VENV_DIR/bin/python3" "$RULES_SCRIPT" uninstall "$@"
+    python3 "$RULES_SCRIPT" uninstall "$@"
     echo ""
 }
 
@@ -409,7 +372,7 @@ show_status() {
 
     echo ""
     echo -e "  ${BOLD}Permissions${RESET}"
-    "$VENV_DIR/bin/python3" "$RULES_SCRIPT" status
+    python3 "$RULES_SCRIPT" status
 }
 
 # ──────────────────────────────────────────────────────────────
@@ -450,13 +413,6 @@ has_asset() {
 do_install() {
     parse_args "$@"
 
-    if has_asset "Skills" || has_asset "Permissions"; then
-        setup_venv
-    fi
-    if has_asset "Skills"; then
-        setup_brew
-    fi
-
     for i in "${PARSED_INDICES[@]}"; do
         echo -e "  ${CYAN}${BOLD}${AGENT_NAMES[$i]}${RESET}"
         if has_asset "Skills"; then
@@ -483,10 +439,6 @@ do_install() {
 
 do_uninstall() {
     parse_args "$@"
-
-    if has_asset "Permissions"; then
-        setup_venv
-    fi
 
     for i in "${PARSED_INDICES[@]}"; do
         echo -e "  ${CYAN}${BOLD}${AGENT_NAMES[$i]}${RESET}"
@@ -561,7 +513,7 @@ main() {
     banner
 
     local action
-    action=$(choose_one "Aktion" "Installieren" "Deinstallieren" "Status" "Dependencies" "Beenden")
+    action=$(choose_one "Aktion" "Installieren" "Deinstallieren" "Status" "Beenden")
 
     case "$action" in
         Installieren)
@@ -580,11 +532,6 @@ main() {
             echo ""
             show_status
             echo ""
-            ;;
-        Dependencies)
-            echo ""
-            setup_venv
-            setup_brew
             ;;
         Beenden)
             exit 0
@@ -615,9 +562,7 @@ case "${1:-}" in
         exit 0
         ;;
     --check)
-        banner
-        setup_venv
-        setup_brew
+        echo -e "\n  ${YELLOW}--check wurde entfernt. Dependencies werden nicht mehr vom Installer verwaltet.${RESET}\n"
         exit 0
         ;;
 esac
