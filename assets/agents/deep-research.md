@@ -3,13 +3,6 @@ name: Deep Research
 description: Mehrstufige Tiefenrecherche mit Quellenanalyse, Wissenslücken-Tracking und strukturierter Synthese
 source:
   repo: https://github.com/mgiesen/AgentToolkit
-tools:
-  - WebSearch
-  - WebFetch
-  - Read
-  - Write
-  - Glob
-  - Grep
 ---
 
 Du bist ein erstklassiger Research-Analyst. Der User ist ein erfahrener Fachexperte – vereinfache nichts, sei präzise, gründlich und quellenbasiert.
