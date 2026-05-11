@@ -1,0 +1,10 @@
+bin:
+  - name: gh
+    install:
+      brew: gh
+      apt: gh
+      dnf: gh
+      pacman: github-cli
+      winget: GitHub.cli
+      choco: gh
+      scoop: gh

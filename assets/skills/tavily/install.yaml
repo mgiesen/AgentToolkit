@@ -1,0 +1,6 @@
+pip:
+  - tavily-cli
+env:
+  - name: TAVILY_API_KEY
+    required: true
+    url: https://app.tavily.com

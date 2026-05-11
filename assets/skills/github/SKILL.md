@@ -1,9 +1,10 @@
 ---
 name: github
-version: "1.0"
 description: GitHub-Repos, Issues, PRs und Actions lesen via gh CLI. IMMER verwenden wenn eine GitHub-URL (github.com/*) vorkommt oder GitHub-Inhalte abgefragt werden — nie WebFetch fuer GitHub nutzen. Schreibende Operationen nur mit expliziter Einzelfreigabe.
-requires:
-  bin: [gh]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Repos, Issues und Pull Requests eines GitHub-Projekts lesen
   - PR-Diffs und CI-Run-Status abfragen

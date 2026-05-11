@@ -2,12 +2,12 @@
 set -euo pipefail
 
 # ──────────────────────────────────────────────────────────────
-# AgentBox – SSH Host Setup
+# AgentToolkit – SSH Host Setup
 # Interaktives Setup für neue SSH-Verbindungen.
 # Wird in einem eigenen Terminal-Fenster gestartet.
 # ──────────────────────────────────────────────────────────────
 
-RESULT_FILE="/tmp/agentbox-ssh-setup.json"
+RESULT_FILE="/tmp/agenttoolkit-ssh-setup.json"
 SSH_DIR="$HOME/.ssh"
 SSH_CONFIG="$SSH_DIR/config"
 KEY_FILE="$SSH_DIR/id_ed25519"
@@ -53,7 +53,7 @@ clear
 echo ""
 echo -e "  ${CYAN}${BOLD}╔══════════════════════════════════════════════════╗${RESET}"
 echo -e "  ${CYAN}${BOLD}║         SSH-Verbindung einrichten                ║${RESET}"
-echo -e "  ${CYAN}${BOLD}║                 ${DIM}AgentBox${RESET}${CYAN}${BOLD}                         ║${RESET}"
+echo -e "  ${CYAN}${BOLD}║                 ${DIM}AgentToolkit${RESET}${CYAN}${BOLD}                         ║${RESET}"
 echo -e "  ${CYAN}${BOLD}╚══════════════════════════════════════════════════╝${RESET}"
 echo ""
 echo -e "  ${BOLD}Was ist SSH?${RESET}"

@@ -1,9 +1,10 @@
 ---
 name: ocr
-version: "1.0"
 description: Extrahiert Text aus Bildern und gescannten PDFs. Nutzt Apple Vision (macOS) mit Tesseract-Fallback (Windows/Linux).
-requires:
-  bin: [tesseract]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Text aus Bildern (PNG, JPG, TIFF, BMP) extrahieren — auf macOS via Apple Vision hardwarebeschleunigt
   - Gescannte PDFs in durchsuchbaren Text umwandeln

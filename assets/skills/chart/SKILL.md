@@ -1,10 +1,10 @@
 ---
 name: chart
-version: "1.0"
 description: Diagramme und Charts erzeugen (Linie, Balken, Kreis) als SVG oder PNG. Verwenden wenn Daten visualisiert, Statistiken dargestellt oder Vergleiche grafisch aufbereitet werden sollen.
-requires:
-  bin: [python]
-  pip: [matplotlib]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Linien-, Balken- und Kreisdiagramme aus JSON-Daten als SVG oder PNG erzeugen
   - Mehrere Datenreihen in einem Diagramm darstellen

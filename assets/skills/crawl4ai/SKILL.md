@@ -1,10 +1,10 @@
 ---
 name: crawl4ai
-version: "0.7"
 description: Complete toolkit for web crawling and data extraction using Crawl4AI. This skill should be used when users need to scrape websites, extract structured data, handle JavaScript-heavy pages, crawl multiple URLs, or build automated web data pipelines. Includes optimized extraction patterns with schema generation for efficient, LLM-free extraction.
-requires:
-  bin: [python]
-  pip: [crawl4ai]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "0.7"
+platform: all
 features:
   - Einzelne oder mehrere URLs crawlen und als Markdown extrahieren
   - Strukturierte Daten mit JSON-Schema aus Websites extrahieren (LLM-frei)

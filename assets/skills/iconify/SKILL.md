@@ -1,8 +1,10 @@
 ---
 name: iconify
-version: "1.0"
 description: SVG-Icons suchen und herunterladen. Verwenden wenn Icons, Symbole oder Piktogramme fuer UI-Elemente, Navigationen, Toolbars, Buttons, Websites, Dokumente oder Apps benoetigt werden. Durchsucht Iconify (200k+ Icons aus Lucide, Tabler, Phosphor, Material Design u.a.).
-requires: {}
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Icons aus 200k+ Iconify-Icons suchen (Lucide, Tabler, Phosphor, Material Design)
   - Konkretes SVG-Icon per ID (z.B. lucide:gauge) herunterladen

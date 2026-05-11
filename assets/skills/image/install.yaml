@@ -1,0 +1,12 @@
+bin:
+  - name: magick
+    install:
+      brew: imagemagick
+      apt: imagemagick
+      dnf: ImageMagick
+      pacman: imagemagick
+      winget: ImageMagick.ImageMagick
+      choco: imagemagick
+      scoop: imagemagick
+pip:
+  - Pillow

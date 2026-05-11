@@ -1,9 +1,10 @@
 ---
 name: youtube-dlp
-version: "1.0"
 description: "YouTube als Recherche- und Wissensquelle mit yt-dlp nutzen: Metadaten, Formate, Untertitel, automatische Transkripte, Suchergebnisse und Playlists ressourcenschonend abrufen. Verwenden, wenn Agenten Inhalte von YouTube analysieren, zitierfaehige Kontextdaten sammeln, Transkripte extrahieren oder nur explizit angeforderte Medien herunterladen sollen."
-requires:
-  bin: [yt-dlp, ffmpeg]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Video-Metadaten (Titel, Kanal, Datum, Beschreibung) ohne Download abrufen
   - Transkripte aus manuellen oder automatischen Untertiteln extrahieren (de/en/…)

@@ -19,7 +19,7 @@ API_BASE = os.environ.get("ICONIFY_API_BASE", "https://api.iconify.design").rstr
 DEFAULT_PREFER = ["lucide", "tabler", "ph", "heroicons", "radix-icons", "carbon", "mdi"]
 DEFAULT_PREFIXES = ["lucide", "tabler", "ph", "mdi", "carbon"]
 DEFAULT_TIMEOUT = float(os.environ.get("ICONIFY_TIMEOUT", "10"))
-USER_AGENT = "AgentBox-Iconify/1.0"
+USER_AGENT = "AgentToolkit-Iconify/1.0"
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": USER_AGENT})
 

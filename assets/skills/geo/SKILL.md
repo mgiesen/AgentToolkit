@@ -1,13 +1,10 @@
 ---
 name: geo
-version: "2.0"
 description: Berechnet Fahrstrecken, Fahrzeiten, geocodiert Adressen, sucht Orte, erstellt Routen, berechnet Höhenprofile, löst Rundtouren (TSP) und passt GPS-Traces auf Straßen ein. Nutzt kostenlose APIs (OSRM, Nominatim, Open-Elevation) mit automatischem Google Maps Fallback. Google API Key nur für ÖPNV, Places und Live-Verkehr zwingend erforderlich.
-requires:
-  bin: [python]
-  pip: [googlemaps, requests, python-dotenv]
-  key:
-    - name: GOOGLE_MAPS_API_KEY
-      url: https://console.cloud.google.com/apis/credentials
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "2.0"
+platform: all
 features:
   - Fahrdistanz und -dauer zwischen zwei Orten (Auto, Fahrrad, zu Fuß)
   - ÖPNV-Routing mit Umstiegszeiten

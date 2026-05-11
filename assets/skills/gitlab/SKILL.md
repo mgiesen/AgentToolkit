@@ -1,12 +1,10 @@
 ---
 name: gitlab
-version: "1.0"
 description: GitLab-Repos, Issues, Merge Requests und CI-Pipelines lesen via glab CLI. IMMER verwenden wenn eine GitLab-URL (gitlab.com/* oder self-hosted) vorkommt oder GitLab-Inhalte abgefragt werden — nie WebFetch fuer GitLab nutzen. Schreibende Operationen nur mit expliziter Einzelfreigabe.
-requires:
-  bin: [glab]
-  key:
-    - name: GITLAB_TOKEN
-      url: https://gitlab.com/-/user_settings/personal_access_tokens
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Repos, Issues und Merge Requests eines GitLab-Projekts lesen
   - MR-Diffs und CI-Pipeline-Status abfragen (inkl. Job-Logs streamen)

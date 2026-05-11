@@ -1,0 +1,6 @@
+bin:
+  - name: zenity
+    install:
+      apt: zenity
+      dnf: zenity
+      pacman: zenity

@@ -1,0 +1,24 @@
+bin:
+  - name: cpdf
+    install:
+      brew: cpdf
+      apt: cpdf
+      manual: https://github.com/coherentgraphics/cpdf-binaries
+  - name: qpdf
+    install:
+      brew: qpdf
+      apt: qpdf
+      dnf: qpdf
+      pacman: qpdf
+      winget: QPDF.QPDF
+      choco: qpdf
+      scoop: qpdf
+  - name: gs
+    install:
+      brew: ghostscript
+      apt: ghostscript
+      dnf: ghostscript
+      pacman: ghostscript
+      winget: ArtifexSoftware.GhostScript
+      choco: ghostscript
+      scoop: ghostscript

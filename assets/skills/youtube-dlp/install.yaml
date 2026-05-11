@@ -1,0 +1,19 @@
+bin:
+  - name: yt-dlp
+    install:
+      brew: yt-dlp
+      apt: yt-dlp
+      dnf: yt-dlp
+      pacman: yt-dlp
+      winget: yt-dlp.yt-dlp
+      choco: yt-dlp
+      scoop: yt-dlp
+  - name: ffmpeg
+    install:
+      brew: ffmpeg
+      apt: ffmpeg
+      dnf: ffmpeg
+      pacman: ffmpeg
+      winget: Gyan.FFmpeg
+      choco: ffmpeg
+      scoop: ffmpeg

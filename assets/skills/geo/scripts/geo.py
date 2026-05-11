@@ -30,7 +30,7 @@ API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 OSRM_BASE = os.environ.get("OSRM_BASE_URL", "https://router.project-osrm.org")
 # Nominatim – User-Agent Pflicht
 NOMINATIM_BASE = "https://nominatim.openstreetmap.org"
-NOMINATIM_UA = "AgentBox-GeoSkill/1.0"
+NOMINATIM_UA = "AgentToolkit-GeoSkill/1.0"
 # Open-Elevation
 OPEN_ELEVATION_BASE = "https://api.open-elevation.com/api/v1"
 

@@ -1,7 +1,0 @@
-googlemaps
-python-dotenv
-crawl4ai
-tavily-cli
-requests
-beautifulsoup4
-matplotlib

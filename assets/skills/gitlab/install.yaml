@@ -1,0 +1,12 @@
+bin:
+  - name: glab
+    install:
+      brew: glab
+      winget: glab.glab
+      choco: glab
+      scoop: glab
+      manual: https://gitlab.com/gitlab-org/cli/-/blob/main/docs/installation_options.md
+env:
+  - name: GITLAB_TOKEN
+    required: false
+    url: https://gitlab.com/-/user_settings/personal_access_tokens

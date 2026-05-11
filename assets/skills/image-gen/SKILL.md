@@ -1,11 +1,10 @@
 ---
 name: image-gen
-version: "1.0"
 description: KI-Bildgenerierung aus Textprompts. Nur auf explizite Anfrage verwenden.
-requires:
-  key:
-    - name: GEMINI_API_KEY
-      url: https://aistudio.google.com/app/apikey
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - KI-Bilder aus Textprompts via Google Gemini generieren
   - Zwischen zwei Qualitätsstufen wählen (hochwertig ~$0.13 oder schnell ~$0.07)

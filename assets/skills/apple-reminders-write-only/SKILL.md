@@ -1,10 +1,10 @@
 ---
 name: apple-reminders-write-only
-version: "1.0"
 description: Erstellt neue Apple Erinnerungen. Nur schreibend, kein Lesen/Loeschen/Auflisten. Nur macOS.
-requires:
-  platform: macOS
-  app: [Reminders]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: [macOS]
 features:
   - Neue Erinnerung mit Titel, Notiztext und Fälligkeitsdatum erstellen
   - Priorität (hoch/mittel/niedrig) und Ziel-Liste festlegen

@@ -1,8 +1,10 @@
 ---
 name: handelsregister
-version: "1.0"
 description: Durchsucht das deutsche Handelsregister und ruft Registerauszuege als PDF ab. Liefert Firma, Sitz, Geschaeftszweck, Stammkapital, Geschaeftsfuehrer, Prokura, Vertretungsregelung, Rechtsform, Satzungsaenderungen, Kapitalentwicklung, Verschmelzungen und komplette Unternehmenshistorie.
-requires: {}
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Unternehmen im deutschen Handelsregister nach Name, Ort oder Registernummer suchen
   - Registerauszüge als PDF (aktuell, chronologisch, historisch) abrufen

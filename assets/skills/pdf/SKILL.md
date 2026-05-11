@@ -1,9 +1,10 @@
 ---
 name: pdf
-version: "1.0"
 description: PDF-Operationen – Merge, Split, Seiten extrahieren, komprimieren, verschluesseln, Metadaten lesen. Nutzt cpdf, qpdf und Ghostscript.
-requires:
-  bin: [cpdf, qpdf, ghostscript]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Mehrere PDFs zu einem Dokument zusammenführen
   - PDF nach Seitenbereich aufteilen oder bestimmte Seiten extrahieren

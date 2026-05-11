@@ -1,0 +1,9 @@
+bin:
+  - name: qrencode
+    install:
+      brew: qrencode
+      apt: qrencode
+      dnf: qrencode
+      pacman: qrencode
+      scoop: qrencode
+      manual: https://fukuchi.org/works/qrencode/

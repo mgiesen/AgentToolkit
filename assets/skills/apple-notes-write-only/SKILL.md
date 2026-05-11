@@ -1,10 +1,10 @@
 ---
 name: apple-notes-write-only
-version: "1.0"
 description: Erstellt neue Apple Notes mit Formatierung. Nur schreibend, kein Lesen/Loeschen/Auflisten. Nur macOS.
-requires:
-  platform: macOS
-  app: [Notes]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: [macOS]
 features:
   - Neue Apple Note mit HTML-formatiertem Body erstellen
   - Notizen mit Bullet-Listen, nummerierten Listen und Tabellen anlegen

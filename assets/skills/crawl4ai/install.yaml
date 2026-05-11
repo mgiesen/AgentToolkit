@@ -1,0 +1,4 @@
+pip:
+  - crawl4ai
+post_install:
+  - .venv/bin/crawl4ai-setup

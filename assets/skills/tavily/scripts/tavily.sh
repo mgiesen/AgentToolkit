@@ -42,7 +42,8 @@ fi
 
 if [[ ! -x "$TVLY" ]]; then
     echo "Fehler: Tavily CLI nicht in der Repo-Venv gefunden." >&2
-    echo "Ausfuehren: cd $REPO_ROOT && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
+    echo "Erstellen: cd $REPO_ROOT && python3 -m venv .venv" >&2
+    echo "Skill-Abhaengigkeiten (tavily-cli) siehe install.yaml im Skill-Ordner." >&2
     exit 1
 fi
 

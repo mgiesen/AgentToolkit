@@ -1,0 +1,19 @@
+bin:
+  - name: pandoc
+    install:
+      brew: pandoc
+      apt: pandoc
+      dnf: pandoc
+      pacman: pandoc
+      winget: JohnMacFarlane.Pandoc
+      choco: pandoc
+      scoop: pandoc
+  - name: typst
+    install:
+      brew: typst
+      apt: typst
+      dnf: typst
+      pacman: typst
+      winget: Typst.Typst
+      choco: typst
+      scoop: typst

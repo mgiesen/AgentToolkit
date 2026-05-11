@@ -1,0 +1,10 @@
+bin:
+  - name: tesseract
+    install:
+      brew: tesseract
+      apt: tesseract-ocr
+      dnf: tesseract
+      pacman: tesseract
+      winget: UB-Mannheim.TesseractOCR
+      choco: tesseract
+      scoop: tesseract

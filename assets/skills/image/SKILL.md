@@ -1,10 +1,10 @@
 ---
 name: image
-version: "1.0"
 description: Bilder herunterladen, konvertieren, skalieren, zuschneiden, drehen und Metadaten lesen. Unterstuetzte Formate u.a. PNG, JPG, WebP, TIFF, GIF, BMP, SVG.
-requires:
-  bin: [imagemagick, python]
-  pip: [Pillow]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Bilder von URLs herunterladen und in ein anderes Format konvertieren
   - Bilder skalieren (Pixel oder Prozent) und zuschneiden

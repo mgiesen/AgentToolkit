@@ -1,6 +1,8 @@
 ---
 name: Report Writer
 description: Strukturiert Rechercheergebnisse in wissenschaftlich konsistente Berichte und erzeugt ein PDF via pandoc + typst
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
 tools:
   - Bash
   - Read

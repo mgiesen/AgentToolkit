@@ -1,8 +1,10 @@
 ---
 name: ssh
-version: "1.0"
 description: Der User möchte via SSH etwas auf einem entfernten System tun — Software installieren, Dienste konfigurieren, Dateien bearbeiten, Logs prüfen oder Probleme beheben.
-requires: {}
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - SSH-Verbindung zu entfernten Hosts über ~/.ssh/config herstellen
   - Software installieren, Dienste konfigurieren und Logs auf Remote-Systemen prüfen
@@ -21,7 +23,7 @@ Lies `~/.ssh/config` und prüfe ob ein passender Host existiert. Falls nicht, st
 osascript -e 'tell app "Terminal" to do script "<skill-pfad>/scripts/setup-host.sh"'
 ```
 
-Ersetze `<skill-pfad>` mit dem absoluten Pfad dieses Skill-Ordners. Warte auf `/tmp/agentbox-ssh-setup.json` (prüfe alle 5s).
+Ersetze `<skill-pfad>` mit dem absoluten Pfad dieses Skill-Ordners. Warte auf `/tmp/agenttoolkit-ssh-setup.json` (prüfe alle 5s).
 
 ## Sicherheit
 

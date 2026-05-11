@@ -1,0 +1,4 @@
+env:
+  - name: GEMINI_IMAGE_GEN_API_KEY
+    required: true
+    url: https://aistudio.google.com/app/apikey

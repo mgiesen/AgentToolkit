@@ -1,9 +1,10 @@
 ---
 name: qr-code
-version: "1.0"
 description: QR-Codes erzeugen, anzeigen oder exportieren (PNG, SVG, Terminal/UTF8). Wandelt URLs, Texte oder Daten in scannbare QR-Codes um. Nutzt qrencode.
-requires:
-  bin: [qrencode]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - QR-Code aus URL oder beliebigem Text als PNG oder SVG exportieren
   - QR-Code direkt im Terminal als UTF8-Grafik anzeigen

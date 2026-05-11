@@ -1,33 +1,30 @@
 ---
 name: how-to-build-a-skill
-version: "1.0"
 description: Skill-Authoring-Referenz für dieses Repo. IMMER laden wenn ein neuer Skill erstellt wird, ein bestehender Skill inhaltlich oder strukturell geändert wird, oder das Frontmatter-Format einer SKILL.md angepasst werden soll.
-requires: {}
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Agenten-Skills nach Best Practice erstellen/bearbeiten
-  - Einhaltung des AgentBox-Standards
+  - Einhaltung des AgentToolkit-Standards
 ---
 
 # Skill authoring best practices
 
 ## Frontmatter-Standard (dieses Repo)
 
-Jede SKILL.md in diesem Repo MUSS dieses Frontmatter-Format verwenden — ein Generator-Script parst alle Köpfe und zieht sie zu einer zentralen Dokumentation zusammen:
+Jede SKILL.md in diesem Repo MUSS dieses Frontmatter-Format verwenden:
 
 ```yaml
 ---
 name: skill-name              # Pflicht: lowercase, hyphens, max 64 Zeichen
-version: "1.0"                # Pflicht: "major.minor" als String
 description: ...              # Pflicht: eine Zeile, kein > Block-Scalar
-requires: # Pflicht: leer als {} wenn keine Abhängigkeiten
-  platform: macOS # optional: Betriebssystem-Einschränkung
-  app: [App.app] # optional: macOS-Apps
-  pip: [paket1, paket2] # optional
-  bin: [tool1, tool2] # optional
-  key: # optional
-    - name: MY_API_KEY
-      url: https://...
-features: # Pflicht: mind. 3 Einträge, kompakte Feature-Beschreibung
+source:                       # Pflicht: Provenance des Skills
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"              # "major.minor" als String
+platform: all                 # Pflicht: `all` oder OS-Liste wie [macOS] / [macOS, linux]
+features:                     # Pflicht: mind. 3 Einträge, kompakte Feature-Beschreibung
   - Feature A
   - Feature B
 ---
@@ -35,10 +32,46 @@ features: # Pflicht: mind. 3 Einträge, kompakte Feature-Beschreibung
 
 **Regeln:**
 
-- `requires: {}` wenn keine Abhängigkeiten (nicht weglassen)
-- `pip`/`brew` nur angeben wenn vorhanden — leere Listen weglassen
-- `key` nur angeben wenn ein API-Key zwingend oder optional benötigt wird
-- Jeder `examples`-Eintrag ist eine kompakte Feature-Beschreibung (kein Beispiel-Query, keine Kategorie-Präfixe)
+- Kein `requires:`-Block mehr — Installations-Infos gehören in `install.yaml` neben der SKILL.md.
+- `source.repo`: aktuell immer `https://github.com/mgiesen/AgentToolkit`. Bei Skills, die aus externen Quellen abgeleitet sind, kann hier zusätzlich `source.upstream: <url>` und `source.fetched: YYYY-MM-DD` ergänzt werden.
+- `source.version`: bei jeder inhaltlichen Änderung anpassen (`major.minor`, siehe Versionierung-Abschnitt).
+- `platform:` ist Pflicht. `all` für plattformunabhängige Skills, ansonsten Liste der unterstützten OS: `macOS`, `linux`, `windows`.
+
+## install.yaml (optional, neben SKILL.md)
+
+Wird vom Agent **nicht** beim Startup geladen, sondern nur gelesen, wenn beim Skill-Aufruf eine Abhängigkeit fehlt. Daher beliebig ausführlich, ohne Token-Sorgen.
+
+```yaml
+pip:                          # Python-Packages für die gemeinsame .venv
+  - paket1
+
+bin:                          # System-Binaries
+  - name: tesseract           # Binary-Name (für `which`-Check)
+    install:                  # Paketname pro Manager
+      brew: tesseract
+      apt: tesseract-ocr
+      dnf: tesseract
+      pacman: tesseract
+      winget: UB-Mannheim.TesseractOCR
+      choco: tesseract
+      scoop: tesseract
+      manual: https://...     # Fallback wenn kein Manager passt
+
+env:                          # Environment-Variablen (API-Keys)
+  - name: MY_API_KEY
+    required: true            # true: ohne Key kein Betrieb; false: Feature-Einschränkung
+    url: https://...          # Quelle für den Key
+
+post_install:                 # Befehle nach pip/bin-Install (z.B. Browser-Download)
+  - .venv/bin/crawl4ai-setup
+```
+
+**Regeln:**
+
+- Nur Felder anlegen, die wirklich nötig sind — keine leeren Listen.
+- `bin.name` = das **Binary**, das aufgerufen wird (z.B. `gs`), nicht der Paketname (`ghostscript`). So kann der Agent per `which` prüfen.
+- `install` listet Paketnamen pro Manager. Nur die Manager eintragen, bei denen das Paket existiert.
+- Wenn nirgends ein Manager passt, `manual:` mit URL zur Install-Anleitung.
 
 ## Versionierung (major.minor)
 

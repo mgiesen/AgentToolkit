@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-Generiert die Skills-Tabelle in README.md aus den Frontmatter-Daten aller SKILL.md-Dateien.
-Ersetzt den Inhalt zwischen '## Skills' und der nächsten '## '-Überschrift (oder EOF).
+Generiert die Skills-Tabelle in docs/skills.md aus:
+- SKILL.md-Frontmatter (name, version, description, platform, features)
+- install.yaml (pip, bin, env, post_install) neben der SKILL.md
 
-Enthält außerdem eine Token-Schätzung pro Skill (Volltext der SKILL.md),
-sowie die Gesamtsumme unter der Tabelle.
+Ersetzt den Tabellen-Block unter '# Skills' sowie die Tabelle unter '## Binaries'.
+Enthält außerdem eine Token-Schätzung pro Skill (name + description, wie beim Startup geladen).
 """
 
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 try:
@@ -30,7 +32,7 @@ except ImportError:
 
 REPO_ROOT = Path(__file__).parent.parent
 SKILLS_DIR = REPO_ROOT / "assets" / "skills"
-README = REPO_ROOT / "README.md"
+SKILLS_DOC = REPO_ROOT / "docs" / "skills.md"
 
 
 def parse_frontmatter(skill_md: Path) -> dict:
@@ -41,28 +43,51 @@ def parse_frontmatter(skill_md: Path) -> dict:
     return yaml.safe_load(match.group(1)) or {}
 
 
-def format_requires(requires) -> str:
-    if not requires:
-        return "—"
+def load_install(skill_dir: Path) -> dict:
+    install_path = skill_dir / "install.yaml"
+    if not install_path.exists():
+        return {}
+    try:
+        return yaml.safe_load(install_path.read_text(encoding="utf-8")) or {}
+    except yaml.YAMLError as e:
+        print(f"Warnung: install.yaml fehlerhaft in {skill_dir.name}: {e}", file=sys.stderr)
+        return {}
+
+
+def format_platform(platform) -> str:
+    if platform is None or platform == "all":
+        return "Alle"
+    if isinstance(platform, str):
+        return platform
+    return ", ".join(str(p) for p in platform)
+
+
+def format_deps(install: dict) -> str:
     parts = []
-    if "platform" in requires:
-        parts.append(f"`🖥️ {requires['platform']}`")
-    if "app" in requires:
-        for app in requires["app"]:
-            parts.append(f"`{app}`")
-    if "bin" in requires:
-        for b in requires["bin"]:
-            parts.append(f"`⚙️ {b}`")
-    if "pip" in requires:
-        for p in requires["pip"]:
-            parts.append(f"`📦 {p}`")
+    for b in install.get("bin", []) or []:
+        name = b.get("name") if isinstance(b, dict) else b
+        if name:
+            parts.append(f"`⚙️ {name}`")
+    for p in install.get("pip", []) or []:
+        parts.append(f"`📦 {p}`")
     return "<br>".join(parts) if parts else "—"
 
 
-def format_keys(requires) -> str:
-    if not requires or "key" not in requires:
+def format_keys(install: dict) -> str:
+    env = install.get("env", []) or []
+    if not env:
         return "—"
-    return ", ".join(f"`{k['name']}`" for k in requires["key"])
+    out = []
+    for k in env:
+        if not isinstance(k, dict):
+            continue
+        name = k.get("name")
+        if not name:
+            continue
+        required = bool(k.get("required", False))
+        suffix = "" if required else " *(optional)*"
+        out.append(f"`{name}`{suffix}")
+    return "<br>".join(out) if out else "—"
 
 
 def format_features(features) -> str:
@@ -72,16 +97,16 @@ def format_features(features) -> str:
 
 
 def build_binaries_table(skills: list[dict]) -> str:
-    """Erstellt eine Binaries-Tabelle aus den bin-Abhängigkeiten aller Skills."""
-    from collections import defaultdict
     binary_to_skills: dict[str, list[str]] = defaultdict(list)
     for s in skills:
-        requires = s.get("requires") or {}
-        for b in requires.get("bin", []):
-            binary_to_skills[b].append(s.get("name", ""))
+        install = s.get("_install") or {}
+        for b in install.get("bin", []) or []:
+            name = b.get("name") if isinstance(b, dict) else b
+            if name:
+                binary_to_skills[name].append(s.get("name", ""))
 
     header = "| Binary | Skill(s) |"
-    separator = "|---|---|"
+    separator = "| --- | --- |"
     rows = []
     for binary in sorted(binary_to_skills):
         skill_list = binary_to_skills[binary]
@@ -95,42 +120,48 @@ def build_binaries_table(skills: list[dict]) -> str:
 
 
 def build_table(skills: list[dict]) -> tuple[str, int]:
-    """Gibt (tabelle, gesamt_tokens) zurück."""
-    header = "| Skill | Version | Features | Abhängigkeiten | API-Key | Startup-Tokens |"
-    separator = "|---|---|---|---|---|---|"
+    header = "| Skill | Version | Plattform | Features | Abhängigkeiten | API-Key | Startup-Tokens |"
+    separator = "| --- | --- | --- | --- | --- | --- | --- |"
     rows = []
     total_tokens = 0
 
     for s in skills:
         name = f"**{s.get('name', '')}**"
-        version = s.get("version", "—")
+        version = (s.get("source") or {}).get("version", "—")
+        platform = format_platform(s.get("platform"))
         features = format_features(s.get("features"))
-        requires = format_requires(s.get("requires"))
-        keys = format_keys(s.get("requires"))
+        install = s.get("_install") or {}
+        deps = format_deps(install)
+        keys = format_keys(install)
         tokens = s.get("_tokens", 0)
         total_tokens += tokens
-        rows.append(f"| {name} | {version} | {features} | {requires} | {keys} | {tokens:,} |")
+        rows.append(
+            f"| {name} | {version} | {platform} | {features} | {deps} | {keys} | {tokens:,} |"
+        )
 
     table = "\n".join([header, separator] + rows)
     return table, total_tokens
 
 
-def update_readme(table: str, total_tokens: int, binaries_table: str):
-    content = README.read_text(encoding="utf-8")
-    lines = content.splitlines(keepends=True)
-
-    # Finde '## Skills'
-    section_start = None
-    for i, line in enumerate(lines):
-        if line.strip() == "## Skills":
-            section_start = i
-            break
-
-    if section_start is None:
-        print("Fehler: '## Skills' nicht in README.md gefunden.", file=sys.stderr)
+def update_doc(table: str, total_tokens: int, binaries_table: str):
+    if not SKILLS_DOC.exists():
+        print(f"Fehler: {SKILLS_DOC} existiert nicht.", file=sys.stderr)
         sys.exit(1)
 
-    # Finde Start und Ende des zu ersetzenden Blocks (Tabelle + evtl. alter Token-Hinweis)
+    content = SKILLS_DOC.read_text(encoding="utf-8")
+    lines = content.splitlines(keepends=True)
+
+    # Find '# Skills' (h1)
+    section_start = None
+    for i, line in enumerate(lines):
+        if line.strip() == "# Skills":
+            section_start = i
+            break
+    if section_start is None:
+        print("Fehler: '# Skills' nicht in docs/skills.md gefunden.", file=sys.stderr)
+        sys.exit(1)
+
+    # Find Skills-Tabellen-Block + folgende Token-Zeile(n)
     block_start = None
     block_end = None
     for i in range(section_start + 1, len(lines)):
@@ -144,18 +175,16 @@ def update_readme(table: str, total_tokens: int, binaries_table: str):
     if block_start is None:
         block_start = section_start + 2
         block_end = block_start
-
     if block_end is None:
         block_end = len(lines)
 
-    # Überspringe direkt folgende Zeilen die zum alten Token-Hinweis gehören
     while block_end < len(lines) and lines[block_end].startswith("_"):
         block_end += 1
 
     token_note = f"_Gesamt-Kontextgröße aller Skills beim Start: **{total_tokens:,} Tokens**_\n"
     skills_block = [table + "\n", "\n", token_note, "\n"]
 
-    # Finde '## Binaries' und ersetze dessen Tabelle
+    # Find '## Binaries' und ersetze dessen Tabelle
     binaries_start = None
     for i in range(block_end, len(lines)):
         if lines[i].strip() == "## Binaries":
@@ -163,7 +192,6 @@ def update_readme(table: str, total_tokens: int, binaries_table: str):
             break
 
     if binaries_start is not None:
-        # Finde Tabellenblock unter ## Binaries
         bin_block_start = None
         bin_block_end = None
         for i in range(binaries_start + 1, len(lines)):
@@ -183,14 +211,14 @@ def update_readme(table: str, total_tokens: int, binaries_table: str):
             lines[:block_start]
             + skills_block
             + lines[block_end:bin_block_start]
-            + [binaries_table + "\n"]
+            + [binaries_table + "\n", "\n"]
             + lines[bin_block_end:]
         )
     else:
         new_lines = lines[:block_start] + skills_block + lines[block_end:]
 
-    README.write_text("".join(new_lines), encoding="utf-8")
-    print(f"README.md aktualisiert — {total_tokens:,} Tokens gesamt ({ESTIMATOR}).")
+    SKILLS_DOC.write_text("".join(new_lines), encoding="utf-8")
+    print(f"docs/skills.md aktualisiert — {total_tokens:,} Tokens gesamt ({ESTIMATOR}).")
 
 
 def main():
@@ -201,16 +229,18 @@ def main():
         if not skill_md.exists():
             continue
         fm = parse_frontmatter(skill_md)
+        if not fm:
+            continue
         if fm.get("name") == "how-to-build-a-skill":
             continue
-        if fm:
-            fm["_tokens"] = count_tokens(f"- {fm.get('name', '')}: {fm.get('description', '')}")
-            skills.append(fm)
+        fm["_tokens"] = count_tokens(f"- {fm.get('name', '')}: {fm.get('description', '')}")
+        fm["_install"] = load_install(d)
+        skills.append(fm)
 
     skills.sort(key=lambda s: s.get("name", ""))
     table, total_tokens = build_table(skills)
     binaries_table = build_binaries_table(skills)
-    update_readme(table, total_tokens, binaries_table)
+    update_doc(table, total_tokens, binaries_table)
 
 
 if __name__ == "__main__":

@@ -1,9 +1,10 @@
 ---
 name: pandoc
-version: "1.0"
 description: Dokumente erstellen und konvertieren (Markdown, Word, PDF, HTML, EPUB, PowerPoint u.v.m.) via pandoc + typst. Zwei PDF-Templates enthalten (Default fuer allgemeine Dokumente, Research Report fuer wissenschaftliche Berichte).
-requires:
-  bin: [pandoc, typst]
+source:
+  repo: https://github.com/mgiesen/AgentToolkit
+  version: "1.0"
+platform: all
 features:
   - Markdown zu PDF mit professionellen Typst-Templates konvertieren
   - Markdown zu Word (.docx), PowerPoint (.pptx) oder EPUB konvertieren
