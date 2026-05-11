@@ -1,80 +1,141 @@
 # AgentToolkit
 
-Agentenübergreifende Toolsammlung für CLI-basierte AI Agents.
+AgentToolkit ist eine zentrale Werkbank für CLI-basierte AI Agents. Das Repository bündelt Skills, Subagenten, gemeinsame Arbeitsregeln, Permission-Regeln und Runtime-Konventionen an einer Stelle und verteilt sie in die Konfigurationsverzeichnisse der unterstützten Agent-Systeme.
 
-Skills, Agenten und Workflows werden zentral in diesem Repository entwickelt und versioniert. Ein Installer verlinkt sie per Symlink in die jeweiligen Agent-Verzeichnisse, sodass alle Tools eine gemeinsame Quelle, eine gemeinsame Python-Venv und eine zentrale `.env` für API-Keys nutzen. Änderungen wirken sofort, ohne erneute Installation.
+Der praktische Nutzen: Fähigkeiten werden nicht pro Agent kopiert und auseinanderentwickelt, sondern einmal gepflegt und per Symlink eingebunden. Änderungen an einem Skill, einem Subagenten oder einer Regel wirken dadurch sofort in Claude Code, Codex, Gemini CLI und OpenCode.
 
-## Skills
+## Was dieses Repo löst
 
-18 Skills für Apple-Integration, Web-Recherche, Dokumentenkonvertierung, Bildverarbeitung, Geo-Routing und mehr. Vollständige Übersicht inkl. Features, Abhängigkeiten und benötigter Binaries: [docs/skills.md](docs/skills.md).
+Viele lokale Agent-Setups wachsen organisch: ein Skript hier, eine Prompt-Regel dort, mehrere virtuelle Python-Umgebungen, verstreute API-Keys und leicht abweichende Versionen derselben Tools. AgentToolkit ordnet diese Teile in ein nachvollziehbares Modell:
 
-## Agenten
+| Ebene        | Aufgabe                                                                                     | Quelle im Repo                  |
+| ------------ | ------------------------------------------------------------------------------------------- | ------------------------------- |
+| Skills       | Wiederverwendbare Fähigkeiten mit Anleitung, Skripten und Abhängigkeitsdefinition           | `assets/skills/*`               |
+| Subagenten   | Spezialisierte Agent-Rollen für delegierbare Aufgaben                                       | `assets/agents/*.md`            |
+| Instructions | Gemeinsame Grundregeln für Sprache, Skill-Nutzung, Plattformprüfung und Dependency-Handling | `assets/instructions/AGENTS.md` |
+| Permissions  | Vorab erlaubte, eng begrenzte Shell-Befehle für häufige Tool-Aufrufe                        | `assets/permissions/rules.json` |
+| Runtime      | Gemeinsame `.env` und gemeinsame Python-Umgebung `.venv` im Repo-Root                       | `.env`, `.venv`                 |
 
-2 Subagenten für mehrstufige Recherche und wissenschaftliche Berichtserstellung. Details: [docs/agents.md](docs/agents.md).
+## Grundidee
 
-## Permissions
+Ein Skill ist hier nicht nur ein Prompt-Snippet. Ein Skill besteht aus einer `SKILL.md` mit Frontmatter, Plattformangaben und Arbeitsanweisung. Optional kommen `scripts/`, `references/`, `templates/`, Tests und eine `install.yaml` hinzu.
 
-Der Installer verteilt Berechtigungsregeln aus `assets/permissions/rules.json` in die Config-Dateien der Agents, damit häufig genutzte Befehle (Skill-Scripts, lokale CLI-Tools, `gh`-Leseoperationen) nicht jedes Mal manuell bestätigt werden müssen.
+Die `install.yaml` beschreibt, was ein Skill zur Laufzeit braucht: Python-Pakete, System-Binaries, API-Keys oder Post-Install-Schritte. Die globalen Instructions sagen den Agents, wie sie diese Datei auswerten sollen. Python-Abhängigkeiten werden dabei immer in der gemeinsamen `.venv` installiert, nicht ins System-Python.
 
-| Agent       | Ziel-Config                         | Format                                     |
-| ----------- | ----------------------------------- | ------------------------------------------ |
-| Claude Code | `~/.claude/settings.json`           | `Bash(pattern)` in `allow[]`               |
-| Codex       | `~/.codex/rules/agentic.rules`      | Starlark `prefix_rule()`                   |
-| Gemini CLI  | `~/.gemini/settings.json`           | `run_shell_command()` in `tools.allowed[]` |
-| OpenCode    | `~/.config/opencode/.opencode.json` | Pattern in `permission.bash{}`             |
+Der Installer kopiert diese Inhalte nicht, sondern legt Symlinks an. Das ist bewusst so: Das Repository bleibt die einzige Quelle der Wahrheit.
+
+## Enthaltene Fähigkeiten
+
+Das Toolkit enthält Skills für unter anderem:
+
+- Dokumente und PDFs: `pandoc`, `pdf`, `ocr`
+- Bilder, Diagramme und QR-Codes: `image`, `image-gen`, `chart`, `qr-code`, `iconify`
+- Recherche und Web-Daten: `crawl4ai`, `tavily`, `youtube-dlp`, `github`, `gitlab`, `handelsregister`
+- Lokale und externe Arbeitsumgebungen: `ssh`, `folder-picker`
+- Apple-Integration: `apple-notes-write-only`, `apple-reminders-write-only`
+- Routing und Orte: `geo`
+
+Die vollständige, generierte Übersicht mit Plattformen, Features, Abhängigkeiten, API-Keys und Startup-Token steht in [docs/skills.md](docs/skills.md).
+
+Zusätzlich enthält das Repo zwei Subagenten:
+
+- `deep-research` für mehrstufige Recherche mit Quellenanalyse und Synthese
+- `report-writer` für wissenschaftlich strukturierte Berichte mit PDF-Erzeugung
+
+Details stehen in [docs/agents.md](docs/agents.md).
+
+## Unterstützte Agents
+
+Der Installer kennt aktuell diese Zielsysteme:
+
+| Agent       | Skills               | Subagenten           | Instructions                   |
+| ----------- | -------------------- | -------------------- | ------------------------------ |
+| Claude Code | `~/.claude/skills`   | `~/.claude/agents`   | `~/.claude/CLAUDE.md`          |
+| Codex       | `~/.codex/skills`    | `~/.codex/agents`    | `~/.codex/AGENTS.md`           |
+| Gemini CLI  | `~/.gemini/skills`   | `~/.gemini/agents`   | `~/.gemini/GEMINI.md`          |
+| OpenCode    | `~/.opencode/skills` | `~/.opencode/agents` | `~/.config/opencode/AGENTS.md` |
+
+Die Instructions werden als verwaltete Datei geschrieben. Sie enthalten einen Marker und das beim Installieren erkannte Betriebssystem (`macos`, `linux` oder `windows`). Eigene, nicht von AgentToolkit verwaltete Instruction-Dateien werden nicht überschrieben.
 
 ## Installation
 
+Voraussetzung ist Python 3.9 oder neuer. Unter Windows müssen Symlinks erlaubt sein, entweder über den Developer Mode oder durch ein Terminal mit Admin-Rechten.
+
 ```bash
-git clone https://github.com/mgiesen/AgentToolkit.git && cd AgentToolkit
-python3 scripts/install.py              # Interaktiver Installer (TUI)
+git clone https://github.com/mgiesen/AgentToolkit.git
+cd AgentToolkit
+python3 scripts/install.py
 ```
 
-Oder direkt:
+Ohne Flags öffnet der Installer ein interaktives Menü. Dort wählst du, ob Skills, Subagenten, Instructions und Permissions installiert oder entfernt werden sollen und für welche Agent-Systeme das gelten soll.
+
+Für nicht-interaktive Nutzung:
 
 ```bash
-python3 scripts/install.py --all        # Alles für alle Agents installieren
+python3 scripts/install.py --all        # alles für alle unterstützten Agents installieren
 python3 scripts/install.py --status     # Installationsstatus anzeigen
-python3 scripts/install.py --uninstall  # Alles deinstallieren
+python3 scripts/install.py --uninstall  # verwaltete Symlinks und Dateien entfernen
 ```
 
-Cross-Platform: läuft auf macOS, Linux und Windows (Windows benötigt Developer-Mode oder Admin-Rechte für Symlinks). Der Installer setzt Symlinks für Skills und Agents, schreibt die Instructions-Datei mit eingetragenem OS in die Config-Verzeichnisse und verteilt die Permission-Regeln. Skill-Abhängigkeiten (Python-Packages, System-Binaries, API-Keys) installiert der Agent bei Bedarf zur Laufzeit auf Basis der `install.yaml` neben jedem Skill.
+Nach der Installation trägst du benötigte API-Keys in `.env` ein. Eine Vorlage liegt in [.env.example](.env.example).
 
-Nach der Installation: API-Keys in `.env` eintragen.
+## Was der Installer konkret macht
 
-## Roadmap: Sandbox-Modus (Docker)
+Bei einer Installation passieren vier Dinge:
 
-Das Repo soll langfristig zwei Nutzungsmodi bieten:
+1. Skill-Ordner aus `assets/skills/` werden in die Skill-Verzeichnisse der ausgewählten Agents verlinkt.
+2. Subagent-Dateien aus `assets/agents/` werden in die Agent-Verzeichnisse verlinkt.
+3. Die gemeinsamen Instructions werden mit eingetragenem OS in die passende globale Agent-Datei geschrieben.
+4. Permission-Regeln aus `assets/permissions/rules.json` werden in die Konfigurationen der Agents übertragen.
 
-| Modus                 | Zielgruppe                         | Setup                                                                                   |
-| --------------------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
-| **Host-Installation** | Erfahrene Entwickler               | `install.py` verlinkt Skills/Agents per Symlink in die lokalen Agent-Verzeichnisse      |
-| **Sandbox (Docker)**  | Einsteiger, Unternehmensumgebungen | Vorkonfiguriertes Docker-Image mit allen Agents, Skills und Dependencies out of the box |
+Die Permission-Regeln erlauben nur bekannte Tool-Aufrufe, zum Beispiel Skill-Skripte, lokale Dokument- und Bildwerkzeuge sowie lesende `gh`-Operationen. Schreibende oder riskante Aktionen bleiben weiterhin zustimmungspflichtig, sofern der jeweilige Agent das so erzwingt.
 
-### Idee
+Die Regeln werden agent-spezifisch in unterschiedlichen Formaten gespeichert:
 
-Ein Docker-Image, das alle vier Agentensysteme (Claude Code, Codex, Gemini CLI, OpenCode) inklusive Skills, Agents und Dependencies vorinstalliert enthält. User pullen das Image, hinterlegen ihre API-Keys/Credentials und können direkt loslegen — ohne lokale Installation.
+| Agent       | Ziel-Config                         | Format                                            |
+| ----------- | ----------------------------------- | ------------------------------------------------- |
+| Claude Code | `~/.claude/settings.json`           | `permissions.allow[]` mit `Bash(pattern)`         |
+| Codex       | `~/.codex/rules/agentic.rules`      | Starlark-`prefix_rule()`                          |
+| Gemini CLI  | `~/.gemini/settings.json`           | `tools.allowed[]` mit `run_shell_command(prefix)` |
+| OpenCode    | `~/.config/opencode/.opencode.json` | `permission.bash{}` mit Pattern → `allow`         |
 
-### Sicherheitskonzept
+## Nutzung im Alltag
 
-- Der Container läuft unprivilegiert
-- Ein einzelner Ordner (z.B. `workspace/`) wird als Volume gemountet und ist der einzige beschreibbare Ort — Arbeitsverzeichnis für Input und Output
-- Der Agent hat keinen Zugriff auf das Host-Filesystem, SSH-Keys, Browser-Credentials oder andere Repos
-- Netzwerk-Egress wird auf die benötigten API-Endpunkte beschränkt
-- Selbst bei Prompt Injection oder Fehlbedienung kann der Agent nicht über den gemounteten Ordner hinaus operieren — die Isolation wird auf OS-Ebene erzwungen
+Nach der Installation musst du Skills normalerweise nicht manuell starten. Die globalen Instructions weisen den Agent an, passende Skills bevorzugt zu verwenden, wenn deine Aufgabe zur Skill-Beschreibung passt.
 
-### Distribution
+Beispiele:
 
-Das Image wird über die GitHub Container Registry bereitgestellt. Angedachter Workflow:
+- Eine PDF zusammenführen oder komprimieren → `pdf`
+- Text aus einem Scan extrahieren → `ocr`
+- Einen wissenschaftlichen Bericht aus Markdown bauen → `pandoc`
+- GitHub-Issues oder PRs analysieren → `github`
+- Eine Website strukturiert crawlen → `crawl4ai`
+- Ein Diagramm als SVG oder PNG erzeugen → `chart`
+
+Wenn einem Skill ein Tool fehlt, liest der Agent die jeweilige `install.yaml`. Python-Pakete darf er direkt in `.venv` installieren. System-Binaries wie `pandoc`, `qpdf`, `magick` oder `qrencode` erfordern je nach Agent und Plattform eine Rückfrage oder eine passende Freigabe.
+
+## Einzelne Skills via `skills` CLI
+
+Einzelne Skills lassen sich auch ohne vollständiges Klonen dieses Repos über das [Vercel-`skills`-CLI](https://skills.sh) installieren:
 
 ```bash
-docker pull ghcr.io/mgiesen/agenttoolkit:latest
-docker run --read-only --tmpfs /tmp -v ./dir:/workspace -it agenttoolkit
+npx skills add mgiesen/AgentToolkit --skill <name>
+npx skills add mgiesen/AgentToolkit
 ```
 
-### Offene Punkte
+Der Skill-Name entspricht dem `name:`-Feld in der jeweiligen `SKILL.md`, zum Beispiel `chart`, `pandoc` oder `crawl4ai`.
 
-- Hosting der API-Keys: Docker Secrets, `.env`-Mount oder interaktive Eingabe beim Start
-- Ein Image für alle Agents vs. ein Base-Image mit Agent-spezifischen Varianten
-- Kennzeichnung von Skills, die im Container nicht verfügbar sind (z.B. Apple Notes, Folder Picker)
-- Egress-Whitelist für erlaubte API-Endpunkte
+Diese Variante ist praktisch zum schnellen Ausprobieren, ersetzt aber nicht das vollständige AgentToolkit-Setup. Das `skills`-CLI nutzt nicht den Installer dieses Repos, nicht die gemeinsame `.venv`, nicht die zentrale `.env` und nicht automatisch die hier definierten globalen Instructions. Für produktive lokale Agent-Setups ist `python3 scripts/install.py` daher der empfohlene Weg.
+
+## Wartung und Weiterentwicklung
+
+Neue oder geänderte Skills gehören unter `assets/skills/<name>/`. Die zentrale Beschreibung steht in `SKILL.md`; Abhängigkeiten gehören in `install.yaml`; ausführbare Hilfen liegen idealerweise in `scripts/`.
+
+Nach Änderungen an Skills oder Agents sollten die Übersichtsseiten neu erzeugt werden:
+
+```bash
+python3 scripts/generate_skills_overview.py
+python3 scripts/generate_agents_overview.py
+```
+
+Wenn sich die globalen Instructions ändern, wird nicht direkt in den Agent-Konfigurationsdateien editiert. Stattdessen wird `assets/instructions/AGENTS.md` angepasst und anschließend der Installer erneut ausgeführt.
