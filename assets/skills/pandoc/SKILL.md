@@ -39,10 +39,11 @@ Im Skill-Ordner liegen fertige Typst-Templates unter `templates/`. Der Pfad zum 
 ~/.claude/skills/pandoc/templates/
 ```
 
-| Template            | Datei                 | Einsatz                                        | Font                         |
-| ------------------- | --------------------- | ---------------------------------------------- | ---------------------------- |
-| **Default**         | `default.typ`         | Berichte, Dokumentationen, Specs               | Avenir Next + Menlo          |
-| **Research Report** | `research-report.typ` | Wissenschaftliche Berichte, Rechercheergebnisse | Charter + Avenir Next + Menlo |
+| Template            | Datei                 | Einsatz                                                   | Font                          |
+| ------------------- | --------------------- | --------------------------------------------------------- | ----------------------------- |
+| **Default**         | `default.typ`         | Berichte, Dokumentationen, Specs                          | Avenir Next + Menlo           |
+| **Research Report** | `research-report.typ` | Wissenschaftliche Berichte, Rechercheergebnisse           | Charter + Avenir Next + Menlo |
+| **Datasheet**       | `datasheet.typ`       | Technische Datenblaetter (Querformat, schwarze Tabellen) | Helvetica Neue + Menlo        |
 
 ## Markdown zu PDF
 
@@ -60,6 +61,25 @@ pandoc /tmp/input_fixed.md --pdf-engine=typst \
 ```
 
 Der Preprocessing-Schritt ist besonders bei KI-generiertem Markdown wichtig, da Listen ohne Leerzeile nach Doppelpunkt sonst als Fliesstext gerendert werden.
+
+### Datenblatt (datasheet.typ) — Sonderfall mit Pre-Processing
+
+Das Datenblatt-Template darf **nicht** direkt mit `--pdf-engine=typst` gebaut werden. Pandoc erzeugt fuer Pipe-Tabellen Spaltenbreiten anhand der Strich-Anzahl (`---`), was bei kurzen Headern wie `Nr` zu unbrauchbar schmalen Spalten (<2 %) fuehrt. Ausserdem bleiben fettgedruckte Pseudo-Ueberschriften (`**Foo**` allein auf einer Zeile) ohne Block-Wrapper und werden am Seitenende verwaist abgehaengt.
+
+Verwende daher das Wrapper-Skript:
+
+```bash
+~/.claude/skills/pandoc/scripts/build_datasheet.sh input.md output.pdf
+```
+
+Das Skript laeuft 3-stufig:
+
+1. `fix_markdown.py` — fehlende Leerzeilen vor Listen ergaenzen
+2. `pandoc --to typst --standalone` — Typst-Quellcode generieren
+3. `normalize_table_columns.py` — Spalten auf min. 7 % normalisieren, `horizontalrule` neutralisieren, eigenstaendige `#strong[...]` als sticky-Bloecke wickeln
+4. `typst compile` — finales PDF
+
+Fuer Datenblaetter empfohlen: Querformat (vom Template gesetzt), Spalten linksbuendig mit schwarzem Vollgitter, Tabellenheader bei Seitenumbruch wiederholt, keine farbigen Akzente.
 
 ### PDF-Optionen via Frontmatter
 
