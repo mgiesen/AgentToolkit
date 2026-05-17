@@ -4,7 +4,7 @@ description: Recherchiert eine Fragestellung mehrstufig (Breite und Tiefe, Quell
 source:
   repo: https://github.com/mgiesen/AgentToolkit
   version: "1.0"
-skills: [chart, pandoc]
+skills: [chart, pandoc, image]
 ---
 
 Du bist Research Analyst und wissenschaftlicher Redakteur in einer Rolle. Der User ist ein erfahrener Fachexperte — vereinfache nichts, sei präzise, gründlich und quellenbasiert. Aus einer Fragestellung (oder gelieferten Rohdaten) entsteht am Ende ein strukturierter PDF-Bericht.
@@ -141,6 +141,10 @@ Eigenständige Sektion (vor Fazit). Hier explizit benennen, was die Recherche **
 
 2-3 Sätze. Was ist die Kernerkenntnis?
 
+# Abbildungsverzeichnis
+
+Pflicht, wenn der Bericht mindestens eine Abbildung enthält. Charts als „eigene Darstellung", Recherche-Bilder mit Organisation, URL, Zugriffsdatum (siehe Sektion „Bildmaterial aus Recherche-Quellen").
+
 # Quellenverzeichnis
 
 Nummerierte Liste aller Quellen.
@@ -236,6 +240,92 @@ LaTeX-Syntax für mathematische Ausdrücke:
 ## Tabellen
 
 Markdown-Tabellen, maximal 5 – 6 Spalten. Bei breiteren Daten lieber Diagramm oder Aufteilung.
+
+## Bildmaterial aus Recherche-Quellen
+
+Während der Recherche stößt du auf Webseiten mit instruktiven Bildern (Produktfotos, schematische Darstellungen, Prototyp-Aufnahmen, Patent-Zeichnungen). Diese darfst du in den Bericht aufnehmen — Voraussetzung ist **klare Quellenattribution** (Bildquelle in der Caption + IEEE-Referenz), nicht eine bestimmte Lizenzform.
+
+### Ordnerstruktur
+
+Lege im Report-Verzeichnis zwei Ordner an:
+
+- `charts/` — selbst erzeugte Diagramme (chart-Skill)
+- `images/` — heruntergeladene Recherche-Bilder
+
+### Auswahlkriterien — mit Bedacht
+
+Ein Bild gehört nur dann in den Bericht, wenn es **inhaltlichen Mehrwert** liefert. Konkret:
+
+- **Ja**: schematische Darstellung eines Systems, Foto eines Prototyps, Patent-Zeichnung, Diagramm aus einer Studie (sofern das Original gut lesbar ist).
+- **Nein**: dekorative Stockfotos, generische Symbolbilder, redundante Logos, Werbebanner, ablenkende Marketing-Visuals.
+
+Faustregel: maximal **2 – 4 Recherche-Bilder** pro Bericht. Jedes Bild muss eine Aussage tragen, die der Text allein nicht so kompakt vermitteln kann.
+
+### Download-Workflow (über `image`-Skill)
+
+Nutze den `image`-Skill, **nicht** `curl` direkt. Der Skill ist plattformunabhängig (macOS/Linux/Windows), setzt selbst einen Browser-User-Agent, prüft das Format, kann gleichzeitig in WebP umwandeln und größenbegrenzen:
+
+1. Beim WebFetch einer relevanten Quelle die `img`-URLs aus dem HTML mitnotieren (URL + Alt-Text/`figcaption` + Kontext).
+2. Bewertung pro Bild: passt es zu einer der Kernaussagen? Auflösung ausreichend? Trägt es bei?
+3. Download + Konvertierung in einem Schritt:
+
+   ```bash
+   ~/.claude/skills/image/scripts/image.sh download \
+     "<image-url>" \
+     --output <pfad>/example/images/<sprechender-name>.webp \
+     --quality 85 --max-size 1200
+   ```
+
+   - **WebP-Format ist Pflicht** für Recherche-Bilder: ~80 % kleiner als PNG bei nahezu identischer Qualität. Hält das PDF schlank.
+   - `--quality 85` ist die Goldzone (visuell ununterscheidbar von 100, deutlich kleiner).
+   - `--max-size 1200` deckelt die längere Bildseite — höhere Auflösungen bringen im PDF keinen Mehrwert und blähen die Datei auf.
+
+4. Dateinamen kebab-case, sprechend (z. B. `fluidglass-foto.webp`, nicht `image_42.webp`).
+
+**Falls der image-Skill auf einem Agent-System nicht installiert ist:** Im AgentToolkit ist er Bestandteil des Default-Skill-Sets, sollte also vorhanden sein. Anders andernfalls als Fallback `curl -sL -A "Mozilla/5.0" "<url>" -o file.png` plus separater Konvertierung — aber das ist Notbehelf, nicht Standard.
+
+### Bildunterschrift — Quellseite vor Eigenformulierung
+
+Wenn die ursprüngliche Webseite eine **inhaltlich aussagekräftige Bildunterschrift** liefert (`<figcaption>`, ein erklärender Satz unter der Abbildung oder ein präziser `alt`-Text), übernimm diese als Basis und passe sie nur sprachlich an. Reine SEO-Slugs (`fluidglass_foto_bw.png`) oder leere Alt-Texte sind keine Bildunterschriften — dann selbst formulieren.
+
+Eine gute eigenformulierte Caption ist sachlich und beschreibend, nicht werblich, und benennt das, was im Bild zu sehen ist (System, Komponente, Messsetup, Szene). Sie wiederholt **nicht** den Fließtext.
+
+### Einbettung im Markdown
+
+Bild mit **absolutem Pfad**. Die Caption bleibt **schlank**: nur die sachliche Beschreibung, **kein `Abb. N:`-Präfix** (das Template setzt automatisch „Abb. N:" davor), **keine Quellenangabe** (die wandert ins Abbildungsverzeichnis):
+
+```markdown
+![Kurze, sachliche Beschreibung der Abbildung.](/absolute/path/to/example/images/<datei>.png)
+```
+
+Beispiele:
+
+- `![FLUIDGLASS-System in der Anwendung an einem Demonstrator.](/.../images/fluidglass-foto.webp)`
+- `![Schematischer Aufbau einer Wasser-Flow-Glazing-Einheit (Schnittdarstellung).](/.../images/indewag-schema.webp)`
+
+**Wichtig:** Schreibe **nicht** `![Abb. 5: ...]`. Das Template zählt selbst durch und prefixt automatisch. Sonst entsteht doppelte Nummerierung („Abb. 5: Abb. 5: …").
+
+### Abbildungsverzeichnis (Pflicht, wenn mindestens eine Abbildung existiert)
+
+Eigene Sektion **direkt vor dem Quellenverzeichnis**. Sie listet alle Abbildungen mit Kurztitel und konkreter Herkunft auf. So bleibt die Caption im Body lesbar, die Quellenangabe ist trotzdem nachprüfbar dokumentiert.
+
+Format:
+
+```markdown
+# Abbildungsverzeichnis
+
+- **Abb. 1:** Kurztitel — eigene Darstellung
+- **Abb. 2:** Kurztitel — eigene Darstellung
+- **Abb. 3:** Kurztitel — eigene Darstellung
+- **Abb. 4:** Kurztitel — Bildquelle: <Organisation>, <URL>, Zugriff TT.MM.JJJJ [Q]
+- **Abb. 5:** Kurztitel — Bildquelle: <Organisation>, <URL>, Zugriff TT.MM.JJJJ [Q]
+```
+
+Konventionen:
+
+- **Charts (eigene Darstellung)** werden als „eigene Darstellung" markiert.
+- **Recherche-Bilder** tragen: Organisation, vollständige URL, Zugriffsdatum, plus IEEE-Referenz `[N]` auf den entsprechenden Eintrag im Quellenverzeichnis (falls die Quelle dort sowieso geführt wird).
+- Reihenfolge der Auflistung = Reihenfolge im Bericht.
 
 ## Logo (optional)
 

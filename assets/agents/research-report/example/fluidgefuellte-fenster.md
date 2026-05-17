@@ -57,13 +57,19 @@ Fluidgefüllte Fenster lassen sich entlang zweier Achsen klassifizieren — *sta
 
 Das von der Universität Liechtenstein koordinierte EU-FP7-Projekt mit zehn Konsortialpartnern (Mayer Glastechnik, NTB Buchs, TU München, GlassX AG, Hoval, CEA, Universität Stuttgart, CyRIC, Arconic Europe, AMIRES) realisierte einen voll funktionsfähigen Demonstrationscontainer und testete ihn in Vaduz (kaltes Klima) und Nicosia (heißes Klima) [4] [5]. Budget: 5,13 Mio. € gesamt, 3,87 Mio. € EU-Förderung [4]. Das System ist eine Vierfachverglasung mit zwei segmentierten Fluidkammern (außen: Verschattung/Solarabsorption mit magnetischen Nanopartikeln in Wasser-Frostschutz-Suspension; innen: Heiz-/Kühlpanel) und einer adaptiven Steuerung [5] [10]. Berichtete Performance: bis zu **1 kW pro Fenster** unter Idealbedingungen, **50–70 % Energieeinsparung im Retrofit, 20–30 % im nZEB-Neubau** [5]. Die magnetischen Partikel wurden so funktionalisiert, dass sie nicht agglomerieren und nicht auf der Glasinnenseite ausfallen [5]. Seit 2023/24 wird die Technologie durch das Spin-off **flowX** (CEO Dragan Popovic, CTO Andreas Bittis, Beirat Prof. Dietrich Schwarz) kommerzialisiert; flowX nennt 67 % Energiereduktion, 28 % geringere Betriebskosten und 10 % geringere Geschosshöhe — letztere durch Wegfall konventioneller Heiz-/Kühldecken [11].
 
+![FLUIDGLASS-System in der Anwendung an einem Demonstrator-Container.](/Users/max/GitHub/AgentToolkit/assets/agents/research-report/example/images/fluidglass-foto.webp)
+
 ### LaWin — Large-Area Fluidic Windows (Horizon 2020, GA 637108, ab 2015)
 
 Koordiniert von Prof. Lothar Wondraczek (Otto-Schott-Institut, Friedrich-Schiller-Universität Jena) mit 14 Konsortialpartnern aus Deutschland, Österreich, Belgien und Tschechien, EU-Förderung rund 6 Mio. € [12] [20]. Im Zentrum steht ein **Glas-Glas-Verbund mit eingewalzten Mikrokanälen**, durch die eine Funktionsflüssigkeit mit magnetischen Eisen-Nanopartikeln zirkuliert. Die Verschattung kann durch externe Magnetfelder lokal gesteuert werden; gleichzeitig wird Außenwärme über das zirkulierende Fluid an eine Wärmepumpe übertragen [20]. Die Folgepublikation von Su, Fraaß, Kloas, Wondraczek (Frontiers in Materials, 2019) [3] beschreibt eine Dreifachverglasung mit zwei Glas-Glas-Kapillarpaneelen und einem R1233zd-Kältekreislauf (GWP ≈ 14). Erreichte U-Werte: 1,46 W/(m²·K) ohne Beschichtung, 1,0 W/(m²·K) mit einer Low-E-Schicht, 0,7 W/(m²·K) mit zwei Low-E-Schichten. Saisonale Leistungszahl: SCOP ≈ 6,5 (Heizen), SEER ≈ 10,9 (Kühlen); Primärenergiebedarf für ein Berliner Büro mit Fenster-Boden-Verhältnis 0,4 nur 2,9 kWh/(m²·a) [3].
 
+![LaWin-Prototyp mit magnetisch steuerbarer Fluidschicht — Eisen-Nanopartikel in der Kapillarstruktur regulieren Lichtdurchlässigkeit und Wärmeernte.](/Users/max/GitHub/AgentToolkit/assets/agents/research-report/example/images/lawin-prototyp.webp)
+
 ### InDeWaG — Industrial Development of Water Flow Glazing Systems (H2020, GA 680441, 2015–2020)
 
 Koordiniert von Prof. Dieter Brüggemann (Universität Bayreuth) mit Fraunhofer-Gesellschaft, dem Central Laboratory of Solar Energy (Bulgarien), ETEM BG/AD, Cerviglas, HTCO, Bollinger+Grohmann, GMAE Transforma und Architektonika Studio [6] [21]. Gesamtbudget 4,997 Mio. €, EU-Förderung 4,23 Mio. € [6]. Ergebnis: ein 50 m² großer nZEB-Pavillon (7 × 7 m) an der Bulgarischen Akademie der Wissenschaften in Sofia, eröffnet am 10. Oktober 2019 [21] [22]. **Jedes Fenster enthält 70 Liter destilliertes Wasser und 30 Liter Ethylenglykol als Frostschutz**, Durchflussrate des FFG-Zirkulators 8 L/min pro Fenster [21] [22]. Drei Temperaturebenen werden bereitgestellt: 30 °C (Heizen/Speicher), 60 °C (Brauchwarmwasser), 90 °C (Antrieb von Absorptionskältemaschinen). Berichtete Kostenreduktion gegenüber konventioneller nZEB-Bauweise: **mindestens 15 %** [6] [21]. Messreihe in Sofia ist auf 10 Jahre angelegt [22] — die ersten langfristigen In-situ-Daten dieser Klasse werden also erst 2029 vollständig vorliegen.
+
+![Demonstrationspavillon des InDeWaG-Projekts an der Bulgarischen Akademie der Wissenschaften in Sofia (7 × 7 m, eröffnet Oktober 2019).](/Users/max/GitHub/AgentToolkit/assets/agents/research-report/example/images/indewag-pavillon.webp)
 
 ### Water House 1.0 / 2.0 und Loughborough/Water-Filled Glass Ltd.
 
@@ -72,13 +78,15 @@ Matyas Gutai (heute Loughborough University, vorher Tokyo University) entwickelt
 - **Water House 1.0** (2014/2015): 10 m² großer Pavillon in Kecskemét/Ungarn, Konstruktion aus 4 wassergefüllten Glaspaneelen (WFG, mit externem Argonschicht-Schutz) und 13 wassergefüllten Stahlpaneelen (WFS, mit 20 cm Dämmung). Wasserführung in drei Loops mit je einem Boden-, einem Dach- und zwei Wandpaneelen. Förderung ca. 50.000 € EU + Ungarn [23] [24].
 - **Water House 2.0**: Pavillon an der Feng Chia University in Taichung/Taiwan (genaues Errichtungsjahr nicht öffentlich dokumentiert), klar verglaste Südseite zum See, demonstriert Tropenklima-Eignung [7] [25].
 
+![Water House 2.0 von Matyas Gutai am Feng Chia University Campus in Taichung — hybride Konstruktion aus wassergefüllten Glas- und Stahlpaneelen, klar verglaste Südfassade zum See.](/Users/max/GitHub/AgentToolkit/assets/agents/research-report/example/images/water-house-2.webp)
+
 Die 2020 in *Energy and Buildings* publizierte Simulationsstudie [4] [8] extrapolierte die Messdaten aus beiden Häusern auf 13 Städte in allen Klimazonen (tropisch, trocken, gemäßigt, kontinental, polar). Ergebnis: WFG spart **47–72 % Energie gegenüber Doppel-Low-E** und **34–61 % gegenüber Dreifachverglasung** [8]; eine Folgestudie (SWFG, hybride Variante) berichtet **3–84 % Einsparung je nach Klima** [9]. Die Loughborough-Ausgründung Water-Filled Glass Ltd. (Gutai, Daniel Schinagl, Abolfazl Ganji Kheybari, 2020) arbeitet mit dem Aluminium-Profilhersteller WICONA und stellte das Produkt auf der BAU München 2025 vor [26].
 
 ### Weitere akademische Arbeiten
 
 Die Hong-Kong-Schule um T. T. Chow und Mitarbeiter:innen (Hong Kong Polytechnic, City University of Hong Kong) hat seit den 2010er-Jahren Wasserdurchflussfenster systematisch experimentell und numerisch untersucht: Cavity-Stärke 10–20 mm, Wärmeeintragseffizienz 20–37 % bei 1000 mL/min·m², Reduktion der Raumkühllast um 32 % (vs. Doppelverglasung) bzw. 52 % (vs. Einfachverglasung) [27] [28]. Eine spektral selektive Variante mit Cu²⁺/Chlorophyll-Mischung erreichte 2024 in Hong Kong **Light-to-Solar-Gain-Werte > 2,5** bei sehr niedrigem SHGC und hoher Lichttransmission [29]. Die UPM Madrid (Hernández-Ramos) hat im Rahmen von InDeWaG die LCA- und Wirtschaftlichkeitsmodelle beigesteuert [13] [14] [22].
 
-![Abb. 1: Berichtete Energieeinsparungen fluidgefüllter Verglasungen gegenüber Doppel-Low-E-Referenzen (Bandbreite konservativ bis maximal je System)](chart_savings.svg)
+![Berichtete Energieeinsparungen fluidgefüllter Verglasungen gegenüber Doppel-Low-E-Referenzen (Bandbreite konservativ bis maximal je System)](/Users/max/GitHub/AgentToolkit/assets/agents/research-report/example/charts/chart_savings.svg)
 
 ## Technischer Nutzen und Funktionsweise
 
@@ -91,7 +99,7 @@ Fluidgefüllte Fenster vereinen Funktionen, die konventionell auf mehrere Bautei
 5. **Schallschutz**: Wasser dämpft Luftschall im mittleren Frequenzbereich besser als Argon [26] [31].
 6. **Strahlenschutz** und Brandschutz sind theoretisch denkbar (vgl. ClearView Radiation Shielding für radiologische Anwendungen [32]), aber für die Gebäudeanwendung bislang nicht systematisch untersucht.
 
-![Abb. 2: U-Werte fluidgefüllter Verglasungen im Vergleich zur Standardverglasung. Fluide Füllung allein bringt keinen U-Wert-Vorteil; erst die Kombination mit Low-E-Schichten reicht an Premium-Triple-Glazing heran.](chart_uvalues.svg)
+![U-Werte fluidgefüllter Verglasungen im Vergleich zur Standardverglasung. Fluide Füllung allein bringt keinen U-Wert-Vorteil; erst die Kombination mit Low-E-Schichten reicht an Premium-Triple-Glazing heran.](/Users/max/GitHub/AgentToolkit/assets/agents/research-report/example/charts/chart_uvalues.svg)
 
 ## Verwendete Fluide
 
@@ -145,7 +153,7 @@ Drei Beobachtungen sind für die Einordnung entscheidend.
 
 Die Spannung zwischen Hersteller-Claims (flowX: 67 %, WFG: 72 %) und LCA-Werten (30 % in Sofia, 66 % in Peralveche) ist real und wird mit hoher Wahrscheinlichkeit erst durch standardisierte Mess- und Berechnungsverfahren auflösbar.
 
-![Abb. 3: Zeitliche Entwicklung der Schlüsselmeilensteine fluidgefüllter Verglasung — die Anfänge liegen in den späten 1950er-Jahren, das Feld professionalisierte sich ab 2013 mit den EU-Großprojekten.](chart_timeline.svg)
+![Zeitliche Entwicklung der Schlüsselmeilensteine fluidgefüllter Verglasung — die Anfänge liegen in den späten 1950er-Jahren, das Feld professionalisierte sich ab 2013 mit den EU-Großprojekten.](/Users/max/GitHub/AgentToolkit/assets/agents/research-report/example/charts/chart_timeline.svg)
 
 # Limitationen
 
@@ -160,6 +168,16 @@ Die Spannung zwischen Hersteller-Claims (flowX: 67 %, WFG: 72 %) und LCA-Werten 
 # Fazit
 
 Fluidgefüllte Fenster sind ein wissenschaftlich solide entwickeltes Feld mit drei abgeschlossenen EU-Großprojekten, mindestens vier validierten Demonstratoren und einer beginnenden Kommerzialisierung über zwei Spin-offs (flowX, Water-Filled Glass Ltd.). Die berichteten Energieeinsparungen von 30–72 % gegenüber konventioneller Verglasung sind in Simulation und Container-Tests konsistent reproduziert, ihre Übertragbarkeit auf reale Volumenbauten ist jedoch erst durch die Sofia-Langzeitmessung bis 2029 belastbar zu belegen. Die zentrale Hürde ist nicht die Physik, sondern die Industrialisierung: fehlende Normen, hohe Initialkosten, keine HLK-Drop-in-Lösung und ungelöste Fragen zu Mikrobiologie und parasitärer Pumpenenergie.
+
+# Abbildungsverzeichnis
+
+- **Abb. 1:** FLUIDGLASS-System in der Anwendung an einem Demonstrator-Container — Bildquelle: flowX AG, https://www.flowx.one, Zugriff 18.05.2026 [11]
+- **Abb. 2:** LaWin-Prototyp mit magnetisch steuerbarer Fluidschicht — Bildquelle: Jan-Peter Kasper / FSU Jena via New Atlas, https://newatlas.com/fluidic-windows-iron-particles/53003/, Zugriff 18.05.2026 [20]
+- **Abb. 3:** Demonstrationspavillon des InDeWaG-Projekts in Sofia — Bildquelle: InDeWaG-Konsortium, https://www.indewag.eu/photos/pavilion/s03.jpg, Zugriff 18.05.2026 [21]
+- **Abb. 4:** Water House 2.0 am Feng Chia University Campus in Taichung — Bildquelle: Water-Filled Glass Ltd. via Designboom, https://www.designboom.com/technology/water-filled-glass-windows-passive-insulation-technology-01-19-2023/, Zugriff 18.05.2026 [7]
+- **Abb. 5:** Berichtete Energieeinsparungen fluidgefüllter Verglasungen gegenüber Doppel-Low-E-Referenzen — eigene Darstellung
+- **Abb. 6:** U-Werte fluidgefüllter Verglasungen im Vergleich zur Standardverglasung — eigene Darstellung
+- **Abb. 7:** Zeitleiste der Schlüsselmeilensteine fluidgefüllter Verglasung — eigene Darstellung
 
 # Quellenverzeichnis
 

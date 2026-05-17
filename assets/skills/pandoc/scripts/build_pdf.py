@@ -53,6 +53,10 @@ def main() -> int:
                         help="Pandoc-Spaltenbreiten in Tabellen NICHT entfernen "
                              "(Default: nowidths.lua-Filter aktiv, damit typst "
                              "die Spaltenbreiten selbst bestimmt)")
+    parser.add_argument("--no-optimize", action="store_true",
+                        help="Ghostscript-Postprocessing zur PDF-Verkleinerung "
+                             "ueberspringen (Default: optimieren, wenn gs "
+                             "verfuegbar — verkleinert PDFs mit Bildern stark)")
     args = parser.parse_args()
 
     require("pandoc")
@@ -98,6 +102,28 @@ def main() -> int:
             cmd += ["-V", v]
 
         subprocess.run(cmd, check=True)
+
+    # Optionale Ghostscript-Komprimierung (typst bettet WebP/PNG unkomprimiert
+    # ein — gs reduziert das auf ~20 % der Ausgangsgroesse bei /printer-Qualitaet)
+    if not args.no_optimize and shutil.which("gs"):
+        size_before = output_path.stat().st_size
+        tmp_optimized = output_path.with_suffix(".optimized.pdf")
+        try:
+            subprocess.run(
+                ["gs", "-sDEVICE=pdfwrite", "-dPDFSETTINGS=/printer",
+                 "-dNOPAUSE", "-dQUIET", "-dBATCH",
+                 f"-sOutputFile={tmp_optimized}", str(output_path)],
+                check=True,
+            )
+            size_after = tmp_optimized.stat().st_size
+            if size_after < size_before:
+                tmp_optimized.replace(output_path)
+                print(f"PDF erzeugt: {output_path} "
+                      f"({size_before // 1024} KB -> {size_after // 1024} KB)")
+                return 0
+            tmp_optimized.unlink(missing_ok=True)
+        except subprocess.CalledProcessError:
+            tmp_optimized.unlink(missing_ok=True)
 
     print(f"PDF erzeugt: {output_path}")
     return 0

@@ -75,7 +75,13 @@
   // Nummerierte Ueberschriften
   set heading(numbering: sectionnumbering)
 
+  // Abbildungs- und Quellenverzeichnis starten immer auf eigener Seite.
+  // weak: true verhindert eine leere Seite, falls die Vorseite ohnehin endet.
   show heading.where(level: 1): it => {
+    let label = it.body
+    if label == [Abbildungsverzeichnis] or label == [Quellenverzeichnis] {
+      pagebreak(weak: true)
+    }
     v(1.4em)
     block(below: 0.8em)[
       #set text(size: 1.4em, weight: "bold", fill: primary-color, font: heading-font)
@@ -130,8 +136,10 @@
   }
 
   // Abbildungen: Beschriftung unter der Abbildung, nummeriert
-  set figure(numbering: "1")
-  set figure.caption(separator: [ — ])
+  // typst-figure: eigene Nummerierung + supplement "Abb." statt "Abbildung",
+  // damit Captions kompakt bleiben (kein redundantes "Abb. N:" im Markdown noetig)
+  set figure(numbering: "1", supplement: [Abb.])
+  set figure.caption(separator: [: ])
   show figure.caption: it => {
     set text(size: 0.9em, style: "italic", fill: rgb("#444"))
     it
