@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """AgentToolkit Installer — cross-platform (macOS, Linux, Windows).
 
-Verteilt Skills, Subagents, Instructions und Permissions per Symlink (Skills/Agents) 
+Verteilt Skills, Subagents und Instructions per Symlink (Skills/Agents)
 bzw. Datei-Substitution (Instructions) in die Config-Verzeichnisse der unterstützten Agent-Systeme.
 
 Benutzung:
@@ -17,7 +17,6 @@ oder ein Terminal mit Admin-Rechten.
 from __future__ import annotations
 
 import argparse
-import importlib.util
 import os
 import platform
 import sys
@@ -32,14 +31,13 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SKILLS_DIR = REPO_ROOT / "assets" / "skills"
 AGENTS_DIR = REPO_ROOT / "assets" / "agents"
 INSTRUCTIONS_SOURCE = REPO_ROOT / "assets" / "instructions" / "AGENTS.md"
-RULES_SCRIPT = REPO_ROOT / "assets" / "permissions" / "install_rules.py"
 
 INSTRUCTIONS_MARKER = (
     "<!-- AgentToolkit-generated — Quelle: assets/instructions/AGENTS.md. "
     "Nicht direkt editieren, sondern die Quelle und dann install.py erneut ausführen. -->"
 )
 
-ASSETS = ("Skills", "Agents", "Instructions", "Permissions")
+ASSETS = ("Skills", "Agents", "Instructions")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -315,41 +313,6 @@ def uninstall_instructions(targets: list[AgentTarget]) -> None:
 
 
 # ──────────────────────────────────────────────────────────────
-# Permissions — install_rules.py als Modul laden statt subprocess
-# ──────────────────────────────────────────────────────────────
-
-_rules_module = None
-
-
-def _load_rules():
-    global _rules_module
-    if _rules_module is None:
-        spec = importlib.util.spec_from_file_location("install_rules", RULES_SCRIPT)
-        if spec is None or spec.loader is None:
-            raise RuntimeError(f"Kann {RULES_SCRIPT} nicht laden.")
-        _rules_module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(_rules_module)
-    return _rules_module
-
-
-def install_permissions(agent_names: list[str]) -> None:
-    print(bold("  Permissions"))
-    _load_rules().install(agent_names)
-    print()
-
-
-def uninstall_permissions(agent_names: list[str]) -> None:
-    print(bold("  Permissions"))
-    _load_rules().uninstall(agent_names)
-    print()
-
-
-def status_permissions() -> None:
-    print(bold("  Permissions"))
-    _load_rules().status()
-
-
-# ──────────────────────────────────────────────────────────────
 # Status
 # ──────────────────────────────────────────────────────────────
 
@@ -401,7 +364,6 @@ def show_status() -> None:
               f"Instructions: {instr}")
 
     print()
-    status_permissions()
 
 
 # ──────────────────────────────────────────────────────────────
@@ -480,8 +442,6 @@ def do_install(targets: list[AgentTarget], assets: list[str]) -> None:
         if "Agents" in assets:
             install_agents(agent)
         print()
-    if "Permissions" in assets:
-        install_permissions([a.name for a in targets])
     if "Instructions" in assets:
         install_instructions(targets)
 
@@ -494,8 +454,6 @@ def do_uninstall(targets: list[AgentTarget], assets: list[str]) -> None:
         if "Agents" in assets:
             uninstall_agents(agent)
         print()
-    if "Permissions" in assets:
-        uninstall_permissions([a.name for a in targets])
     if "Instructions" in assets:
         uninstall_instructions(targets)
 

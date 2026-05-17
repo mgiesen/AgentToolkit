@@ -14,7 +14,7 @@
 | **gitlab** | 1.0 | Alle | • Repos, Issues und Merge Requests eines GitLab-Projekts lesen<br>• MR-Diffs und CI-Pipeline-Status abfragen (inkl. Job-Logs streamen)<br>• Code und Dateiinhalte direkt über die GitLab API abrufen<br>• Repos und Code über GitLab Search durchsuchen<br>• Self-hosted GitLab-Instanzen über GITLAB_HOST oder volle URLs ansprechen<br>• Schreibende Operationen (Kommentare, Labels, Merges) nur nach expliziter Freigabe | `⚙️ glab` | `GITLAB_TOKEN` *(optional)* | 82 |
 | **handelsregister** | 1.0 | Alle | • Unternehmen im deutschen Handelsregister nach Name, Ort oder Registernummer suchen<br>• Registerauszüge als PDF (aktuell, chronologisch, historisch) abrufen<br>• Strukturierte Unternehmensdaten mit Geschäftsführern, Stammkapital und Prokura auslesen<br>• Nach Rechtsform, Bundesland, Registergericht und PLZ-Bereich filtern | `📦 requests`<br>`📦 beautifulsoup4` | — | 95 |
 | **iconify** | 1.0 | Alle | • Icons aus 200k+ Iconify-Icons suchen (Lucide, Tabler, Phosphor, Material Design)<br>• Konkretes SVG-Icon per ID (z.B. lucide:gauge) herunterladen<br>• Nach Farbpalette (mono/color/any) und Icon-Set filtern<br>• Top-Treffer suchen und direkt als SVG-Datei speichern | `📦 requests` | — | 79 |
-| **image** | 1.0 | Alle | • Bilder von URLs herunterladen und in ein anderes Format konvertieren<br>• Bilder skalieren (Pixel oder Prozent) und zuschneiden<br>• SVG zu PNG mit konfigurierbarem DPI konvertieren<br>• Dateigröße ohne sichtbaren Qualitätsverlust optimieren<br>• Metadaten (Format, Dimensionen, Dateigröße, Farbraum) auslesen | `⚙️ magick`<br>`📦 Pillow` | — | 53 |
+| **image** | 1.3 | Alle | • Bilder von URLs herunterladen und in ein anderes Format konvertieren<br>• Bilder skalieren (Pixel oder Prozent) und zuschneiden<br>• SVG zu PNG mit konfigurierbarem DPI konvertieren<br>• Dateigröße ohne sichtbaren Qualitätsverlust optimieren<br>• Metadaten (Format, Dimensionen, Dateigröße, Farbraum) auslesen<br>• Mehrere Bilder zu Collagen oder NxM-Grids zusammenbauen (Reihe, Spalte, Raster) mit konfigurierbarem Hintergrund und Abstand | `⚙️ magick`<br>`📦 Pillow` | — | 103 |
 | **image-gen** | 1.0 | Alle | • KI-Bilder aus Textprompts via Google Gemini generieren<br>• Zwischen zwei Qualitätsstufen wählen (hochwertig ~$0.13 oder schnell ~$0.07)<br>• Aspect Ratio (1:1, 16:9, 9:16, 4:3, 3:2) und Auflösung festlegen<br>• Prompts mit Motiv, Komposition, Stil und Atmosphäre formulieren | — | `GEMINI_IMAGE_GEN_API_KEY` | 24 |
 | **ocr** | 1.0 | Alle | • Text aus Bildern (PNG, JPG, TIFF, BMP) extrahieren — auf macOS via Apple Vision hardwarebeschleunigt<br>• Gescannte PDFs in durchsuchbaren Text umwandeln<br>• Mehrere Sprachen gleichzeitig erkennen (z.B. de+en)<br>• Bilder in durchsuchbare PDFs konvertieren | `⚙️ tesseract` | — | 36 |
 | **pandoc** | 1.0 | Alle | • Markdown zu PDF mit professionellen Typst-Templates konvertieren<br>• Markdown zu Word (.docx), PowerPoint (.pptx) oder EPUB konvertieren<br>• HTML-Ausgabe mit eingebetteten Ressourcen erzeugen<br>• Inhaltsverzeichnis, Abschnittsnummerierung und Syntax-Highlighting konfigurieren<br>• Word-Dokumente zurück zu Markdown extrahieren | `⚙️ pandoc`<br>`⚙️ typst` | — | 63 |
@@ -24,7 +24,12 @@
 | **tavily** | 1.0 | Alle | • Breite Web-Recherche mit Quellensynthese und nummerierten Zitaten<br>• Aktuelle News, Trends und Vendor-Listen zu einem Thema abrufen<br>• Markt- und Wettbewerbsanalysen für strategische Fragen<br>• Gezielte Nachschlag-Suche nach einem Research-Report | `📦 tavily-cli` | `TAVILY_API_KEY` | 88 |
 | **youtube-dlp** | 1.0 | Alle | • Video-Metadaten (Titel, Kanal, Datum, Beschreibung) ohne Download abrufen<br>• Transkripte aus manuellen oder automatischen Untertiteln extrahieren (de/en/…)<br>• YouTube-Suchergebnisse und Playlist-Inhalte als strukturierte Quellenliste abrufen<br>• Audio (m4a/mp3) oder Video (mp4) nur bei explizitem Download-Auftrag speichern | `⚙️ yt-dlp`<br>`⚙️ ffmpeg` | — | 107 |
 
-_Gesamt-Kontextgröße aller Skills beim Start: **1,178 Tokens**_
+_Gesamt-Kontextgröße aller Skills beim Start: **1,228 Tokens**_
+
+
+
+
+
 
 
 ## Binaries
