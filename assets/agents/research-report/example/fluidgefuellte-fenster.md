@@ -15,6 +15,8 @@ Die vorliegende Recherche systematisiert den Stand der Technik mit Fokus auf kon
 
 # Kernerkenntnisse
 
+*Konfidenz-Marker am Ende jeder Erkenntnis: [H] hoch (≥ 3 unabhängige Primärquellen, Falsifikation ergebnislos), [M] mittel (2 Quellen oder leichte Inkonsistenz), [L] niedrig (Einzelquelle oder offene Konflikte).*
+
 - **Fluidgefüllte Verglasungen sind keine Laborkuriosität mehr, sondern wurden in mindestens vier EU-geförderten Großprojekten (FLUIDGLASS, LaWin, InDeWaG, Hybrid-WFG) sowie zwei privaten Pilotgebäuden (Water House 1.0 Ungarn, 2.0 Taiwan) demonstriert** mit kumulierter EU-Förderung von rund 16 Mio. € [1] [4] [5] [6] [7]. **[H]**
 - **Simulationsstudien berichten Energieeinsparungen von 47–72 % gegenüber Doppel-Low-E- und 34–61 % gegenüber Dreifachverglasung in 13 Klimazonen**, allerdings basiert die Mehrheit der zitierten Werte auf einer einzelnen Energiemodellfamilie (Gutai/Kheybari) und ist noch nicht durch unabhängige In-situ-Langzeitmessungen über mehrere Jahre an realen Bürogebäuden validiert [4] [8] [9]. **[M]**
 - **U-Werte fluidgefüllter Dreifachverglasungen erreichen mit Doppel-Low-E-Beschichtung 0,7 W/(m²·K) und liegen damit in der Größenordnung von Premium-Triple-Glazing**, ohne Low-E aber nur bei 1,46 W/(m²·K) — fluide Füllung allein verbessert die Wärmedämmung nicht, sondern ermöglicht aktive Wärmeernte und Wärmeabfuhr [3]. **[H]**

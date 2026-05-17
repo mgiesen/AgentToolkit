@@ -154,7 +154,9 @@
   show figure.where(kind: table): set block(breakable: true)
   set table(
     inset: 8pt,
-    stroke: (x: none, y: 0.5pt + rgb("#CDDED9")),
+    // Feines Gitter in x- und y-Richtung — verbessert Lesbarkeit bei
+    // mehreren Datenspalten ohne dominantes Tabellengitter.
+    stroke: 0.3pt + rgb("#CDDED9"),
   )
   show table.hline: none
   show table.cell: set align(left)

@@ -108,6 +108,10 @@ Kontext, Fragestellung, Motivation.
 
 3-5 Bulletpoints mit den wichtigsten Findings, jeweils mit Quellverweis [N] **und Konfidenz-Marker** [H|M|L] (siehe „Konfidenz-Marker"). Diese Sektion ist Pflicht — sie macht den Report auf einen Blick erfassbar inklusive Vertrauensgrad.
 
+**Direkt unter dieser Überschrift muss eine kursive Legende-Zeile stehen**, damit der Leser die Marker nicht für Quellverweise hält:
+
+*Konfidenz-Marker am Ende jeder Erkenntnis: [H] hoch (≥ 3 unabhängige Primärquellen, Falsifikation ergebnislos), [M] mittel (2 Quellen oder leichte Inkonsistenz), [L] niedrig (Einzelquelle oder offene Konflikte).*
+
 - **Erkenntnis 1** in einem Satz formuliert. Kurze Begründung. [1] [3] [H]
 - **Erkenntnis 2** mit einer schwächeren Evidenzlage. [4] [M]
 - **Erkenntnis 3** auf nur einer Quelle basierend, daher vorsichtig formuliert. [7] [L]
