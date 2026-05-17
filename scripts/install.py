@@ -137,8 +137,19 @@ def get_skills() -> list[Path]:
     return [d for d in sorted(SKILLS_DIR.iterdir()) if (d / "SKILL.md").exists()]
 
 
-def get_agent_files() -> list[Path]:
-    return sorted(AGENTS_DIR.glob("*.md"))
+def get_agents() -> list[Path]:
+    """Liefert Agent-Ordner mit `AGENT.md`. Analog zu get_skills()."""
+    return [d for d in sorted(AGENTS_DIR.iterdir()) if (d / "AGENT.md").exists()]
+
+
+def agent_symlink_name(agent_dir: Path) -> str:
+    """Dateiname unter dem der Agent in den Agent-Systemen liegt."""
+    return f"{agent_dir.name}.md"
+
+
+def agent_symlink_source(agent_dir: Path) -> Path:
+    """Symlink-Ziel: die `AGENT.md` im Agent-Ordner."""
+    return agent_dir / "AGENT.md"
 
 
 # ──────────────────────────────────────────────────────────────
@@ -217,15 +228,17 @@ def uninstall_skills(agent: AgentTarget) -> None:
 
 def install_agents(agent: AgentTarget) -> None:
     print(dim("  Agents"))
-    files = get_agent_files()
-    if not files:
+    agents = get_agents()
+    if not agents:
         print(dim("    keine Agents im Repo"))
         return
     created = ok = blocked = 0
-    for f in files:
-        result = ensure_symlink(f, agent.agents_dir / f.name)
+    for a in agents:
+        source = agent_symlink_source(a)
+        target = agent.agents_dir / agent_symlink_name(a)
+        result = ensure_symlink(source, target)
         if result == "created":
-            print(green("    ✓"), f.name)
+            print(green("    ✓"), a.name)
             created += 1
         elif result == "ok":
             ok += 1
@@ -241,7 +254,11 @@ def install_agents(agent: AgentTarget) -> None:
 def uninstall_agents(agent: AgentTarget) -> None:
     print(dim("  Agents"))
     removed = sum(
-        remove_symlink_to(agent.agents_dir / f.name, f) for f in get_agent_files()
+        remove_symlink_to(
+            agent.agents_dir / agent_symlink_name(a),
+            agent_symlink_source(a),
+        )
+        for a in get_agents()
     )
     print("    " + (green(f"{removed} entfernt") if removed else dim("nichts installiert")))
 
@@ -318,8 +335,8 @@ def uninstall_instructions(targets: list[AgentTarget]) -> None:
 
 def show_status() -> None:
     skills = get_skills()
-    agent_files = get_agent_files()
-    print(f"  {bold('Repo')}: {len(skills)} Skills, {len(agent_files)} Agents "
+    agents = get_agents()
+    print(f"  {bold('Repo')}: {len(skills)} Skills, {len(agents)} Agents "
           f"(OS: {detect_os()})")
     print()
 
@@ -334,8 +351,8 @@ def show_status() -> None:
 
         agents_ok = 0
         if agent.agents_dir.exists():
-            for f in agent_files:
-                link = agent.agents_dir / f.name
+            for a in agents:
+                link = agent.agents_dir / agent_symlink_name(a)
                 if link.is_symlink() and link.exists():
                     agents_ok += 1
 
@@ -348,7 +365,7 @@ def show_status() -> None:
         else:
             instr = "✗"
 
-        total = len(skills) + len(agent_files)
+        total = len(skills) + len(agents)
         installed = skills_ok + agents_ok
         if total > 0 and installed == total:
             marker = green("●")
@@ -360,7 +377,7 @@ def show_status() -> None:
         print(f"  {marker} {bold(agent.name)}")
         broken = f" {red(f'({skills_broken} broken)')}" if skills_broken else ""
         print(f"    Skills: {skills_ok}/{len(skills)}{broken}  "
-              f"Agents: {agents_ok}/{len(agent_files)}  "
+              f"Agents: {agents_ok}/{len(agents)}  "
               f"Instructions: {instr}")
 
     print()

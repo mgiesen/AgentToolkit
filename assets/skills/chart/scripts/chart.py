@@ -101,6 +101,23 @@ def apply_theme(theme_name: str) -> dict:
 # Chart-Typen
 # ──────────────────────────────────────────────────────────────
 
+def _layout_xtick_labels(ax, labels: list[str]) -> None:
+    """Entscheidet anhand von Anzahl und Laenge der Labels, ob die x-Achsen-Labels
+    rotiert werden muessen, um Ueberlappungen zu vermeiden. Kalibriert fuer die
+    Default-Plot-Breite (5 – 6 inch). Heuristik:
+
+      - viele Labels (> 6)                 → rotieren
+      - oder: ein Label laenger als 8 Z.    → rotieren
+      - oder: Summe aller Labels > 40 Z.    → rotieren
+    """
+    n = len(labels)
+    max_len = max((len(str(l)) for l in labels), default=0)
+    total_len = sum(len(str(l)) for l in labels)
+    rotate = n > 6 or max_len > 8 or total_len > 40
+    if rotate:
+        plt.setp(ax.get_xticklabels(), rotation=35, ha="right", rotation_mode="anchor")
+
+
 def chart_line(data: dict, output: Path, title: str | None, colors: list) -> None:
     fig, ax = plt.subplots(figsize=(6, 3.5))
     labels = data["labels"]
@@ -121,8 +138,9 @@ def chart_line(data: dict, output: Path, title: str | None, colors: list) -> Non
     if "ylabel" in data:
         ax.set_ylabel(data["ylabel"])
 
-    plt.xticks(rotation=45 if len(labels) > 6 else 0, ha="right" if len(labels) > 6 else "center")
-    fig.savefig(output, format=output.suffix.lstrip("."))
+    _layout_xtick_labels(ax, labels)
+    fig.tight_layout()
+    fig.savefig(output, format=output.suffix.lstrip("."), bbox_inches="tight")
     plt.close(fig)
 
 
@@ -150,8 +168,9 @@ def chart_bar(data: dict, output: Path, title: str | None, colors: list) -> None
     if "ylabel" in data:
         ax.set_ylabel(data["ylabel"])
 
-    plt.xticks(rotation=45 if len(labels) > 6 else 0, ha="right" if len(labels) > 6 else "center")
-    fig.savefig(output, format=output.suffix.lstrip("."))
+    _layout_xtick_labels(ax, labels)
+    fig.tight_layout()
+    fig.savefig(output, format=output.suffix.lstrip("."), bbox_inches="tight")
     plt.close(fig)
 
 

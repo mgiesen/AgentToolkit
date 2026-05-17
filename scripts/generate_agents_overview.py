@@ -48,19 +48,29 @@ def format_tools(tools) -> str:
     return ", ".join(f"`{t}`" for t in tools)
 
 
+def format_skills(skills) -> str:
+    if not skills:
+        return "—"
+    if isinstance(skills, str):
+        skills = [skills]
+    return "<br>".join(f"`{s}`" for s in skills)
+
+
 def build_table(agents: list[dict]) -> tuple[str, int]:
-    header = "| Agent | Beschreibung | Tools | Startup-Tokens |"
-    separator = "| --- | --- | --- | --- |"
+    header = "| Agent | Version | Beschreibung | Skills | Tools | Startup-Tokens |"
+    separator = "| --- | --- | --- | --- | --- | --- |"
     rows = []
     total_tokens = 0
     for a in agents:
         slug = a.get("_slug", "")
         name = f"**{slug}**"
+        version = (a.get("source") or {}).get("version", "—")
         description = a.get("description", "")
+        skills = format_skills(a.get("skills"))
         tools = format_tools(a.get("tools"))
         tokens = a.get("_tokens", 0)
         total_tokens += tokens
-        rows.append(f"| {name} | {description} | {tools} | {tokens:,} |")
+        rows.append(f"| {name} | {version} | {description} | {skills} | {tools} | {tokens:,} |")
     table = "\n".join([header, separator] + rows)
     return table, total_tokens
 
@@ -115,11 +125,14 @@ def main():
         sys.exit(1)
 
     agents = []
-    for md in sorted(AGENTS_DIR.glob("*.md")):
-        fm = parse_frontmatter(md)
+    for d in sorted(AGENTS_DIR.iterdir()):
+        agent_md = d / "AGENT.md"
+        if not agent_md.exists():
+            continue
+        fm = parse_frontmatter(agent_md)
         if not fm:
             continue
-        fm["_slug"] = md.stem
+        fm["_slug"] = d.name
         fm["_tokens"] = count_tokens(f"- {fm.get('name', '')}: {fm.get('description', '')}")
         agents.append(fm)
 
