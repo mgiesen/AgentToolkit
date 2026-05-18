@@ -33,11 +33,21 @@ Im Zweifel: vollständig. Vor Beginn kurz festhalten, in welchem Modus du arbeit
 
 ## Workflow
 
-### Phase 1 — Zerlegung
+### Phase 1 — Zerlegung und Auftragserfassung
 
-Zerlege die Fragestellung in 3 – 5 spezifische Teilfragen, die unterschiedliche Facetten abdecken. Formuliere für jede Teilfrage eine gezielte Suchanfrage. Suche nie die Originalfrage wörtlich — das liefert generische Ergebnisse.
+Halte zuerst den **Rechercheauftrag** des Anwenders fest — er erscheint auf dem Deckblatt des Berichts (`briefing`-Feld im Frontmatter, siehe „Deckblatt"). Übernimm den Original-Input **1:1**: keine Zerlegung in Abschnitte, keine inhaltliche Umformulierung, keine Glättung des Stils. Erlaubt sind ausschliesslich:
 
-Plane bereits hier mit, **welche Daten sich später als Diagramm eignen** (Zeitreihen, Kategorienvergleiche, Anteile). Notiere diese Hypothesen — sie steuern die Recherche. Diagramme sind kein Selbstzweck und sollten nun verwendet werden, wenn sie einen Mehrwert liefern.
+- **Rechtschreib- und Tippfehler-Korrektur** (offensichtliche Vertipper, fehlende Umlaute).
+- **Zeichensetzung** (Kommas, Punkte, Anführungszeichen einheitlich).
+- **Behutsames Absatz-Setzen**, wenn der Input ein Wall-of-Text ist und der Inhalt natürliche Absatzgrenzen hat.
+
+Nicht erlaubt: Worte ändern, Listen erfinden, Hypothesen umformulieren, „besser" formulieren. Der Auftrag bleibt lesbar als das, was der Anwender geschickt hat — auch wenn er kurz, unprofessionell oder unstrukturiert ist. So bleibt im fertigen Report nachvollziehbar, _was_ initial gefragt wurde und _was_ daraus entstanden ist.
+
+Erst danach zerlege die Fragestellung intern in 3 – 5 spezifische Teilfragen, die unterschiedliche Facetten abdecken. Formuliere für jede Teilfrage eine gezielte Suchanfrage. Suche nie die Originalfrage wörtlich — das liefert generische Ergebnisse.
+
+Plane bereits hier mit, **welche Daten sich später als Diagramm eignen** (Zeitreihen, Kategorienvergleiche, Anteile). Notiere diese Hypothesen — sie steuern die Recherche. Diagramme sind kein Selbstzweck und sollten nur verwendet werden, wenn sie einen Mehrwert liefern.
+
+Im **aufbereitenden Modus** (Rohdaten ohne explizite Fragestellung) bleibt das `briefing`-Feld leer oder enthält eine knappe Notiz zur Datenlage.
 
 ### Phase 2 — Breitenrecherche (wide-first)
 
@@ -90,11 +100,14 @@ Erzeuge das PDF mit dem mitgelieferten `research-report.typ`-Template (siehe „
 
 Markdown-Dokument mit folgender Gliederung. Nicht jede Sektion ist bei jedem Bericht nötig — verwende nur, was inhaltlich passt. Die Reihenfolge ist verbindlich.
 
-```markdown
+~~~markdown
 ---
 title: "Titel des Berichts"
 subtitle: "Optionaler Untertitel"
-abstract: "2-3 Sätze Zusammenfassung"
+abstract: "2-3 Sätze Zusammenfassung des Recherche-Ergebnisses (Deckblatt-Sektion ZUSAMMENFASSUNG)"
+briefing: | # Pflicht im vollständigen/angereicherten Modus — Rechercheauftrag 1:1 vom Anwender
+  Originaltext des Anwenders, korrigiert auf Rechtschreibung und Zeichensetzung,
+  ansonsten unverändert übernommen. Erscheint auf dem Deckblatt unter RECHERCHEAUFTRAG.
 version: "1.0" # Pflicht — uebernimm den Wert aus `source.version` deines AGENT.md-Frontmatters
 toc: true # Pflicht — Inhaltsverzeichnis auf Seite 2
 logo: /absolute/path/to/logo.svg # optional — Logo auf Hero-Block (weisse SVG-Version empfohlen)
@@ -152,26 +165,27 @@ Pflicht, wenn der Bericht mindestens eine Abbildung enthält. Charts als „eige
 # Quellenverzeichnis
 
 Nummerierte Liste aller Quellen.
-```
+~~~
 
-**Wichtig zur Version:** Das `version`-Feld stammt aus dem `source.version`-Feld in _deiner eigenen_ AGENT.md (nicht zu erfinden, nicht hochzuzaehlen). Lies es ab und uebernimm es 1:1 in das Report-Frontmatter — es taucht im Colophon-Footer des Deckblatts auf und macht damit den verwendeten Agent-Stand reproduzierbar nachvollziehbar.
+**Wichtig zur Version:** Das `version`-Feld stammt aus dem `source.version`-Feld in _deiner eigenen_ AGENT.md (nicht zu erfinden, nicht hochzuzaehlen). Lies es ab und uebernimm es 1:1 in das Report-Frontmatter — es erscheint im Hero-Label des Deckblatts (`RESEARCH REPORT · AGENT V1.0`) und macht den verwendeten Agent-Stand reproduzierbar nachvollziehbar.
 
 ## Deckblatt — automatisches Design
 
-Das Deckblatt entsteht vollstaendig aus den Frontmatter-Werten. Du musst nichts manuell layouten. Was das Template fest verdrahtet erzeugt:
+Das Deckblatt entsteht vollstaendig aus den Frontmatter-Werten. Du musst nichts manuell layouten. Es ist **mehrseitig fliessend** — laeuft der Rechercheauftrag oder die Zusammenfassung ueber die erste Seite hinaus, wird automatisch umgebrochen; die Folgeseiten bleiben ohne Header/Footer/Seitenzahl Teil des Deckblatts.
 
-1. **Hero-Block oben (Cyprus #013D3E)** — vollflaechig dunkelgruener Block mit:
+Reihenfolge (von oben nach unten):
+
+1. **Hero-Block (Cyprus #013D3E)** — vollflaechig dunkelgruener Block:
    - Logo oben rechts (falls gesetzt, siehe „Logo")
-   - Label `RESEARCH REPORT` in Fraunhofer-Gruen oberhalb des Titels
+   - Label `RESEARCH REPORT · AGENT V<version>` in Fraunhofer-Gruen oberhalb des Titels
    - `title` gross + weiss
    - `subtitle` etwas kleiner in hellem Gruen
-2. **Body-Block (weiss)** — Sektion `ZUSAMMENFASSUNG` (Akzentlabel) + der Abstract als Fliesstext.
-3. **Colophon-Footer am unteren Seitenrand** — _automatisch eingefuegt_:
-   `Erstellt mit AgentToolkit` (Link auf das Repo) + Zeile darunter `RESEARCH REPORT · v<version>`
+2. **Sektion `RECHERCHEAUFTRAG`** (Akzentlabel) — der Inhalt des `briefing`-Feldes als Fliesstext, **1:1 vom Anwender** (nur Rechtschreib- und Zeichensetzungskorrektur erlaubt, siehe Phase 1).
+3. **Sektion `ZUSAMMENFASSUNG`** (Akzentlabel) — der `abstract` als Fliesstext: 2 – 3 Saetze, die das Ergebnis der Recherche bringen.
 
-Du musst weder den Footer noch Farben noch das Label setzen — das passiert im Template.
+Du musst weder Farben noch Labels setzen — das passiert im Template.
 
-**Pflichtfelder fuer ein vollstaendiges Deckblatt:** `title`, `abstract`, `version`. Ein gut formulierter `subtitle` ist dringend empfohlen (er strukturiert den Hero), aber technisch optional. Bei fehlendem `abstract` bleibt der Body-Block leer — also immer setzen.
+**Pflichtfelder fuer ein vollstaendiges Deckblatt:** `title`, `briefing`, `abstract`, `version`. Ein gut formulierter `subtitle` ist dringend empfohlen (er strukturiert den Hero), aber technisch optional. Im _aufbereitenden_ Modus darf `briefing` entfallen, dann wird die Sektion einfach nicht gerendert.
 
 ## Quellenarbeit
 

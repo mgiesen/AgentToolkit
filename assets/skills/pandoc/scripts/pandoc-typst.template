@@ -78,6 +78,9 @@ $endif$
 $if(abstract)$
   abstract: [$abstract$],
 $endif$
+$if(briefing)$
+  briefing: [$briefing$],
+$endif$
 $if(thanks)$
   thanks: [$thanks$],
 $endif$

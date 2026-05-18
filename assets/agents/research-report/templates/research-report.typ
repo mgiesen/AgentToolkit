@@ -28,6 +28,7 @@
   pagenumbering: "1",
   logo: none,
   version: none,
+  briefing: none,
   metrics: (),
   doc,
 ) = {
@@ -200,68 +201,79 @@
     ]
   }
 
-  // --- Titelseite (Magazine-Style, reduziert) ---
+  // --- Titelseite (Magazine-Style, mehrseitig fliessend) ---
   if title != none {
     // Titelseite ohne Standard-Header/Footer/Pagenumber.
-    set page(header: none, footer: none, numbering: none, margin: 0pt)
+    // Normales Margin auf allen Seiten — Hero ueberschreibt das obere Margin
+    // per negativem Pad auf der ERSTEN Seite. Folgeseiten (wenn Briefing
+    // umbricht) bekommen so automatisch ein sauberes oberes Margin.
+    set page(
+      header: none,
+      footer: none,
+      numbering: none,
+      margin: (left: 1.8cm, right: 1.8cm, top: 2cm, bottom: 1.8cm),
+    )
 
-    // ▓▓▓ HERO-BLOCK ▓▓▓ — kompakter Cyprus-Bereich oben.
-    // Logo direkt im Block oben rechts platziert, Titel folgt darunter mit
-    // bewusst kleinem Abstand.
-    block(
-      width: 100%,
-      fill: primary-color,
-      inset: (x: 1.8cm, top: 1.6cm, bottom: 2cm),
-    )[
-      #set text(fill: white, font: heading-font)
-      // Logo oben rechts auf dem Hero-Block
-      #if logo != none {
-        align(right)[
-          #image(logo, height: 1.4cm)
+    // ▓▓▓ HERO-BLOCK ▓▓▓ — Cyprus-Bereich oben, ueberschreibt links/rechts/oben
+    // die Page-Margin per negativem Pad. So fuellt er die volle Seitenbreite
+    // und sitzt buendig am oberen Seitenrand.
+    pad(left: -1.8cm, right: -1.8cm, top: -2cm)[
+      #block(
+        width: 100%,
+        fill: primary-color,
+        inset: (x: 1.8cm, top: 1.6cm, bottom: 2cm),
+      )[
+        #set text(fill: white, font: heading-font)
+        // Logo oben rechts auf dem Hero-Block
+        #if logo != none {
+          align(right)[
+            #image(logo, height: 1.4cm)
+          ]
+          v(1.4cm)
+        }
+        // Label "RESEARCH REPORT · AGENT V<version>" oberhalb des Titels
+        #text(size: 0.85em, weight: "medium", tracking: 2pt, fill: accent-color)[
+          RESEARCH REPORT#if version != none [ · AGENT V#version]
         ]
-        v(1.4cm)
-      }
-      // Label "RESEARCH REPORT" oberhalb des Titels
-      #text(size: 0.85em, weight: "medium", tracking: 2pt, fill: accent-color)[RESEARCH REPORT]
-      #v(0.3cm)
-      #block[
-        #set text(size: 2.6em, weight: "bold", fill: white)
-        #title
-      ]
-      #if subtitle != none {
-        v(0.3cm)
-        block[
-          #set text(size: 1.2em, weight: "regular", fill: rgb("#A8D5C7"))
-          #subtitle
+        #v(0.3cm)
+        #block[
+          #set text(size: 2.6em, weight: "bold", fill: white)
+          #title
         ]
-      }
-    ]
-
-    // ▓▓▓ BODY-BLOCK ▓▓▓ — nur Zusammenfassung als Fliesstext
-    block(
-      width: 100%,
-      inset: (x: 1.8cm, y: 1.5cm),
-    )[
-      #if abstract != none {
-        text(size: 0.8em, weight: "bold", tracking: 1.5pt, fill: accent-color)[ZUSAMMENFASSUNG]
-        v(0.3cm)
-        block[
-          #set text(size: 1em, fill: primary-color)
-          #set par(leading: 0.7em, justify: true)
-          #abstract
-        ]
-      }
-    ]
-
-    // ▓▓▓ COLOPHON-FOOTER ▓▓▓ — Hinweis auf AgentToolkit am unteren Seitenrand
-    place(bottom + center, dy: -1.4cm)[
-      #set text(size: 0.78em, fill: mid-gray, font: body-font)
-      #align(center)[
-        Erstellt mit #link("https://github.com/mgiesen/AgentToolkit")[
-          #text(fill: accent-color, weight: "medium")[AgentToolkit]
-        ] · Research Report#if version != none [ v#version]
+        #if subtitle != none {
+          v(0.3cm)
+          block[
+            #set text(size: 1.2em, weight: "regular", fill: rgb("#A8D5C7"))
+            #subtitle
+          ]
+        }
       ]
     ]
+
+    // ▓▓▓ RECHERCHEAUFTRAG ▓▓▓ — 1:1 vom Anwender uebernommen (mit Rechtschreib-/
+    // Zeichensetzungs-Korrektur). Bricht automatisch ueber mehrere Seiten um.
+    if briefing != none {
+      v(1.2cm)
+      text(size: 0.8em, weight: "bold", tracking: 1.5pt, fill: accent-color, font: heading-font)[RECHERCHEAUFTRAG]
+      v(0.35cm)
+      block[
+        #set text(size: 1em, fill: primary-color)
+        #set par(leading: 0.7em, justify: true, first-line-indent: 0pt)
+        #briefing
+      ]
+    }
+
+    // ▓▓▓ ZUSAMMENFASSUNG ▓▓▓ — Abstract, ggf. auf Folgeseite.
+    if abstract != none {
+      v(1cm)
+      text(size: 0.8em, weight: "bold", tracking: 1.5pt, fill: accent-color, font: heading-font)[ZUSAMMENFASSUNG]
+      v(0.35cm)
+      block[
+        #set text(size: 1em, fill: primary-color)
+        #set par(leading: 0.7em, justify: true, first-line-indent: 0pt)
+        #abstract
+      ]
+    }
 
     pagebreak()
 
