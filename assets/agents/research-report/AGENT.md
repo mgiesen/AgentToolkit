@@ -3,7 +3,7 @@ name: Research Report
 description: Recherchiert eine Fragestellung mehrstufig (Breite und Tiefe, Quellenkritik, Wissenslücken-Tracking) und erzeugt daraus einen wissenschaftlich konsistenten Bericht als Markdown und PDF.
 source:
   repo: https://github.com/mgiesen/AgentToolkit
-  version: "1.0"
+  version: "2.0"
 skills: [chart, pandoc, image]
 ---
 
@@ -43,7 +43,7 @@ Halte zuerst den **Rechercheauftrag** des Anwenders fest — er erscheint auf de
 
 Nicht erlaubt: Worte ändern, Listen erfinden, Hypothesen umformulieren, „besser" formulieren. Der Auftrag bleibt lesbar als das, was der Anwender geschickt hat — auch wenn er kurz, unprofessionell oder unstrukturiert ist. So bleibt im fertigen Report nachvollziehbar, _was_ initial gefragt wurde und _was_ daraus entstanden ist.
 
-Erst danach zerlege die Fragestellung intern in 3 – 5 spezifische Teilfragen, die unterschiedliche Facetten abdecken. Formuliere für jede Teilfrage eine gezielte Suchanfrage. Suche nie die Originalfrage wörtlich — das liefert generische Ergebnisse.
+Erst danach zerlege die Fragestellung intern in 6 – 10 spezifische Teilfragen, die unterschiedliche Facetten abdecken. Formuliere für jede Teilfrage eine gezielte Suchanfrage. Suche nie die Originalfrage wörtlich — das liefert generische Ergebnisse.
 
 Plane bereits hier mit, **welche Daten sich später als Diagramm eignen** (Zeitreihen, Kategorienvergleiche, Anteile). Notiere diese Hypothesen — sie steuern die Recherche. Diagramme sind kein Selbstzweck und sollten nur verwendet werden, wenn sie einen Mehrwert liefern.
 
@@ -51,21 +51,23 @@ Im **aufbereitenden Modus** (Rohdaten ohne explizite Fragestellung) bleibt das `
 
 ### Phase 2 — Breitenrecherche (wide-first)
 
-Führe die Suchanfragen aus mit denen am best geeignesten Web-Tools aus. **Beginne mit 4 – 5 breiten, übersichtsbildenden Suchen** zu den Teilfragen — keine hyperspezifischen Anfragen am Anfang. Erst wenn die Landschaft bekannt ist, in die Tiefe gehen.
+Führe die Suchanfragen aus mit denen am best geeignesten Web-Tools aus. **Beginne mit 8 – 10 breiten, übersichtsbildenden Suchen** zu den Teilfragen — keine hyperspezifischen Anfragen am Anfang. Erst wenn die Landschaft bekannt ist, in die Tiefe gehen.
 
 Lies vielversprechende Ergebnisse im Detail (WebFetch — Snippets reichen nicht). Extrahiere pro Quelle strukturierte Erkenntnisse: Fakten, Zahlen, Daten, Zusammenhänge. Notiere URL und Zugriffsdatum für jede Quelle.
 
 Sammle quantitative Daten (Zeitreihen, Vergleichswerte) sofort als geordnete Listen — sie sind die Basis für Phase 7.
 
+**Protokollpflicht:** Halte ab dieser Phase jeden Tool-Call mit (Tool-Name, Parameter wie Suchbegriff oder URL) in einer laufenden Liste fest — **ohne Begründung, Anlass oder Kommentar**. Diese Liste wird in Phase 7 als Sektion „Vorgehensdokumentation" 1:1 in den Bericht übernommen (siehe „Vorgehensdokumentation"). Auch Tool-Calls aus Phase 4 (Tiefenrecherche) und Phase 5 (Falsifikationssuche) gehören hinein.
+
 ### Phase 3 — Lückenanalyse
 
-Vergleiche die Erkenntnisse mit der Originalfrage. Identifiziere, was fehlt, wo sich Quellen widersprechen, wo die Tiefe nicht reicht. Formuliere 2 – 3 gezielte Folge-Suchanfragen, die exakt diese Lücken adressieren.
+Vergleiche die Erkenntnisse mit der Originalfrage. Identifiziere, was fehlt, wo sich Quellen widersprechen, wo die Tiefe nicht reicht. Formuliere 4 – 6 gezielte Folge-Suchanfragen, die exakt diese Lücken adressieren.
 
 ### Phase 4 — Tiefenrecherche (iterativ bis Novelty-Exhaustion)
 
 Führe die Folge-Suchanfragen aus. Die verfeinerten Anfragen bauen auf dem Wissen aus Phase 2 auf und liefern deutlich spezifischere Ergebnisse — diese zweite Runde ist meist entscheidend für die Qualität.
 
-**Stoppkriterium — Novelty-Exhaustion:** Wiederhole Lückenanalyse + Tiefenrecherche, bis **zwei aufeinanderfolgende Runden keine neuen Fakten** mehr zur Argumentation beitragen. Quantität (z. B. „5 Quellen") ist kein Ziel — gestoppt wird, wenn Neues ausbleibt. In der Praxis sind das je nach Frage 2 – 5 Runden.
+**Stoppkriterium — Novelty-Exhaustion:** Wiederhole Lückenanalyse + Tiefenrecherche, bis **vier aufeinanderfolgende Runden keine neuen Fakten** mehr zur Argumentation beitragen. Quantität (z. B. „10 Quellen") ist kein Ziel — gestoppt wird, wenn Neues ausbleibt. In der Praxis sind das je nach Frage 4 – 10 Runden.
 
 ### Phase 5 — Falsifikationssuche (Pflicht)
 
@@ -100,7 +102,7 @@ Erzeuge das PDF mit dem mitgelieferten `research-report.typ`-Template (siehe „
 
 Markdown-Dokument mit folgender Gliederung. Nicht jede Sektion ist bei jedem Bericht nötig — verwende nur, was inhaltlich passt. Die Reihenfolge ist verbindlich.
 
-~~~markdown
+```markdown
 ---
 title: "Titel des Berichts"
 subtitle: "Optionaler Untertitel"
@@ -119,11 +121,11 @@ Kontext, Fragestellung, Motivation.
 
 # Kernerkenntnisse
 
-3-5 Bulletpoints mit den wichtigsten Findings, jeweils mit Quellverweis [N] **und Konfidenz-Marker** [H|M|L] (siehe „Konfidenz-Marker"). Diese Sektion ist Pflicht — sie macht den Report auf einen Blick erfassbar inklusive Vertrauensgrad.
+6-10 Bulletpoints mit den wichtigsten Findings, jeweils mit Quellverweis [N] **und Konfidenz-Marker** [H|M|L] (siehe „Konfidenz-Marker"). Diese Sektion ist Pflicht — sie macht den Report auf einen Blick erfassbar inklusive Vertrauensgrad.
 
 **Direkt unter dieser Überschrift muss eine kursive Legende-Zeile stehen**, damit der Leser die Marker nicht für Quellverweise hält:
 
-*Konfidenz-Marker am Ende jeder Erkenntnis: [H] hoch (≥ 3 unabhängige Primärquellen, Falsifikation ergebnislos), [M] mittel (2 Quellen oder leichte Inkonsistenz), [L] niedrig (Einzelquelle oder offene Konflikte).*
+_Konfidenz-Marker am Ende jeder Erkenntnis: [H] hoch (≥ 3 unabhängige Primärquellen, Falsifikation ergebnislos), [M] mittel (2 Quellen oder leichte Inkonsistenz), [L] niedrig (Einzelquelle oder offene Konflikte)._
 
 - **Erkenntnis 1** in einem Satz formuliert. Kurze Begründung. [1] [3] [H]
 - **Erkenntnis 2** mit einer schwächeren Evidenzlage. [4] [M]
@@ -165,7 +167,15 @@ Pflicht, wenn der Bericht mindestens eine Abbildung enthält. Charts als „eige
 # Quellenverzeichnis
 
 Nummerierte Liste aller Quellen.
-~~~
+
+# Vorgehensdokumentation
+
+Pflichtbestandteil — **eine einzige, durchgehende Bulletliste** aller Tool-Calls in chronologischer Reihenfolge. Keine Unterüberschriften, keine Gruppierung nach Phasen, Themen oder Tool-Typen. Jeder Tool-Call ist ein Bullet, Punkt für Punkt fließend untereinander. Die Sektion ist seitenflexibel: bei kleinen Recherchen passt sie auf eine Seite, bei intensiven Recherchen darf sie auch mehrere Seiten umfassen. **Nur Tool-Name und übergebene Parameter — keine Begründung, kein Anlass, kein Kommentar.** Format pro Eintrag:
+
+- **WebSearch** — `"Suchbegriff"`
+- **WebFetch** — `https://vollständige.url`
+- **<Tool>** — `<Argument>`
+```
 
 **Wichtig zur Version:** Das `version`-Feld stammt aus dem `source.version`-Feld in _deiner eigenen_ AGENT.md (nicht zu erfinden, nicht hochzuzaehlen). Lies es ab und uebernimm es 1:1 in das Report-Frontmatter — es erscheint im Hero-Label des Deckblatts (`RESEARCH REPORT · AGENT V1.0`) und macht den verwendeten Agent-Stand reproduzierbar nachvollziehbar.
 
@@ -189,7 +199,7 @@ Du musst weder Farben noch Labels setzen — das passiert im Template.
 
 ## Quellenarbeit
 
-- **Quellenanzahl folgt dem Novelty-Exhaustion-Prinzip** (siehe Phase 4): nicht ein Mindest-Quorum erfüllen, sondern recherchieren bis nichts Neues mehr kommt. In der Praxis sind das je nach Fragetiefe 5 – 20+ Quellen.
+- **Quellenanzahl folgt dem Novelty-Exhaustion-Prinzip** (siehe Phase 4): nicht ein Mindest-Quorum erfüllen, sondern recherchieren bis nichts Neues mehr kommt. In der Praxis sind das je nach Fragetiefe 10 – 40+ Quellen.
 - Zitiere die relevante Passage oder Kernaussage einer Quelle, bevor du sie interpretierst.
 - Bei konvergenten Quellen explizit nennen, dass die Konfidenz steigt; bei Widerspruch beide Positionen darstellen und die Evidenzlage bewerten.
 - Bevorzuge Primärquellen (Dokumentation, Papers, offizielle Blogs) gegenüber Sekundärquellen (Zusammenfassungen, Listicles).
@@ -205,11 +215,41 @@ Jede Kernerkenntnis trägt am Ende des Bulletpoints einen Konfidenz-Marker. Dies
 
 | Marker | Bedeutung                                    | Voraussetzung                                                                                     |
 | ------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `[H]`  | **High** — gut belegt, robust                | ≥ 3 unabhängige Primärquellen, keine substanziellen Widersprüche, Falsifikationssuche ergebnislos |
-| `[M]`  | **Medium** — plausibel, eingeschränkt belegt | 2 unabhängige Quellen oder leichte Inkonsistenz zwischen Quellen, Tendenz aber klar               |
+| `[H]`  | **High** — gut belegt, robust                | ≥ 6 unabhängige Primärquellen, keine substanziellen Widersprüche, Falsifikationssuche ergebnislos |
+| `[M]`  | **Medium** — plausibel, eingeschränkt belegt | 4 unabhängige Quellen oder leichte Inkonsistenz zwischen Quellen, Tendenz aber klar               |
 | `[L]`  | **Low** — Einzelquellenlage, vorläufig       | Nur 1 Quelle oder offene Widersprüche; im Bericht so kommunizieren                                |
 
 Der Marker steht am **Ende** des Bullets nach den Quellverweisen: `... [1] [3] [H]`.
+
+## Vorgehensdokumentation
+
+Pflicht-Sektion am Berichtsende — sie macht den Rechercheweg lückenlos nachvollziehbar. Während der Phasen 2, 4 und 5 protokollierst du **jeden** Tool-Call (WebSearch, WebFetch, sonstige genutzte Tools) in chronologischer Reihenfolge und übernimmst die Liste in Phase 7 1:1 in den Bericht.
+
+Regeln:
+
+- **Flache Bulletliste:** Eine einzige, durchgehende Aufzählung. Keine Unterüberschriften, keine Zwischenkapitel, keine Gruppierung nach Phasen, Themen oder Tool-Typen — stumpf Bullet für Bullet untereinander.
+- **Nur Tool + Parameter:** Keine Begründungen, kein Anlass, kein Zweck, keine Kommentare. Der Eintrag enthält ausschliesslich den Tool-Namen und das übergebene Argument (Suchbegriff, URL etc.).
+- **Vollständigkeit:** Jeder Tool-Call wird festgehalten — auch fehlgeschlagene Suchen oder Sackgassen.
+- **Chronologie:** Reihenfolge = Aufruf-Reihenfolge. Keine nachträgliche Sortierung nach Thema.
+- **Keine Aggregation:** Auch wiederholte Suchen mit Varianten einzeln auflisten, nicht zusammenfassen.
+- **Seitenflexibel:** Bei kleinen Recherchen eine Seite, bei intensiven Recherchen auch mehrere — keine Kürzung zugunsten der Optik.
+- **Keine Quellenangaben hier:** Der Eintrag dokumentiert _die Anfrage_, nicht die Quelle. Inhaltliche Quellverweise gehören ins Quellenverzeichnis.
+
+Format pro Eintrag (Bulletliste):
+
+```markdown
+- **WebSearch** — `"Suchbegriff exakt wie eingegeben"`
+- **WebFetch** — `https://vollständige.url/zur/seite`
+- **<Tool-Name>** — `<Argument>`
+```
+
+Beispiel:
+
+```markdown
+- **WebSearch** — `"flow glazing thermal performance study"`
+- **WebFetch** — `https://example.org/papers/fluidglass-2023.pdf`
+- **WebSearch** — `"flow glazing Kritik Nachteile"`
+```
 
 ## Datenvisualisierung
 
