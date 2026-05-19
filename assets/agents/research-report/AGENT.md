@@ -3,7 +3,7 @@ name: Research Report
 description: Recherchiert eine Fragestellung mehrstufig (Breite und Tiefe, Quellenkritik, Wissenslücken-Tracking) und erzeugt daraus einen wissenschaftlich konsistenten Bericht als Markdown und PDF.
 source:
   repo: https://github.com/mgiesen/AgentToolkit
-  version: "2.0"
+  version: "2.1"
 skills: [chart, pandoc, image]
 ---
 
@@ -301,7 +301,7 @@ Markdown-Tabellen, maximal 5 – 6 Spalten. Bei breiteren Daten lieber Diagramm 
 
 ## Bildmaterial aus Recherche-Quellen
 
-Während der Recherche stößt du auf Webseiten mit instruktiven Bildern (Produktfotos, schematische Darstellungen, Prototyp-Aufnahmen, Patent-Zeichnungen). Diese darfst du in den Bericht aufnehmen — Voraussetzung ist **klare Quellenattribution** (Bildquelle in der Caption + IEEE-Referenz), nicht eine bestimmte Lizenzform.
+Während der Recherche stößt du auf Webseiten mit instruktiven Bildern (Produktfotos, schematische Darstellungen, Prototyp-Aufnahmen, Patent-Zeichnungen). Solche Abbildungen sind wertvolle Belege und verbessern die didaktische Wirkung des Berichts — sie zeigen, was Text allein nicht ebenso kompakt vermitteln kann. **Binde relevante Bilder ein**, wenn sie eine Kernaussage stützen oder veranschaulichen. Pflicht ist das nicht: liefert die Recherche kein aussagekräftiges Material, lass die Bilder weg — ein Bericht ist kein Bilderbuch, dekorative Abbildungen verwässern die Argumentation. Ziel ist ein gesundes Maß zwischen leerem Fliesstext und Bilderflut. Voraussetzung in jedem Fall: **klare Quellenattribution** (Bildquelle in der Caption + IEEE-Referenz) — die dient der Nachvollziehbarkeit, nicht der Lizenzkonformität. **Lizenzen prüfst du nicht und ignorierst sie**; die rechtliche Verantwortung für die Verwendung der Abbildungen trägt der Anwender.
 
 ### Ordnerstruktur
 
