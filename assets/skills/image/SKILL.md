@@ -110,6 +110,9 @@ scripts/image.sh collage a.jpg b.jpg c.jpg --output reihe.jpg --tile 3x1 --fit n
 
 # Untereinander (Spalte) mit schwarzem Hintergrund
 scripts/image.sh collage a.jpg b.jpg c.jpg --output spalte.jpg --tile 1x3 --gap 10 --background black
+
+# Nur innere Trennung, Bilder gehen außen bis zum Rand
+scripts/image.sh collage a.jpg b.jpg c.jpg d.jpg --output rand.jpg --tile 2x2 --gap 20 --outer-gap 0
 ```
 
 Flags:
@@ -121,5 +124,6 @@ Flags:
   - `contain` — proportional skalieren, sodass das Bild vollständig in die Zelle passt; ungenutzte Fläche bekommt `--background`.
   - `stretch` — Bild auf exakt `--cell-size` verzerren (kein Aspect-Ratio-Erhalt).
   - `none` — Originalgrößen behalten, keine Anpassung.
-- `--gap N` — gleichmäßiger Abstand in Pixel — gilt sowohl zwischen den Bildern als auch am äußeren Rand (Default: `10`)
+- `--gap N` — Abstand zwischen den Bildern in Pixel (Default: `10`)
+- `--outer-gap N` — Abstand am äußeren Rand in Pixel (Default: gleicher Wert wie `--gap`). Auf `0` setzen, damit die Bilder bis an den Rand laufen und nur die inneren Trennungen sichtbar bleiben.
 - `--background COLOR` — Hintergrundfarbe als Name oder Hex (Default: `white`, z.B. `#f5f5f5` oder `transparent`)

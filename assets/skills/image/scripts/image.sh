@@ -14,7 +14,7 @@ usage() {
     echo "  rotate <file> --output OUT --degrees N"
     echo "  optimize <file> --output OUT [--quality N]"
     echo "  info <file>"
-    echo "  collage <file1> <file2> [...files] --output OUT [--tile CxR] [--cell-size WxH] [--fit cover|contain|stretch|none] [--gap N] [--background COLOR]"
+    echo "  collage <file1> <file2> [...files] --output OUT [--tile CxR] [--cell-size WxH] [--fit cover|contain|stretch|none] [--gap N] [--outer-gap N] [--background COLOR]"
     exit 1
 }
 
@@ -198,7 +198,7 @@ cmd_info() {
 }
 
 cmd_collage() {
-    local output="" tile="" cell_size="" gap="10" background="white" fit="cover"
+    local output="" tile="" cell_size="" gap="10" outer_gap="" background="white" fit="cover"
     local files=()
 
     while [[ $# -gt 0 ]]; do
@@ -208,10 +208,14 @@ cmd_collage() {
             --cell-size) cell_size="$2"; shift 2 ;;
             --fit) fit="$2"; shift 2 ;;
             --gap) gap="$2"; shift 2 ;;
+            --outer-gap) outer_gap="$2"; shift 2 ;;
             --background) background="$2"; shift 2 ;;
             *) files+=("$1"); shift ;;
         esac
     done
+
+    # Default: gleicher Wert wie --gap (Backward-Compat zum bisherigen Verhalten)
+    [[ -z "$outer_gap" ]] && outer_gap="$gap"
 
     [[ ${#files[@]} -lt 2 ]] && { echo "Fehler: Mindestens zwei Bilder erforderlich" >&2; exit 1; }
     [[ -z "$output" ]] && { echo "Fehler: --output erforderlich" >&2; exit 1; }
@@ -253,12 +257,13 @@ cmd_collage() {
 
     mkdir -p "$(dirname "$output")"
 
-    # Gap so aufteilen, dass Innen- und Außenabstand gleich groß werden:
-    # montage's -geometry +X+X erzeugt X Pixel um JEDES Tile → zwischen Bildern wird
-    # daraus 2X, am Rand bleibt X. Damit innen = außen = gap gilt: half als Tile-
-    # Padding (innen = 2*half), rest als nachgelagerter Border (außen = half + rest).
+    # montage's -geometry +X+X erzeugt X Pixel Padding um JEDES Tile → zwischen
+    # Bildern wird daraus 2X, am Rand bleibt X. Wir setzen X = gap/2, sodass
+    # innen ≈ gap entsteht (1px Drift bei ungeradem gap, kosmetisch ok).
+    # Der äußere Rand wird danach via Border (positiv) oder Shave (negativ) auf
+    # outer_gap getrimmt.
     local half=$((gap / 2))
-    local rest=$((gap - half))
+    local outer_delta=$((outer_gap - half))
 
     local geometry
     local montage_inputs=("${files[@]}")
@@ -293,9 +298,13 @@ cmd_collage() {
             ;;
     esac
 
-    if [[ $rest -gt 0 ]]; then
+    if [[ $outer_delta -gt 0 ]]; then
         magick montage "${montage_inputs[@]}" "${font_arg[@]}" +set label -tile "$tile" -geometry "$geometry" -background "$background" miff:- \
-            | magick - -bordercolor "$background" -border "${rest}x${rest}" "$output"
+            | magick - -bordercolor "$background" -border "${outer_delta}x${outer_delta}" "$output"
+    elif [[ $outer_delta -lt 0 ]]; then
+        local shave=$((-outer_delta))
+        magick montage "${montage_inputs[@]}" "${font_arg[@]}" +set label -tile "$tile" -geometry "$geometry" -background "$background" miff:- \
+            | magick - -shave "${shave}x${shave}" "$output"
     else
         magick montage "${montage_inputs[@]}" "${font_arg[@]}" +set label -tile "$tile" -geometry "$geometry" -background "$background" "$output"
     fi
