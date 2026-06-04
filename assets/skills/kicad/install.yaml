@@ -1,0 +1,26 @@
+bin:
+  - name: kicad-cli
+    install:
+      brew: --cask kicad
+      apt: kicad
+      dnf: kicad
+      pacman: kicad
+      winget: KiCad.KiCad
+      choco: kicad
+      manual: https://www.kicad.org/download/
+
+  - name: magick
+    install:
+      brew: imagemagick
+      apt: imagemagick
+      dnf: ImageMagick
+      pacman: imagemagick
+      winget: ImageMagick.ImageMagick
+      choco: imagemagick
+      manual: https://imagemagick.org/script/download.php
+
+  - name: cpdf
+    install:
+      brew: cpdf
+      apt: cpdf
+      manual: https://github.com/coherentgraphics/cpdf-binaries

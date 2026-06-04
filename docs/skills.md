@@ -16,6 +16,7 @@
 | **iconify** | 1.0 | Alle | • Icons aus 200k+ Iconify-Icons suchen (Lucide, Tabler, Phosphor, Material Design)<br>• Konkretes SVG-Icon per ID (z.B. lucide:gauge) herunterladen<br>• Nach Farbpalette (mono/color/any) und Icon-Set filtern<br>• Top-Treffer suchen und direkt als SVG-Datei speichern | `📦 requests` | — | 79 |
 | **image** | 1.3 | Alle | • Bilder von URLs herunterladen und in ein anderes Format konvertieren<br>• Bilder skalieren (Pixel oder Prozent) und zuschneiden<br>• SVG zu PNG mit konfigurierbarem DPI konvertieren<br>• Dateigröße ohne sichtbaren Qualitätsverlust optimieren<br>• Metadaten (Format, Dimensionen, Dateigröße, Farbraum) auslesen<br>• Mehrere Bilder zu Collagen oder NxM-Grids zusammenbauen (Reihe, Spalte, Raster) mit konfigurierbarem Hintergrund und Abstand | `⚙️ magick`<br>`📦 Pillow` | — | 103 |
 | **image-gen** | 1.0 | Alle | • KI-Bilder aus Textprompts via Google Gemini generieren<br>• Zwischen zwei Qualitätsstufen wählen (hochwertig ~$0.13 oder schnell ~$0.07)<br>• Aspect Ratio (1:1, 16:9, 9:16, 4:3, 3:2) und Auflösung festlegen<br>• Prompts mit Motiv, Komposition, Stil und Atmosphäre formulieren | — | `GEMINI_IMAGE_GEN_API_KEY` | 24 |
+| **kicad** | 1.0 | Alle | • Design Review anhand von Netzliste + BOM<br>• Schaltplan und 3D-Renders als PDF/PNG exportieren<br>• Konsolidiertes Full-Export-PDF für Dokumentation | `⚙️ kicad-cli`<br>`⚙️ magick`<br>`⚙️ cpdf` | — | 52 |
 | **ocr** | 1.0 | Alle | • Text aus Bildern (PNG, JPG, TIFF, BMP) extrahieren — auf macOS via Apple Vision hardwarebeschleunigt<br>• Gescannte PDFs in durchsuchbaren Text umwandeln<br>• Mehrere Sprachen gleichzeitig erkennen (z.B. de+en)<br>• Bilder in durchsuchbare PDFs konvertieren | `⚙️ tesseract` | — | 36 |
 | **pandoc** | 2.0 | Alle | • Markdown zu PDF konvertieren (typst-Engine, beliebiges Template als Pfad uebergeben)<br>• Markdown zu Word (.docx), PowerPoint (.pptx), EPUB, HTML konvertieren<br>• Word/PPTX zurueck zu Markdown extrahieren<br>• Inhaltsverzeichnis, Abschnittsnummerierung und Syntax-Highlighting konfigurieren<br>• KI-generiertes Markdown vorbereiten (Listen-Spacing, IEEE-Zitations-Linkung) | `⚙️ pandoc`<br>`⚙️ typst` | — | 61 |
 | **pdf** | 1.0 | Alle | • Mehrere PDFs zu einem Dokument zusammenführen<br>• PDF nach Seitenbereich aufteilen oder bestimmte Seiten extrahieren<br>• Dateigröße mit einstellbarer Qualitätsstufe komprimieren (screen/ebook/printer/prepress)<br>• PDF mit Passwort verschlüsseln oder Passwortschutz entfernen<br>• Metadaten und Seitenanzahl eines PDFs auslesen | `⚙️ cpdf`<br>`⚙️ qpdf`<br>`⚙️ gs` | — | 42 |
@@ -24,7 +25,9 @@
 | **tavily** | 1.0 | Alle | • Breite Web-Recherche mit Quellensynthese und nummerierten Zitaten<br>• Aktuelle News, Trends und Vendor-Listen zu einem Thema abrufen<br>• Markt- und Wettbewerbsanalysen für strategische Fragen<br>• Gezielte Nachschlag-Suche nach einem Research-Report | `📦 tavily-cli` | `TAVILY_API_KEY` | 88 |
 | **youtube-dlp** | 1.0 | Alle | • Video-Metadaten (Titel, Kanal, Datum, Beschreibung) ohne Download abrufen<br>• Transkripte aus manuellen oder automatischen Untertiteln extrahieren (de/en/…)<br>• YouTube-Suchergebnisse und Playlist-Inhalte als strukturierte Quellenliste abrufen<br>• Audio (m4a/mp3) oder Video (mp4) nur bei explizitem Download-Auftrag speichern | `⚙️ yt-dlp`<br>`⚙️ ffmpeg` | — | 107 |
 
-_Gesamt-Kontextgröße aller Skills beim Start: **1,226 Tokens**_
+_Gesamt-Kontextgröße aller Skills beim Start: **1,278 Tokens**_
+
+
 
 
 
@@ -37,12 +40,13 @@ _Gesamt-Kontextgröße aller Skills beim Start: **1,226 Tokens**_
 
 | Binary | Skill(s) |
 | --- | --- |
-| `cpdf` | pdf |
+| `cpdf` | • kicad<br>• pdf |
 | `ffmpeg` | youtube-dlp |
 | `gh` | github |
 | `glab` | gitlab |
 | `gs` | pdf |
-| `magick` | image |
+| `kicad-cli` | kicad |
+| `magick` | • image<br>• kicad |
 | `pandoc` | pandoc |
 | `qpdf` | pdf |
 | `qrencode` | qr-code |
