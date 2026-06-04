@@ -21,11 +21,15 @@
 | **pandoc** | 2.0 | Alle | • Markdown zu PDF konvertieren (typst-Engine, beliebiges Template als Pfad uebergeben)<br>• Markdown zu Word (.docx), PowerPoint (.pptx), EPUB, HTML konvertieren<br>• Word/PPTX zurueck zu Markdown extrahieren<br>• Inhaltsverzeichnis, Abschnittsnummerierung und Syntax-Highlighting konfigurieren<br>• KI-generiertes Markdown vorbereiten (Listen-Spacing, IEEE-Zitations-Linkung) | `⚙️ pandoc`<br>`⚙️ typst` | — | 61 |
 | **pdf** | 1.0 | Alle | • Mehrere PDFs zu einem Dokument zusammenführen<br>• PDF nach Seitenbereich aufteilen oder bestimmte Seiten extrahieren<br>• Dateigröße mit einstellbarer Qualitätsstufe komprimieren (screen/ebook/printer/prepress)<br>• PDF mit Passwort verschlüsseln oder Passwortschutz entfernen<br>• Metadaten und Seitenanzahl eines PDFs auslesen | `⚙️ cpdf`<br>`⚙️ qpdf`<br>`⚙️ gs` | — | 42 |
 | **qr-code** | 1.0 | Alle | • QR-Code aus URL oder beliebigem Text als PNG oder SVG exportieren<br>• QR-Code direkt im Terminal als UTF8-Grafik anzeigen<br>• Modulgröße und Fehlerkorrekturlevel (L/M/Q/H) einstellen | `⚙️ qrencode` | — | 48 |
+| **speak-cloud** | 1.1 | Alle | • Cloud-TTS via ElevenLabs API mit deutscher Sprachunterstuetzung<br>• Direkte Wiedergabe (afplay) oder Speichern als MP3<br>• Zeigt nach jedem Aufruf Credits-Kosten, verbleibendes Kontingent und History-ID<br>• History-Eintraege koennen einzeln per `-d <id>` geloescht werden<br>• Stimme und Modell via VOICE_ID / MODEL einstellbar | — | `ELEVENLABS_API_KEY` | 49 |
+| **speak-on-prem** | 2.0 | macOS | • Lokale, offline Sprachausgabe auf Deutsch (Piper TTS, ONNX)<br>• Direkte Wiedergabe ueber Lautsprecher (afplay) oder Speichern als WAV<br>• Tempo regelbar via SPEED (kleiner = schneller)<br>• Voice-Modell wird bei Bedarf nach ~/.cache/piper-voices/ geladen | `📦 piper-tts`<br>`📦 onnxruntime` | — | 72 |
 | **ssh** | 1.0 | Alle | • SSH-Verbindung zu entfernten Hosts über ~/.ssh/config herstellen<br>• Software installieren, Dienste konfigurieren und Logs auf Remote-Systemen prüfen<br>• Lesende Befehle direkt ausführen, schreibende Befehle mit Rückfrage absichern<br>• Dateien auf Remote-Systemen bearbeiten<br>• Neuen Host interaktiv per setup-Skript einrichten | — | — | 43 |
 | **tavily** | 1.0 | Alle | • Breite Web-Recherche mit Quellensynthese und nummerierten Zitaten<br>• Aktuelle News, Trends und Vendor-Listen zu einem Thema abrufen<br>• Markt- und Wettbewerbsanalysen für strategische Fragen<br>• Gezielte Nachschlag-Suche nach einem Research-Report | `📦 tavily-cli` | `TAVILY_API_KEY` | 88 |
 | **youtube-dlp** | 1.0 | Alle | • Video-Metadaten (Titel, Kanal, Datum, Beschreibung) ohne Download abrufen<br>• Transkripte aus manuellen oder automatischen Untertiteln extrahieren (de/en/…)<br>• YouTube-Suchergebnisse und Playlist-Inhalte als strukturierte Quellenliste abrufen<br>• Audio (m4a/mp3) oder Video (mp4) nur bei explizitem Download-Auftrag speichern | `⚙️ yt-dlp`<br>`⚙️ ffmpeg` | — | 107 |
 
-_Gesamt-Kontextgröße aller Skills beim Start: **1,278 Tokens**_
+_Gesamt-Kontextgröße aller Skills beim Start: **1,399 Tokens**_
+
+
 
 
 
