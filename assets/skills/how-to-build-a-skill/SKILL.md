@@ -1,9 +1,9 @@
 ---
 name: how-to-build-a-skill
-description: Skill-Authoring-Referenz für dieses Repo. IMMER laden wenn ein neuer Skill erstellt wird, ein bestehender Skill inhaltlich oder strukturell geändert wird, oder das Frontmatter-Format einer SKILL.md angepasst werden soll.
+description: Skill-Authoring-Referenz für das Repo AgentToolkit. Ausschließlich diesen Skill laden, wenn ein neuer Skill erstellt wird und das Arbeitsverzeichnis das AgentToolkit ist, oder der User das AgentToolkit direkt anspricht. Für alle anderen Arbeitsordner/Projekte muss dieser Skill ignoriert werden!! Relevant wenn ein bestehender Skill des AgentToolkits inhaltlich oder strukturell geändert wird, oder das Frontmatter-Format einer SKILL.md angepasst werden soll.
 source:
   repo: https://github.com/mgiesen/AgentToolkit
-  version: "1.0"
+  version: "1.1"
 platform: all
 features:
   - Agenten-Skills nach Best Practice erstellen/bearbeiten
@@ -18,13 +18,13 @@ Jede SKILL.md in diesem Repo MUSS dieses Frontmatter-Format verwenden:
 
 ```yaml
 ---
-name: skill-name              # Pflicht: lowercase, hyphens, max 64 Zeichen
-description: ...              # Pflicht: eine Zeile, kein > Block-Scalar
-source:                       # Pflicht: Provenance des Skills
+name: skill-name # Pflicht: lowercase, hyphens, max 64 Zeichen
+description: ... # Pflicht: eine Zeile, kein > Block-Scalar
+source: # Pflicht: Provenance des Skills
   repo: https://github.com/mgiesen/AgentToolkit
-  version: "1.0"              # "major.minor" als String
-platform: all                 # Pflicht: `all` oder OS-Liste wie [macOS] / [macOS, linux]
-features:                     # Pflicht: mind. 3 Einträge, kompakte Feature-Beschreibung
+  version: "1.0" # "major.minor" als String
+platform: all # Pflicht: `all` oder OS-Liste wie [macOS] / [macOS, linux]
+features: # Pflicht: mind. 3 Einträge, kompakte Feature-Beschreibung
   - Feature A
   - Feature B
 ---
@@ -42,12 +42,12 @@ features:                     # Pflicht: mind. 3 Einträge, kompakte Feature-Bes
 Wird vom Agent **nicht** beim Startup geladen, sondern nur gelesen, wenn beim Skill-Aufruf eine Abhängigkeit fehlt. Daher beliebig ausführlich, ohne Token-Sorgen.
 
 ```yaml
-pip:                          # Python-Packages für die gemeinsame .venv
+pip: # Python-Packages für die gemeinsame .venv
   - paket1
 
-bin:                          # System-Binaries
-  - name: tesseract           # Binary-Name (für `which`-Check)
-    install:                  # Paketname pro Manager
+bin: # System-Binaries
+  - name: tesseract # Binary-Name (für `which`-Check)
+    install: # Paketname pro Manager
       brew: tesseract
       apt: tesseract-ocr
       dnf: tesseract
@@ -55,14 +55,14 @@ bin:                          # System-Binaries
       winget: UB-Mannheim.TesseractOCR
       choco: tesseract
       scoop: tesseract
-      manual: https://...     # Fallback wenn kein Manager passt
+      manual: https://... # Fallback wenn kein Manager passt
 
-env:                          # Environment-Variablen (API-Keys)
+env: # Environment-Variablen (API-Keys)
   - name: MY_API_KEY
-    required: true            # true: ohne Key kein Betrieb; false: Feature-Einschränkung
-    url: https://...          # Quelle für den Key
+    required: true # true: ohne Key kein Betrieb; false: Feature-Einschränkung
+    url: https://... # Quelle für den Key
 
-post_install:                 # Befehle nach pip/bin-Install (z.B. Browser-Download)
+post_install: # Befehle nach pip/bin-Install (z.B. Browser-Download)
   - .venv/bin/crawl4ai-setup
 ```
 
