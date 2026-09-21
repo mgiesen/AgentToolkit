@@ -1,5 +1,0 @@
-pip:
-  - piper-tts
-  - onnxruntime
-post_install:
-  - scripts/fetch-voices.sh

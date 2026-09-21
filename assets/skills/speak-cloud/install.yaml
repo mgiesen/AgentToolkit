@@ -1,4 +1,0 @@
-env:
-  - name: ELEVENLABS_API_KEY
-    required: true
-    url: https://elevenlabs.io/app/settings/api-keys
