@@ -15,7 +15,7 @@ features:
 
 # Pandoc Skill
 
-Universelle Dokumentkonvertierung via pandoc + typst. **Agnostisches Werkzeug** — dieser Skill liefert keine PDF-Templates. Wer ein gestyltes PDF braucht, bringt sein Typst-Template selbst mit (z.B. aus einem Subagenten-Ordner oder aus dem eigenen Projekt).
+Universelle Dokumentkonvertierung via pandoc + typst. **Agnostisches Werkzeug** — dieser Skill liefert keine PDF-Templates. Wer ein gestyltes PDF braucht, bringt sein Typst-Template selbst mit (z.B. aus dem eigenen Projekt).
 
 ## Voraussetzungen
 
@@ -64,7 +64,6 @@ pandoc /tmp/input_fixed.md --pdf-engine=typst \
 
 Templates sind **nicht** Teil dieses Skills. Wo sie herkommen:
 
-- **Subagenten**: Bringen ihre eigenen Templates in ihrem Agent-Ordner mit (z.B. `assets/agents/report-writer/templates/research-report.typ`). Der Agent loest seinen Template-Pfad selbst auf und uebergibt ihn an `--template`.
 - **Projekt-eigene Templates**: Liegen im jeweiligen Projekt, werden mit absolutem Pfad uebergeben.
 - **Default**: Ohne `--template` nutzt pandoc/typst den eingebauten Default — minimalistisch, aber funktional.
 
