@@ -71,7 +71,6 @@ Beispiele:
 - Eine PDF zusammenführen oder komprimieren → `pdf`
 - Text aus einem Scan extrahieren → `ocr`
 - Einen wissenschaftlichen Bericht aus Markdown bauen → `pandoc`
-- GitHub-Issues oder PRs analysieren → `github`
 - Eine Website strukturiert crawlen → `crawl4ai`
 - Ein Diagramm als SVG oder PNG erzeugen → `chart`
 
